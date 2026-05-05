@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="ChatGPT_Image_May_5__2026__09_36_31_PM-removebg-preview.png" />
+    <None Remove="sssss.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="ChatGPT_Image_May_5__2026__09_36_31_PM-removebg-preview.png" />
+    <Resource Include="Resources\ChatGPT_Image_May_5__2026__09_36_31_PM-removebg-preview.png" />
+    <Resource Include="sssss.png" />
+  </ItemGroup>
+
+</Project>
