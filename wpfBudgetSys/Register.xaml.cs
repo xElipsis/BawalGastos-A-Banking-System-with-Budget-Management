@@ -15,13 +15,18 @@ using System.Windows.Shapes;
 namespace wpfBudgetSys
 {
     /// <summary>
-    /// Interaction logic for Window1.xaml
+    /// Interaction logic for Register.xaml
     /// </summary>
-    public partial class Window1 : Window
+    public partial class Register : Window
     {
-        public Window1()
+        public Register()
         {
             InitializeComponent();
+        }
+
+        private void RegisterButton_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

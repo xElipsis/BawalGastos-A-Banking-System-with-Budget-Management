@@ -13,6 +13,9 @@
     <None Remove="dads-removebg-preview.png" />
     <None Remove="loginbutton-removebg-preview.png" />
     <None Remove="loginbutton.png" />
+    <None Remove="logowword-removebg-preview.png" />
+    <None Remove="logowword.png" />
+    <None Remove="logowwordclear.png" />
     <None Remove="sssss.png" />
   </ItemGroup>
 
@@ -21,6 +24,9 @@
     <Resource Include="dads-removebg-preview.png" />
     <Resource Include="loginbutton-removebg-preview.png" />
     <Resource Include="loginbutton.png" />
+    <Resource Include="logowword-removebg-preview.png" />
+    <Resource Include="logowword.png" />
+    <Resource Include="logowwordclear.png" />
     <Resource Include="Resources\ChatGPT_Image_May_5__2026__09_36_31_PM-removebg-preview.png" />
     <Resource Include="sssss.png" />
   </ItemGroup>
