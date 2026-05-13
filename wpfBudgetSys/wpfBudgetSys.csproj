@@ -37,9 +37,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Assets\Icons\" />
+    <Folder Include="Assets\Fonts\" />
     <Folder Include="Model\" />
-    <Folder Include="ViewModel\" />
-    <Folder Include="View\" />
   </ItemGroup>
 
 </Project>

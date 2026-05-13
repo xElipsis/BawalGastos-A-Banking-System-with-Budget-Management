@@ -1,0 +1,82 @@
+﻿<Window x:Class="wpfBudgetSys.View.HomeWindowView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:wpfBudgetSys.View"
+        mc:Ignorable="d"
+        Title="HomeWindowView" Height="450" Width="800"
+        WindowStartupLocation="CenterScreen"
+        WindowState="Maximized">
+    <Grid>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="8*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid Background="#060063">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1.5*"/>
+                <RowDefinition Height="8.5*"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel VerticalAlignment="Center">
+                <TextBlock Text="BawalGastos"
+                           FontSize="20"
+                           HorizontalAlignment="Center" 
+                           Foreground="#ddec00"
+                           FontWeight="Bold"/>
+            </StackPanel>
+            
+            <StackPanel Grid.Row="1">
+
+                <RadioButton Content="Dashboard" 
+                             Height="40"
+                             IsChecked="True"
+                             Command="{Binding ShowDashboardCommand}"/>
+                <RadioButton Content="Deposit" 
+                             Height="40"
+                             Command="{Binding ShowDepositCommand}"/>
+                <RadioButton Content="Withdraw" 
+                             Height="40"
+                             Command="{Binding ShowWithdrawCommand}"/>
+                <RadioButton Content="Transfer" 
+                             Height="40"
+                             Command="{Binding ShowTransferCommand}"/>
+                <RadioButton Content="Pay" 
+                             Height="40"/>
+                <RadioButton Content="Transactions" 
+                             Height="40"/>
+                <RadioButton Content="Settings" 
+                             Height="40"
+                             Command="{Binding ShowSettingsCommand}"/>
+            </StackPanel>
+        </Grid>
+
+        <Grid Grid.Column="1" Background="LightGray">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1.5*"/>
+                <RowDefinition Height="8.5*"/>
+            </Grid.RowDefinitions>
+
+            <Border Background="Transparent"
+                    Padding="20">
+
+                <TextBlock Text="{Binding ViewTitle}"
+                           FontSize="20"
+                           FontWeight="SemiBold"/>
+
+            </Border>
+
+            <Border Grid.Row="1"
+                    Background="Transparent"
+                    Padding="30"
+                    BorderThickness="0">
+
+                <ContentControl Content="{Binding CurrentView}" BorderThickness="0"/>
+
+            </Border>
+        </Grid>
+    </Grid>
+</Window>

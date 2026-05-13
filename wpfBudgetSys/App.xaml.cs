@@ -10,5 +10,4 @@ namespace wpfBudgetSys
     public partial class App : Application
     {
     }
-
 }
