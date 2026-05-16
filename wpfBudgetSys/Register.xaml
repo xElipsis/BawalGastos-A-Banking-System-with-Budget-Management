@@ -39,7 +39,7 @@
                 <!-- LEFT SIDE -->
                 <Grid Grid.Column="0">
 
-                    <Image Source="/logowwordclear.png"
+                    <Image Source="/Assets/logowwordclear.png"
                            Width="250"
                            Height="250"
                            Stretch="Uniform"

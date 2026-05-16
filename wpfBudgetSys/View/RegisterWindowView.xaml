@@ -1,0 +1,49 @@
+﻿<Window x:Class="wpfBudgetSys.View.RegisterWindowView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:wpfBudgetSys.View"
+        xmlns:userControls="clr-namespace:wpfBudgetSys.View.UserControls"
+        mc:Ignorable="d"
+        Title="RegisterWindowView" Height="450" Width="800"
+        WindowStartupLocation="CenterScreen"
+        WindowState="Maximized">
+    <Grid>
+        <ScrollViewer>
+            <StackPanel HorizontalAlignment="Center"
+                        
+                        Margin="0,50,0,100">
+                <TextBlock Text="Create Account"
+                           FontSize="24"
+                           FontWeight="DemiBold"
+                           HorizontalAlignment="Center"
+                           Margin="0 0 0 50"/>
+                <userControls:LabeledTextBox InputLabel="First Name"
+                                             Text="{Binding FirstName}"/>
+                <userControls:LabeledTextBox InputLabel="Middle Name"
+                                             Text="{Binding MiddleName}"/>
+                <userControls:LabeledTextBox InputLabel="Last Name"
+                                             Text="{Binding LastName}"/>
+                <userControls:LabeledTextBox InputLabel="Email"
+                                             Text="{Binding Email}"/>
+                <userControls:LabeledTextBox InputLabel="Phone#"
+                                             Text="{Binding Phone}"/>
+                <userControls:LabeledTextBox InputLabel="Username"
+                                             Text="{Binding Username}"/>
+                <userControls:LabeledTextBox InputLabel="Password"
+                                             Text="{Binding Password}"/>
+                <userControls:LabeledTextBox InputLabel="Confirm Password"/>
+                <Button Content="Register Now"
+                        Height="40"
+                        Background="DarkBlue"
+                        Foreground="White"
+                        FontSize="20"
+                        FontWeight="Bold"
+                        BorderThickness="0"
+                        Margin="0,50,0,0"
+                        Command="{Binding RegisterUser}"/>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</Window>

@@ -1,0 +1,26 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:PanelView="clr-namespace:wpfBudgetSys.View.PanelView"
+                    xmlns:PanelVM="clr-namespace:wpfBudgetSys.ViewModel.PanelViewModel">
+
+    <DataTemplate DataType="{x:Type PanelVM:HomeWindowPanelVM}">
+        <PanelView:HomeWindowPanelView/>
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type PanelVM:DepositPanelVM}">
+        <PanelView:DepositPanelView/>
+    </DataTemplate>
+    
+    <DataTemplate DataType="{x:Type PanelVM:WithdrawPanelVM}">
+        <PanelView:WithdrawPanelView/>
+    </DataTemplate>
+    
+    <DataTemplate DataType="{x:Type PanelVM:TransferPanelVM}">
+        <PanelView:TransferPanelView/>
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type PanelVM:SettingsPanelVM}">
+        <PanelView:SettingsPanelView/>
+    </DataTemplate>
+    
+</ResourceDictionary>

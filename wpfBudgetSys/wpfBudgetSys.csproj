@@ -9,6 +9,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Assets\dads-removebg-preview.png" />
+    <None Remove="Assets\loginbutton-removebg-preview.png" />
+    <None Remove="Assets\loginbutton.png" />
+    <None Remove="Assets\logowword-removebg-preview.png" />
+    <None Remove="Assets\logowword.png" />
+    <None Remove="Assets\logowwordclear.png" />
     <None Remove="ChatGPT_Image_May_5__2026__09_36_31_PM-removebg-preview.png" />
     <None Remove="dads-removebg-preview.png" />
     <None Remove="loginbutton-removebg-preview.png" />
@@ -20,15 +26,24 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="ChatGPT_Image_May_5__2026__09_36_31_PM-removebg-preview.png" />
-    <Resource Include="dads-removebg-preview.png" />
-    <Resource Include="loginbutton-removebg-preview.png" />
-    <Resource Include="loginbutton.png" />
-    <Resource Include="logowword-removebg-preview.png" />
-    <Resource Include="logowword.png" />
-    <Resource Include="logowwordclear.png" />
-    <Resource Include="Resources\ChatGPT_Image_May_5__2026__09_36_31_PM-removebg-preview.png" />
-    <Resource Include="sssss.png" />
+    <Resource Include="Assets\dads-removebg-preview.png" />
+    <Resource Include="Assets\loginbutton-removebg-preview.png" />
+    <Resource Include="Assets\loginbutton.png" />
+    <Resource Include="Assets\logowword-removebg-preview.png" />
+    <Resource Include="Assets\logowword.png" />
+    <Resource Include="Assets\logowwordclear.png" />
+    <Resource Include="Assets\ChatGPT_Image_May_5__2026__09_36_31_PM-removebg-preview.png" />
+    <Resource Include="Assets\sssss.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Assets\Icons\" />
+    <Folder Include="Assets\Fonts\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MySql.Data" Version="9.7.0" />
+    <PackageReference Include="NuGet.Frameworks" Version="7.6.0" />
   </ItemGroup>
 
 </Project>

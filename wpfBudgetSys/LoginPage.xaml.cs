@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using wpfBudgetSys.View;
 
 namespace wpfBudgetSys
 {
@@ -31,9 +32,20 @@ namespace wpfBudgetSys
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            Register register = new Register();
-            register.Show();
-            this.Close();
+            //Register register = new Register();
+            //register.Show();
+            //this.Close();
+
+            HomeWindowView homeWindow = new HomeWindowView();
+            homeWindow.Show();
+            Close();
+        }
+
+        private void ToRegisterButton_Click(object sender, RoutedEventArgs e)
+        {
+            RegisterWindowView registerWindow = new RegisterWindowView();
+            registerWindow.Show();
+            Close();
         }
     }
 }
