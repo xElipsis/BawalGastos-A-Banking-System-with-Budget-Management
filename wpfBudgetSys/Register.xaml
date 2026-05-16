@@ -95,14 +95,14 @@
                                      Margin="0,0,0,20"/>
 
                         <!-- Register Button -->
-                        <Button Content="Register"
+                        <Button Content="Next"
                                 Height="35"
                                 Background="#FF0E218E"
                                 Foreground="White"
                                 FontWeight="Bold"
                                 BorderThickness="0"
                                 Cursor="Hand"
-                                Click="RegisterButton_Click"/>
+                                Click="RegisterButton_Click" Width="80"/>
 
 
                     </StackPanel>
