@@ -83,6 +83,10 @@
 
                         </Button>
 
+                        <Button Content="To Register"
+                                HorizontalAlignment="Center"
+                                Click="ToRegisterButton_Click"/>
+
                     </StackPanel>
 
                 </Grid>

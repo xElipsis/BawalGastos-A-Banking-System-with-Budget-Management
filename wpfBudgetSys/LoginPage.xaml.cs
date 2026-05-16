@@ -40,5 +40,12 @@ namespace wpfBudgetSys
             homeWindow.Show();
             Close();
         }
+
+        private void ToRegisterButton_Click(object sender, RoutedEventArgs e)
+        {
+            RegisterWindowView registerWindow = new RegisterWindowView();
+            registerWindow.Show();
+            Close();
+        }
     }
 }

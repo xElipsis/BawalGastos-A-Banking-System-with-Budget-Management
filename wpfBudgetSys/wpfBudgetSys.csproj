@@ -39,7 +39,11 @@
   <ItemGroup>
     <Folder Include="Assets\Icons\" />
     <Folder Include="Assets\Fonts\" />
-    <Folder Include="Model\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MySql.Data" Version="9.7.0" />
+    <PackageReference Include="NuGet.Frameworks" Version="7.6.0" />
   </ItemGroup>
 
 </Project>

@@ -1,7 +1,5 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 
 namespace wpfBudgetSys.MVVM
 {
