@@ -6,13 +6,12 @@ using System.Threading.Tasks;
 
 namespace wpfBudgetSys.Enums
 {
-    internal class AppEnums
+    public class AppEnums
     {
         public enum UserRole
         {
             Admin = 1,
             User = 2
         }
-
     }
 }

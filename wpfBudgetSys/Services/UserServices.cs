@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using wpfBudgetSys.Enums;
+﻿using wpfBudgetSys.Enums;
 using wpfBudgetSys.Model;
 using wpfBudgetSys.Repositories;
 
@@ -16,14 +10,16 @@ namespace wpfBudgetSys.Services
 
         public int RegisterUser (string fullname, string email, string phone, string status)
         {
-            User user = new User(
-                AppEnums.UserRole.User,
-                fullname,
-                email,
-                phone,
-                status);
+            User user = new()
+            {
+                Role = AppEnums.UserRole.User,
+                Fullname = fullname,
+                Email = email,
+                Phone = phone,
+                Status = status
+            };
+                
             return userRepo.InsertUser(user);
-            
         }
     }
 }

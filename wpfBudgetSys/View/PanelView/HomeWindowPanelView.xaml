@@ -33,19 +33,23 @@
                     <Button Content="Deposit"
                             Width="100"
                             Height="40"
-                            Margin="20,0"/>
+                            Margin="20,0"
+                            Command="{Binding ShowDepositCommand}"/>
                     <Button Content="Withdraw"
                             Width="100"
                             Height="40"
-                            Margin="20,0"/>
+                            Margin="20,0"
+                            Command="{Binding ShowWithdrawCommand}"/>
                     <Button Content="Transfer"
                             Width="100"
                             Height="40"
-                            Margin="20,0"/>
+                            Margin="20,0"
+                            Command="{Binding ShowTransferCommand}"/>
                     <Button Content="Pay"
                             Width="100"
                             Height="40"
-                            Margin="20,0"/>
+                            Margin="20,0"
+                            Command="{Binding ShowPayCommand}"/>
                 </StackPanel>
             </Grid>
         </Border>

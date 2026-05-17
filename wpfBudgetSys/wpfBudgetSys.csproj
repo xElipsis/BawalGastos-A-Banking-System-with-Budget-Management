@@ -10,6 +10,13 @@
 
   <ItemGroup>
     <None Remove="Assets\dads-removebg-preview.png" />
+    <None Remove="Assets\Icons\arrow-bottom_left_corner-100.png" />
+    <None Remove="Assets\Icons\arrow-top_right_corner-100.png" />
+    <None Remove="Assets\Icons\cash-100.png" />
+    <None Remove="Assets\Icons\dashboard-100.png" />
+    <None Remove="Assets\Icons\plus-100.png" />
+    <None Remove="Assets\Icons\settings-100.png" />
+    <None Remove="Assets\Icons\transaction-100.png" />
     <None Remove="Assets\loginbutton-removebg-preview.png" />
     <None Remove="Assets\loginbutton.png" />
     <None Remove="Assets\logowword-removebg-preview.png" />
@@ -27,6 +34,13 @@
 
   <ItemGroup>
     <Resource Include="Assets\dads-removebg-preview.png" />
+    <Resource Include="Assets\Icons\arrow-bottom_left_corner-100.png" />
+    <Resource Include="Assets\Icons\arrow-top_right_corner-100.png" />
+    <Resource Include="Assets\Icons\cash-100.png" />
+    <Resource Include="Assets\Icons\dashboard-100.png" />
+    <Resource Include="Assets\Icons\plus-100.png" />
+    <Resource Include="Assets\Icons\settings-100.png" />
+    <Resource Include="Assets\Icons\transaction-100.png" />
     <Resource Include="Assets\loginbutton-removebg-preview.png" />
     <Resource Include="Assets\loginbutton.png" />
     <Resource Include="Assets\logowword-removebg-preview.png" />
@@ -37,7 +51,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Assets\Icons\" />
     <Folder Include="Assets\Fonts\" />
   </ItemGroup>
 

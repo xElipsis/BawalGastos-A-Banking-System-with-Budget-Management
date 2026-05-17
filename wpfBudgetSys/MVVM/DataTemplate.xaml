@@ -3,6 +3,10 @@
                     xmlns:PanelView="clr-namespace:wpfBudgetSys.View.PanelView"
                     xmlns:PanelVM="clr-namespace:wpfBudgetSys.ViewModel.PanelViewModel">
 
+    <DataTemplate DataType="{x:Type PanelVM:GetStartedPanelVM}">
+        <PanelView:GetStartedPanelView/>
+    </DataTemplate>
+    
     <DataTemplate DataType="{x:Type PanelVM:HomeWindowPanelVM}">
         <PanelView:HomeWindowPanelView/>
     </DataTemplate>

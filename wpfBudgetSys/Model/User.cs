@@ -8,28 +8,13 @@ using wpfBudgetSys.Enums;
 
 namespace wpfBudgetSys.Model
 {
-
-    class User
+    public class User
     {
-        private AppEnums.UserRole role;
-        private string fullname;
-        private string email;
-        private string phone;
-        private string status;
-
-        public User(AppEnums.UserRole role, string fullname, string email, string phone, string status)
-        {
-            Role = role;
-            Fullname = fullname;
-            Email = email;
-            Phone = phone;
-            Status = status;
-        }
-
-        public AppEnums.UserRole Role { get => role; set => role = value; }
-        public string Fullname { get => fullname; set => fullname = value; }
-        public string Email { get => email; set => email = value; }
-        public string Phone { get => phone; set => phone = value; }
-        public string Status { get => status; set => status = value; }
+        public int UserId { get; set; }
+        public AppEnums.UserRole Role { get; set; }
+        public string? Fullname { get; set; }
+        public string? Email { get; set; }
+        public string? Phone { get; set; }
+        public string? Status { get; set; }
     }
 }

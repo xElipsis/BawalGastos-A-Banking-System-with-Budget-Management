@@ -90,13 +90,14 @@ namespace wpfBudgetSys.ViewModel
             }
         }
 
-        public ICommand RegisterUser { get; set; }
+        public ICommand RegisterUserCommand { get; set; }
+        public ICommand ShowLoginWindowCommand { get; set; }
 
         public RegisterWindowVM()
         {
             authServices = new AuthServices();
 
-            RegisterUser = new RelayCommand(o =>
+            RegisterUserCommand = new RelayCommand(o =>
             {
                 if (string.IsNullOrWhiteSpace(firstName) ||
                     string.IsNullOrWhiteSpace(middleName) ||
@@ -113,6 +114,13 @@ namespace wpfBudgetSys.ViewModel
                 string fullName = $"{firstName} {middleName} {lastName}".Trim();
                 authServices.Register(fullName, email, phone, username, password);
                 MessageBox.Show("Registration successful!");
+            });
+
+            ShowLoginWindowCommand = new RelayCommand(o =>
+            {
+                LoginPage loginWindow = new LoginPage();
+                loginWindow.Show();
+                Application.Current.Windows[0].Close();
             });
         }
     }

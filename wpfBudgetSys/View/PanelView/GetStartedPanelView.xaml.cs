@@ -10,23 +10,19 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
-using wpfBudgetSys.View;
-using wpfBudgetSys.ViewModel;
 
-namespace wpfBudgetSys
+namespace wpfBudgetSys.View.PanelView
 {
     /// <summary>
-    /// Interaction logic for LoginPage.xaml
+    /// Interaction logic for GetStartedPanelView.xaml
     /// </summary>
-    public partial class LoginPage : Window
+    public partial class GetStartedPanelView : UserControl
     {
-        public LoginPage()
+        public GetStartedPanelView()
         {
             InitializeComponent();
-            LoginWindowVM loginWindowVM = new LoginWindowVM();
-            loginWindowVM.CloseAction = new Action(this.Close);
-            DataContext = loginWindowVM;
         }
     }
 }
