@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using wpfBudgetSys.Model;
+﻿using wpfBudgetSys.Model;
 using wpfBudgetSys.Repositories;
 
 namespace wpfBudgetSys.Services
@@ -14,8 +9,11 @@ namespace wpfBudgetSys.Services
 
         public void RegisterLogin(int user_id, string username, string password)
         {
-            Login login = new Login(
-                username);
+            Login login = new()
+            {
+                Username = username,
+            };
+
             loginRepository.InsertLogin(user_id, login, password);
         }
     }

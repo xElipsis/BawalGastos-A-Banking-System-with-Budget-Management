@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:wpfBudgetSys.View"
         xmlns:userControls="clr-namespace:wpfBudgetSys.View.UserControls"
+        xmlns:Menu="clr-namespace:wpfBudgetSys.MVVM"
         mc:Ignorable="d"
         Title="HomeWindowView" Height="450" Width="800"
         WindowStartupLocation="CenterScreen"
@@ -32,26 +33,119 @@
             
             <StackPanel Grid.Row="1">
 
-                <RadioButton Content="Dashboard" 
-                             Height="40"
-                             IsChecked="True"
-                             Command="{Binding ShowDashboardCommand}"/>
-                <RadioButton Content="Deposit" 
-                             Height="40"
-                             Command="{Binding ShowDepositCommand}"/>
-                <RadioButton Content="Withdraw" 
-                             Height="40"
-                             Command="{Binding ShowWithdrawCommand}"/>
-                <RadioButton Content="Transfer" 
-                             Height="40"
-                             Command="{Binding ShowTransferCommand}"/>
-                <RadioButton Content="Pay" 
-                             Height="40"/>
-                <RadioButton Content="Transactions" 
-                             Height="40"/>
-                <RadioButton Content="Settings" 
-                             Height="40"
-                             Command="{Binding ShowSettingsCommand}"/>
+                <!-- // Dashboard // -->
+                
+                <Menu:Btn Style="{StaticResource BtnStyle}"
+                          Command="{Binding ShowDashboardCommand}"
+                          IsChecked="True">
+
+                    <Grid>
+
+                        <Image Source="pack://application:,,,/Assets/Icons/dashboard-100.png"
+                               Style="{StaticResource Image_Style}"/>
+
+                        <TextBlock Text="Dashboard"
+                                   Style="{StaticResource Text_Style}"/>
+                    </Grid>
+                    
+                </Menu:Btn>
+
+                <!-- // Deposit // -->
+                
+                <Menu:Btn Style="{StaticResource BtnStyle}"
+                          Command="{Binding ShowDepositCommand}">
+
+                    <Grid>
+
+                        <Image Source="pack://application:,,,/Assets/Icons/plus-100.png"
+                               Style="{StaticResource Image_Style}"/>
+
+                        <TextBlock Text="Deposit"
+                                   Style="{StaticResource Text_Style}"/>
+                    </Grid>
+
+                </Menu:Btn>
+
+                <!-- // Withdraw // -->
+                
+                <Menu:Btn Style="{StaticResource BtnStyle}"
+                          Command="{Binding ShowWithdrawCommand}">
+
+                    <Grid>
+
+                        <Image Source="pack://application:,,,/Assets/Icons/arrow-bottom_left_corner-100.png"
+                               Style="{StaticResource Image_Style}"/>
+
+                        <TextBlock Text="Withdraw"
+                                   Style="{StaticResource Text_Style}"/>
+                    </Grid>
+
+                </Menu:Btn>
+
+                <!-- // Transfer // -->
+                
+                <Menu:Btn Style="{StaticResource BtnStyle}"
+                          Command="{Binding ShowTransferCommand}">
+
+                    <Grid>
+
+                        <Image Source="pack://application:,,,/Assets/Icons/arrow-top_right_corner-100.png"
+                               Style="{StaticResource Image_Style}"/>
+
+                        <TextBlock Text="Transfer"
+                   Style="{StaticResource Text_Style}"/>
+                    </Grid>
+
+                </Menu:Btn>
+                
+                <!-- // Pay // -->
+
+                <Menu:Btn Style="{StaticResource BtnStyle}"
+                          Command="{Binding ShowPayCommand}">
+
+                    <Grid>
+
+                        <Image Source="pack://application:,,,/Assets/Icons/cash-100.png"
+                               Style="{StaticResource Image_Style}"/>
+
+                        <TextBlock Text="Pay"
+                                   Style="{StaticResource Text_Style}"/>
+                    </Grid>
+
+                </Menu:Btn>
+                
+                <!-- // Transaction // -->
+
+                <Menu:Btn Style="{StaticResource BtnStyle}"
+                          Command="{Binding ShowTransactionCommand}">
+
+                    <Grid>
+
+                        <Image Source="pack://application:,,,/Assets/Icons/transaction-100.png"
+                               Style="{StaticResource Image_Style}"/>
+
+                        <TextBlock Text="Transaction"
+                                   Style="{StaticResource Text_Style}"/>
+                    </Grid>
+
+                </Menu:Btn>
+                
+                <!-- // Settings // -->
+
+                <Menu:Btn Style="{StaticResource BtnStyle}"
+                          Command="{Binding ShowSettingsCommand}">
+
+                    <Grid>
+
+                        <Image Source="pack://application:,,,/Assets/Icons/settings-100.png"
+                               Style="{StaticResource Image_Style}"/>
+
+                        <TextBlock Text="Settings"
+                                   Style="{StaticResource Text_Style}"/>
+                    </Grid>
+
+                </Menu:Btn>
+
             </StackPanel>
         </Grid>
 

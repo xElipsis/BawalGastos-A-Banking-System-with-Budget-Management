@@ -3,8 +3,7 @@
 
     <Style x:Key="BtnStyle"
            TargetType="RadioButton">
-        <Setter Property="HorizontalAlignment"
-                Value="Left"/>
+        
         <Setter Property="VerticalAlignment"
                 Value="Center"/>
         <Setter Property="Margin"
@@ -15,11 +14,10 @@
 
                     <Border x:Name="border"
                             Height="50"
-                            Width="228"
                             BorderThickness="0">
 
                         <Border.Background>
-                            <SolidColorBrush x:Name="BorderBackground" Color="#EEEEEE"/>
+                            <SolidColorBrush x:Name="BorderBackground" Color="Transparent"/>
                         </Border.Background>
 
                         <Grid>
@@ -55,8 +53,8 @@
                                 <Storyboard>
                                     <ColorAnimation Storyboard.TargetName="BorderBackground"
                                                     Storyboard.TargetProperty="Color"
-                                                    From="#EEEEEE"
-                                                    To="#AAAAAA"
+                                                    From="Transparent"
+                                                    To="SkyBlue"
                                                     Duration="0:0:0.3"/>
                                 </Storyboard>
                             </BeginStoryboard>
@@ -68,8 +66,8 @@
                                 <Storyboard>
                                     <ColorAnimation Storyboard.TargetName="BorderBackground"
                                                     Storyboard.TargetProperty="Color"
-                                                    From="#AAAAAA"
-                                                    To="#EEEEEE"
+                                                    From="SkyBlue"
+                                                    To="Transparent"
                                                     Duration="0:0:0.3"/>
                                 </Storyboard>
                             </BeginStoryboard>
@@ -79,7 +77,7 @@
                                  Value="True">
                             <Setter Property="Background"
                                     TargetName="border"
-                                    Value="Green"/>
+                                    Value="SkyBlue"/>
                             <Setter Property="Visibility"
                                     TargetName="Indicator"
                                     Value="Visible"/>

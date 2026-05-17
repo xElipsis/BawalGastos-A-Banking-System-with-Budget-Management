@@ -91,6 +91,7 @@ namespace wpfBudgetSys.ViewModel
         }
 
         public ICommand RegisterUser { get; set; }
+        public ICommand ShowLoginWindow { get; set; }
 
         public RegisterWindowVM()
         {
@@ -113,6 +114,13 @@ namespace wpfBudgetSys.ViewModel
                 string fullName = $"{firstName} {middleName} {lastName}".Trim();
                 authServices.Register(fullName, email, phone, username, password);
                 MessageBox.Show("Registration successful!");
+            });
+
+            ShowLoginWindow = new RelayCommand(o =>
+            {
+                LoginPage loginWindow = new LoginPage();
+                loginWindow.Show();
+                Application.Current.Windows[0].Close();
             });
         }
     }
