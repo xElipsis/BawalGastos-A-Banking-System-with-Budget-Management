@@ -28,13 +28,17 @@
                                    FontWeight="DemiBold"
                                    VerticalAlignment="Center"/>
 
-                        <TextBlock Text="{Full}"
+                        <TextBlock Text="{Binding Fullname}"
                                    FontSize="20"
                                    FontWeight="DemiBold"
                                    VerticalAlignment="Center"/>
                     </StackPanel>
                     
                 </StackPanel>
+
+                <Border>
+                    
+                </Border>
             </Grid>
         </ScrollViewer>
     </Grid>
