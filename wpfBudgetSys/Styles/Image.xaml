@@ -2,7 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <Style x:Key="Image_Style"
-           TargetType="Image">
+           TargetType="Rectangle">
 
         <Setter Property="HorizontalAlignment"
                 Value="Left"/>

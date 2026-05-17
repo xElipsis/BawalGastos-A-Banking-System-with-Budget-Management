@@ -17,7 +17,7 @@
                             BorderThickness="0">
 
                         <Border.Background>
-                            <SolidColorBrush x:Name="BorderBackground" Color="Transparent"/>
+                            <SolidColorBrush x:Name="BorderBackground" Color="#060063"/>
                         </Border.Background>
 
                         <Grid>
@@ -27,7 +27,7 @@
                                     Width="4"
                                     HorizontalAlignment="Left"
                                     VerticalAlignment="Center"
-                                    Background="#FFFFFF"
+                                    Background="#ddec00"
                                     Visibility="Collapsed"
                                     CornerRadius="2"/>
 
@@ -53,8 +53,8 @@
                                 <Storyboard>
                                     <ColorAnimation Storyboard.TargetName="BorderBackground"
                                                     Storyboard.TargetProperty="Color"
-                                                    From="Transparent"
-                                                    To="SkyBlue"
+                                                    From="#060063"
+                                                    To="DarkBlue"
                                                     Duration="0:0:0.3"/>
                                 </Storyboard>
                             </BeginStoryboard>
@@ -66,8 +66,8 @@
                                 <Storyboard>
                                     <ColorAnimation Storyboard.TargetName="BorderBackground"
                                                     Storyboard.TargetProperty="Color"
-                                                    From="SkyBlue"
-                                                    To="Transparent"
+                                                    From="DarkBlue"
+                                                    To="#060063"
                                                     Duration="0:0:0.3"/>
                                 </Storyboard>
                             </BeginStoryboard>
@@ -77,7 +77,7 @@
                                  Value="True">
                             <Setter Property="Background"
                                     TargetName="border"
-                                    Value="SkyBlue"/>
+                                    Value="DarkBlue"/>
                             <Setter Property="Visibility"
                                     TargetName="Indicator"
                                     Value="Visible"/>

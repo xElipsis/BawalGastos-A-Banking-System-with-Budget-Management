@@ -7,7 +7,7 @@
         xmlns:userControls="clr-namespace:wpfBudgetSys.View.UserControls"
         xmlns:Menu="clr-namespace:wpfBudgetSys.MVVM"
         mc:Ignorable="d"
-        Title="HomeWindowView" Height="450" Width="800"
+        Title="Bawal Gastos" Height="450" Width="800"
         WindowStartupLocation="CenterScreen"
         WindowState="Maximized">
     <Grid>
@@ -41,8 +41,12 @@
 
                     <Grid>
 
-                        <Image Source="pack://application:,,,/Assets/Icons/dashboard-100.png"
-                               Style="{StaticResource Image_Style}"/>
+                        <Rectangle Fill="White" 
+                                   Style="{StaticResource Image_Style}">
+                            <Rectangle.OpacityMask>
+                                <ImageBrush ImageSource="pack://application:,,,/Assets/Icons/dashboard-100.png"/>
+                            </Rectangle.OpacityMask>
+                        </Rectangle>
 
                         <TextBlock Text="Dashboard"
                                    Style="{StaticResource Text_Style}"/>
@@ -56,9 +60,12 @@
                           Command="{Binding ShowDepositCommand}">
 
                     <Grid>
-
-                        <Image Source="pack://application:,,,/Assets/Icons/plus-100.png"
-                               Style="{StaticResource Image_Style}"/>
+                        <Rectangle Fill="White" 
+                                   Style="{StaticResource Image_Style}">
+                            <Rectangle.OpacityMask>
+                                <ImageBrush ImageSource="pack://application:,,,/Assets/Icons/plus-100.png"/>
+                            </Rectangle.OpacityMask>
+                        </Rectangle>
 
                         <TextBlock Text="Deposit"
                                    Style="{StaticResource Text_Style}"/>
@@ -73,8 +80,12 @@
 
                     <Grid>
 
-                        <Image Source="pack://application:,,,/Assets/Icons/arrow-bottom_left_corner-100.png"
-                               Style="{StaticResource Image_Style}"/>
+                        <Rectangle Fill="White" 
+                                   Style="{StaticResource Image_Style}">
+                            <Rectangle.OpacityMask>
+                                <ImageBrush ImageSource="pack://application:,,,/Assets/Icons/arrow-bottom_left_corner-100.png"/>
+                            </Rectangle.OpacityMask>
+                        </Rectangle>
 
                         <TextBlock Text="Withdraw"
                                    Style="{StaticResource Text_Style}"/>
@@ -89,8 +100,12 @@
 
                     <Grid>
 
-                        <Image Source="pack://application:,,,/Assets/Icons/arrow-top_right_corner-100.png"
-                               Style="{StaticResource Image_Style}"/>
+                        <Rectangle Fill="White" 
+                                   Style="{StaticResource Image_Style}">
+                            <Rectangle.OpacityMask>
+                                <ImageBrush ImageSource="pack://application:,,,/Assets/Icons/arrow-top_right_corner-100.png"/>
+                            </Rectangle.OpacityMask>
+                        </Rectangle>
 
                         <TextBlock Text="Transfer"
                    Style="{StaticResource Text_Style}"/>
@@ -105,8 +120,12 @@
 
                     <Grid>
 
-                        <Image Source="pack://application:,,,/Assets/Icons/cash-100.png"
-                               Style="{StaticResource Image_Style}"/>
+                        <Rectangle Fill="White" 
+                                   Style="{StaticResource Image_Style}">
+                            <Rectangle.OpacityMask>
+                                <ImageBrush ImageSource="pack://application:,,,/Assets/Icons/cash-100.png"/>
+                            </Rectangle.OpacityMask>
+                        </Rectangle>
 
                         <TextBlock Text="Pay"
                                    Style="{StaticResource Text_Style}"/>
@@ -121,8 +140,12 @@
 
                     <Grid>
 
-                        <Image Source="pack://application:,,,/Assets/Icons/transaction-100.png"
-                               Style="{StaticResource Image_Style}"/>
+                        <Rectangle Fill="White" 
+                                   Style="{StaticResource Image_Style}">
+                            <Rectangle.OpacityMask>
+                                <ImageBrush ImageSource="pack://application:,,,/Assets/Icons/transaction-100.png"/>
+                            </Rectangle.OpacityMask>
+                        </Rectangle>
 
                         <TextBlock Text="Transaction"
                                    Style="{StaticResource Text_Style}"/>
@@ -137,8 +160,12 @@
 
                     <Grid>
 
-                        <Image Source="pack://application:,,,/Assets/Icons/settings-100.png"
-                               Style="{StaticResource Image_Style}"/>
+                        <Rectangle Fill="White" 
+                                   Style="{StaticResource Image_Style}">
+                            <Rectangle.OpacityMask>
+                                <ImageBrush ImageSource="pack://application:,,,/Assets/Icons/settings-100.png"/>
+                            </Rectangle.OpacityMask>
+                        </Rectangle>
 
                         <TextBlock Text="Settings"
                                    Style="{StaticResource Text_Style}"/>
