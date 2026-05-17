@@ -20,7 +20,6 @@ namespace wpfBudgetSys.Services
             };
                 
             return userRepo.InsertUser(user);
-            
         }
     }
 }

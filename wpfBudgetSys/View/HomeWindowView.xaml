@@ -36,8 +36,7 @@
                 <!-- // Dashboard // -->
                 
                 <Menu:Btn Style="{StaticResource BtnStyle}"
-                          Command="{Binding ShowDashboardCommand}"
-                          IsChecked="True">
+                          Command="{Binding ShowDashboardCommand}">
 
                     <Grid>
 
@@ -193,7 +192,6 @@
 
             <Border Grid.Row="1"
                     Background="Transparent"
-                    Padding="30"
                     BorderThickness="0">
 
                 <ContentControl Content="{Binding CurrentView}" BorderThickness="0"/>

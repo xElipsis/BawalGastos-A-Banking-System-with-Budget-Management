@@ -28,6 +28,7 @@ namespace wpfBudgetSys.ViewModel
             }
         }
 
+        public ICommand ShowGetStartedCommand { get; set; }
         public ICommand ShowDashboardCommand { get; set; }
         public ICommand ShowDepositCommand { get; set; }
         public ICommand ShowWithdrawCommand { get; set; }
@@ -37,6 +38,12 @@ namespace wpfBudgetSys.ViewModel
 
         public HomeWindowVM()
         {
+            ShowGetStartedCommand = new RelayCommand(o =>
+            {
+                CurrentView = new GetStartedPanelVM();
+                ViewTitle = "Get Started";
+            });
+
             ShowDashboardCommand = new RelayCommand(o =>
             {
                 CurrentView = new HomeWindowPanelVM();
@@ -72,8 +79,7 @@ namespace wpfBudgetSys.ViewModel
                 ViewTitle = "Settings";
             });
 
-            CurrentView = new HomeWindowPanelVM();
-            ViewTitle = "Dashboard";
+            ShowGetStartedCommand.Execute(null);
         }
     }
 }

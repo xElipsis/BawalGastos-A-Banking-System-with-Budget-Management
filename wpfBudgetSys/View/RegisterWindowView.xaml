@@ -18,9 +18,9 @@
                     <RowDefinition Height="100"/>
                 </Grid.RowDefinitions>
 
-                <TextBlock Text="Create Account"
+                <TextBlock Text="User Account Sign Up"
                            FontSize="24"
-                           FontWeight="DemiBold"
+                           FontWeight="Bold"
                            HorizontalAlignment="Center"
                            VerticalAlignment="Center"/>
 
@@ -58,7 +58,7 @@
                         FontWeight="Bold"
                         BorderThickness="0"
                         Margin="0,50,0,0"
-                        Command="{Binding RegisterUser}"/>
+                        Command="{Binding RegisterUserCommand}"/>
                     </StackPanel>
                 </Border>
 
@@ -69,7 +69,7 @@
                     <TextBlock Text="Already have an account? "
                                Margin="4, 0"/>
                     <Button Content="Login now!"
-                            Command="{Binding ShowLoginWindow}"/>
+                            Command="{Binding ShowLoginWindowCommand}"/>
                 </StackPanel>
 
             </Grid>

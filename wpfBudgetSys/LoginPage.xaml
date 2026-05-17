@@ -57,7 +57,8 @@
 
                         <TextBox Style="{StaticResource SharedInputStyle}"
                                  Height="30"
-                                 Margin="0,5,0,15"/>
+                                 Margin="0,5,0,15"
+                                 Text="{Binding InputUsername}"/>
 
                         <TextBlock Text="Enter Password"
                                    Foreground="White"
@@ -75,7 +76,8 @@
                                 Foreground="White"
                                 FontWeight="Bold"
                                 BorderBrush="{x:Null}"
-                                Click="Button_Click">
+                                Command="{Binding LoginUserCommand}"
+                                CommandParameter="{Binding ElementName=MyPasswordBox}">
 
                             <Button.Background>
                                 <ImageBrush ImageSource="/Assets/loginbutton-removebg-preview.png"/>
@@ -85,7 +87,8 @@
 
                         <Button Content="To Register"
                                 HorizontalAlignment="Center"
-                                Click="ToRegisterButton_Click"/>
+                                Command="{Binding ShowRegisterWindowCommand}"
+                                CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}"/>
 
                     </StackPanel>
 

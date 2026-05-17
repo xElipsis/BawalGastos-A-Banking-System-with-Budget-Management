@@ -1,5 +1,6 @@
 ﻿using MySql.Data.MySqlClient;
 using wpfBudgetSys.Database;
+using wpfBudgetSys.Enums;
 using wpfBudgetSys.Model;
 
 namespace wpfBudgetSys.Repositories
@@ -24,6 +25,37 @@ namespace wpfBudgetSys.Repositories
                     cmd.ExecuteNonQuery();
 
                     return (int)cmd.LastInsertedId;
+                }
+            }
+        }
+
+        public User GetById(int userId)
+        {
+            using (MySqlConnection conn = DBConnection.GetConnection())
+            {
+                conn.Open();
+                string query = "SELECT * FROM users WHERE user_id = @UserId";
+
+                using (MySqlCommand cmd = new MySqlCommand(query, conn)) 
+                {
+                    cmd.Parameters.AddWithValue("@UserId", userId);
+
+                    using (MySqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            return new User
+                            {
+                                UserId = reader.GetInt32("user_id"),
+                                Role = (AppEnums.UserRole)reader.GetInt32("role_id"),
+                                Fullname = reader.GetString("full_name"),
+                                Email = reader.GetString("email"),
+                                Phone = reader.GetString("phone"),
+                                Status = reader.GetString("status")
+                            };
+                        }
+                        return null;
+                    }
                 }
             }
         }

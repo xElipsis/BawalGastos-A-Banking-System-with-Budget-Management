@@ -8,8 +8,9 @@ using wpfBudgetSys.Enums;
 
 namespace wpfBudgetSys.Model
 {
-    internal class User
+    public class User
     {
+        public int UserId { get; set; }
         public AppEnums.UserRole Role { get; set; }
         public string? Fullname { get; set; }
         public string? Email { get; set; }

@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using wpfBudgetSys.View;
+using wpfBudgetSys.ViewModel;
 
 namespace wpfBudgetSys
 {
@@ -23,29 +24,9 @@ namespace wpfBudgetSys
         public LoginPage()
         {
             InitializeComponent();
-        }
-
-        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            //Register register = new Register();
-            //register.Show();
-            //this.Close();
-
-            HomeWindowView homeWindow = new HomeWindowView();
-            homeWindow.Show();
-            Close();
-        }
-
-        private void ToRegisterButton_Click(object sender, RoutedEventArgs e)
-        {
-            RegisterWindowView registerWindow = new RegisterWindowView();
-            registerWindow.Show();
-            Close();
+            LoginWindowVM loginWindowVM = new LoginWindowVM();
+            loginWindowVM.CloseAction = new Action(this.Close);
+            DataContext = loginWindowVM;
         }
     }
 }
