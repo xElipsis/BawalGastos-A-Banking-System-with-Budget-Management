@@ -4,18 +4,20 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:wpfBudgetSys.View.PanelView"
+             xmlns:userControls="clr-namespace:wpfBudgetSys.View.UserControls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <ScrollViewer>
-            <Grid>
+            <Grid Margin="0, 100"
+                  Width="800">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="200"/>
                     <RowDefinition />
                     <RowDefinition />
                 </Grid.RowDefinitions>
 
-                <StackPanel VerticalAlignment="Center">
+                <StackPanel>
                     <TextBlock Text="Welcome to Bawal Gastos!"
                                FontSize="36"
                                FontWeight="Bold"
@@ -23,7 +25,7 @@
 
                     <StackPanel Orientation="Horizontal"
                                 HorizontalAlignment="Center">
-                        <TextBlock Text="Let's get started with you account "
+                        <TextBlock Text="Let's get started with your account "
                                    FontSize="20"
                                    FontWeight="DemiBold"
                                    VerticalAlignment="Center"/>
@@ -36,9 +38,122 @@
                     
                 </StackPanel>
 
-                <Border>
-                    
+                <Border Grid.Row="1" 
+                        Background="White"
+                        CornerRadius="30"
+                        Padding="30"
+                        BorderBrush="LightGray"
+                        BorderThickness="2"
+                        Margin="0,0,0,50">
+
+                    <StackPanel>
+                        <Border Margin="0,0,0,100">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+
+                                <TextBlock Text="Account Setup"
+                                       FontSize="24"
+                                       FontWeight="Bold"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"/>
+
+                                <StackPanel Grid.Row="1">
+                                    <userControls:LabeledTextBox InputLabel="Account Number"/>
+                                    <userControls:LabeledTextBox InputLabel="Account Type"/>
+                                    <userControls:LabeledTextBox InputLabel="Initial Deposit"
+                                                                 x:Name="txtInitialDeposit"
+                                                                 PreviewTextInput="txtInitialDeposit_PreviewTextInput"
+                                                                 Text="{Binding InitialDeposit, UpdateSourceTrigger=PropertyChanged}"/>
+                                </StackPanel>
+
+                            </Grid>
+                        </Border>
+
+                        <DataGrid ItemsSource="{Binding BudgetRows}"
+                                  AutoGenerateColumns="False"
+                                  CanUserAddRows="False"
+                                  CanUserDeleteRows="False">
+                            
+                            <DataGrid.Columns>
+
+                                <!-- Category Name — editable for custom, readonly for defaults -->
+                                <DataGridTemplateColumn Header="Category" Width="*">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding CategoryName}"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                    <DataGridTemplateColumn.CellEditingTemplate>
+                                        <DataTemplate>
+                                            <TextBox Text="{Binding CategoryName, UpdateSourceTrigger=PropertyChanged}"
+                                                     IsReadOnly="{Binding IsDefault}"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellEditingTemplate>
+                                </DataGridTemplateColumn>
+
+                                <!-- Daily Limit -->
+                                <DataGridTemplateColumn Header="Daily Limit" Width="*">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding DailyLimit}"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                    <DataGridTemplateColumn.CellEditingTemplate>
+                                        <DataTemplate>
+                                            <TextBox Text="{Binding DailyLimit, UpdateSourceTrigger=PropertyChanged}"
+                                                     />
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellEditingTemplate>
+                                </DataGridTemplateColumn>
+
+                                <!-- Monthly Limit -->
+                                <DataGridTemplateColumn Header="Monthly Limit" Width="*">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding MonthlyLimit}"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                    <DataGridTemplateColumn.CellEditingTemplate>
+                                        <DataTemplate>
+                                            <TextBox Text="{Binding MonthlyLimit, UpdateSourceTrigger=PropertyChanged}"
+                                                     />
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellEditingTemplate>
+                                </DataGridTemplateColumn>
+
+                                <!-- Remove Button — hidden for default categories -->
+                                <DataGridTemplateColumn Header="" Width="Auto">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Button Content="Remove"
+                                                    Command="{Binding DataContext.RemoveRowCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"
+                                                    CommandParameter="{Binding}"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+
+                            </DataGrid.Columns>
+                        </DataGrid>
+
+                        <Button Content="+ Add Category"
+                                Command="{Binding AddRowCommand}"/>
+
+                    </StackPanel>
                 </Border>
+
+                <Button Grid.Row="2"
+                        Content="Create Account"
+                        Height="40"
+                        Background="DarkBlue"
+                        Foreground="White"
+                        FontSize="20"
+                        FontWeight="Bold"
+                        BorderThickness="0">
+                    
+                </Button>
             </Grid>
         </ScrollViewer>
     </Grid>

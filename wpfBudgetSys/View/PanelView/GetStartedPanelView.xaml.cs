@@ -1,17 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Text.RegularExpressions;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using wpfBudgetSys.ViewModel.PanelViewModel;
 
 namespace wpfBudgetSys.View.PanelView
 {
@@ -23,6 +13,19 @@ namespace wpfBudgetSys.View.PanelView
         public GetStartedPanelView()
         {
             InitializeComponent();
+            DataContext = new GetStartedPanelVM();
+        }
+
+        private void txtInitialDeposit_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex(@"^[0-9]*\.?[0-9]*$");
+            TextBox textBox = sender as TextBox;
+
+            // Build what the text would look like after this input
+            string futureText = textBox.Text.Insert(textBox.CaretIndex, e.Text);
+
+            // Block the input if it doesn't match the pattern
+            e.Handled = !regex.IsMatch(futureText);
         }
     }
 }

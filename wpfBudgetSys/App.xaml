@@ -1,7 +1,8 @@
 ﻿<Application x:Class="wpfBudgetSys.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:wpfBudgetSys"
+             xmlns:local="clr-namespace:wpfBudgetSys" 
+             xmlns:helpers="clr-namespace:wpfBudgetSys.Helpers"
              StartupUri="LoginPage.xaml">
     <Application.Resources>
         <ResourceDictionary>
@@ -20,5 +21,7 @@
         </ResourceDictionary>
 
     </Application.Resources>
+
+    
 
 </Application>
