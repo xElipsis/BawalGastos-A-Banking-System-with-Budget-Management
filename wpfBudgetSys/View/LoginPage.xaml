@@ -70,8 +70,8 @@
                                      Margin="0,5,0,20"/>
 
                         <Button Content="Login"
-                                Height="44"
-                                Width="120"
+                                Height="48"
+                                Width="132"
                                 HorizontalAlignment="Center"
                                 Foreground="White"
                                 FontWeight="Bold"
