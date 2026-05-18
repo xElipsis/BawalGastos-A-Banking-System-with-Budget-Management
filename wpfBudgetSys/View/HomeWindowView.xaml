@@ -9,7 +9,7 @@
         mc:Ignorable="d"
         Title="Bawal Gastos" Height="450" Width="800"
         WindowStartupLocation="CenterScreen"
-        WindowState="Maximized">
+        WindowState="Maximized" Icon="/View/logowwordclear.png">
     <Grid>
 
         <Grid.ColumnDefinitions>
@@ -24,11 +24,7 @@
             </Grid.RowDefinitions>
 
             <StackPanel VerticalAlignment="Center">
-                <TextBlock Text="BawalGastos"
-                           FontSize="20"
-                           HorizontalAlignment="Center" 
-                           Foreground="#ddec00"
-                           FontWeight="Bold"/>
+                <Image Height="250" Width="250" Source="/View/ChatGPT Image May 16, 2026, 07_26_56 PM.png" HorizontalAlignment="Left"/>
             </StackPanel>
             
             <StackPanel Grid.Row="1">
