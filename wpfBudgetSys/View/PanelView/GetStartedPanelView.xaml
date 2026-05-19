@@ -6,11 +6,11 @@
              xmlns:local="clr-namespace:wpfBudgetSys.View.PanelView"
              xmlns:userControls="clr-namespace:wpfBudgetSys.View.UserControls"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="2450" d:DesignWidth="800">
     <Grid>
         <ScrollViewer>
             <Grid Margin="0, 100"
-                  Width="800">
+                  Width="700">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="200"/>
                     <RowDefinition />
@@ -64,82 +64,56 @@
                                     <userControls:LabeledTextBox InputLabel="Account Number"/>
                                     <userControls:LabeledTextBox InputLabel="Account Type"/>
                                     <userControls:LabeledTextBox InputLabel="Initial Deposit"
-                                                                 x:Name="txtInitialDeposit"
-                                                                 PreviewTextInput="txtInitialDeposit_PreviewTextInput"
-                                                                 Text="{Binding InitialDeposit, UpdateSourceTrigger=PropertyChanged}"/>
+                                                                 IsNumericOnly="True"
+                                                                 Text="{Binding InitialDeposit}"
+                                                                 ErrorMessage="Input Digits Only!"/>
                                 </StackPanel>
 
                             </Grid>
                         </Border>
 
-                        <DataGrid ItemsSource="{Binding BudgetRows}"
+                        <DataGrid IsReadOnly="True"
                                   AutoGenerateColumns="False"
                                   CanUserAddRows="False"
-                                  CanUserDeleteRows="False">
-                            
+                                  HeadersVisibility="Column">
+
                             <DataGrid.Columns>
+                                <DataGridTextColumn Header="Category Name"
+                                                    MinWidth="150"
+                                                    Binding="{Binding CategoryName}" />
 
-                                <!-- Category Name — editable for custom, readonly for defaults -->
-                                <DataGridTemplateColumn Header="Category" Width="*">
-                                    <DataGridTemplateColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <TextBlock Text="{Binding CategoryName}"/>
-                                        </DataTemplate>
-                                    </DataGridTemplateColumn.CellTemplate>
-                                    <DataGridTemplateColumn.CellEditingTemplate>
-                                        <DataTemplate>
-                                            <TextBox Text="{Binding CategoryName, UpdateSourceTrigger=PropertyChanged}"
-                                                     IsReadOnly="{Binding IsDefault}"/>
-                                        </DataTemplate>
-                                    </DataGridTemplateColumn.CellEditingTemplate>
-                                </DataGridTemplateColumn>
+                                <DataGridTextColumn Header="Monthly Budget"
+                                                    MinWidth="150"
+                                                    Binding="{Binding MonthlyBudget}" />
 
-                                <!-- Daily Limit -->
-                                <DataGridTemplateColumn Header="Daily Limit" Width="*">
-                                    <DataGridTemplateColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <TextBlock Text="{Binding DailyLimit}"/>
-                                        </DataTemplate>
-                                    </DataGridTemplateColumn.CellTemplate>
-                                    <DataGridTemplateColumn.CellEditingTemplate>
-                                        <DataTemplate>
-                                            <TextBox Text="{Binding DailyLimit, UpdateSourceTrigger=PropertyChanged}"
-                                                     />
-                                        </DataTemplate>
-                                    </DataGridTemplateColumn.CellEditingTemplate>
-                                </DataGridTemplateColumn>
+                                <DataGridTextColumn Header="Daily Budget"
+                                                    MinWidth="150"
+                                                    Binding="{Binding DailyBudget}" />
 
-                                <!-- Monthly Limit -->
-                                <DataGridTemplateColumn Header="Monthly Limit" Width="*">
-                                    <DataGridTemplateColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <TextBlock Text="{Binding MonthlyLimit}"/>
-                                        </DataTemplate>
-                                    </DataGridTemplateColumn.CellTemplate>
-                                    <DataGridTemplateColumn.CellEditingTemplate>
-                                        <DataTemplate>
-                                            <TextBox Text="{Binding MonthlyLimit, UpdateSourceTrigger=PropertyChanged}"
-                                                     />
-                                        </DataTemplate>
-                                    </DataGridTemplateColumn.CellEditingTemplate>
-                                </DataGridTemplateColumn>
+                                <DataGridTemplateColumn>
 
-                                <!-- Remove Button — hidden for default categories -->
-                                <DataGridTemplateColumn Header="" Width="Auto">
                                     <DataGridTemplateColumn.CellTemplate>
+
                                         <DataTemplate>
+
                                             <Button Content="Remove"
-                                                    Command="{Binding DataContext.RemoveRowCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"
-                                                    CommandParameter="{Binding}"/>
-                                        </DataTemplate>
-                                    </DataGridTemplateColumn.CellTemplate>
-                                </DataGridTemplateColumn>
+                                                    Command="{Binding DataContext.RemoveCategoryCommand,
+                                                    RelativeSource={RelativeSource AncestorType=DataGrid}}"
+                                                    CommandParameter="{Binding}" />
 
+                                        </DataTemplate>
+                                        
+                                    </DataGridTemplateColumn.CellTemplate>
+                                    
+                                </DataGridTemplateColumn>
                             </DataGrid.Columns>
+                            
                         </DataGrid>
 
+                        <!--
                         <Button Content="+ Add Category"
                                 Command="{Binding AddRowCommand}"/>
+                        -->
 
                     </StackPanel>
                 </Border>

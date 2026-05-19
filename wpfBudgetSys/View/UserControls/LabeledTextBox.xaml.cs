@@ -1,7 +1,9 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace wpfBudgetSys.View.UserControls
 {
@@ -51,6 +53,45 @@ namespace wpfBudgetSys.View.UserControls
         {
             get => (string)GetValue(ErrorMessageProperty);
             set => SetValue(ErrorMessageProperty, value);
+        }
+
+        public static readonly DependencyProperty IsNumericOnlyProperty =
+            DependencyProperty.Register("IsNumericOnly", typeof(bool),
+            typeof(LabeledTextBox), new PropertyMetadata(false));
+
+        public bool IsNumericOnly
+        {
+            get { return (bool)GetValue(IsNumericOnlyProperty); }
+            set { SetValue(IsNumericOnlyProperty, value); }
+        }
+
+        private void TextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            if (IsNumericOnly)
+            {
+                Regex regex = new Regex(@"^[0-9]*\.?[0-9]*$");
+                TextBox textBox = sender as TextBox;
+                string futureText = textBox.Text.Insert(textBox.CaretIndex, e.Text);
+                e.Handled = !regex.IsMatch(futureText);
+            }
+        }
+
+        private void TextBox_Pasting(object sender, DataObjectPastingEventArgs e)
+        {
+            if (IsNumericOnly)
+            {
+                if (e.DataObject.GetDataPresent(typeof(string)))
+                {
+                    string pastedText = (string)e.DataObject.GetData(typeof(string));
+                    Regex regex = new Regex(@"^[0-9]*\.?[0-9]*$");
+                    if (!regex.IsMatch(pastedText))
+                        e.CancelCommand();
+                }
+                else
+                {
+                    e.CancelCommand();
+                }
+            }
         }
     }
 }

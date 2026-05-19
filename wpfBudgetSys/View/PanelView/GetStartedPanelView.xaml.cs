@@ -13,19 +13,8 @@ namespace wpfBudgetSys.View.PanelView
         public GetStartedPanelView()
         {
             InitializeComponent();
-            DataContext = new GetStartedPanelVM();
-        }
-
-        private void txtInitialDeposit_PreviewTextInput(object sender, TextCompositionEventArgs e)
-        {
-            Regex regex = new Regex(@"^[0-9]*\.?[0-9]*$");
-            TextBox textBox = sender as TextBox;
-
-            // Build what the text would look like after this input
-            string futureText = textBox.Text.Insert(textBox.CaretIndex, e.Text);
-
-            // Block the input if it doesn't match the pattern
-            e.Handled = !regex.IsMatch(futureText);
+            GetStartedPanelVM getStartedPanelVM = new GetStartedPanelVM();
+            DataContext = getStartedPanelVM;
         }
     }
 }

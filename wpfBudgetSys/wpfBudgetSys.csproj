@@ -51,9 +51,7 @@
     <Resource Include="Assets\logowwordclear.png" />
     <Resource Include="Assets\ChatGPT_Image_May_5__2026__09_36_31_PM-removebg-preview.png" />
     <Resource Include="Assets\sssss.png" />
-    <Resource Include="View\ChatGPT Image May 16, 2026, 07_26_56 PM.png" />
-    <Resource Include="View\ChatGPT_Image_May_5__2026__09_36_31_PM-removebg-preview.png" />
-    <Resource Include="View\logowwordclear.png" />
+    <Resource Include="Assets\ChatGPT Image May 16, 2026, 07_26_56 PM.png" />
   </ItemGroup>
 
   <ItemGroup>

@@ -33,6 +33,7 @@ namespace wpfBudgetSys.ViewModel
         public ICommand ShowDepositCommand { get; set; }
         public ICommand ShowWithdrawCommand { get; set; }
         public ICommand ShowTransferCommand { get; set; }
+        public ICommand ShowPayCommand { get; set; }
         public ICommand ShowTransactionCommand { get; set; }
         public ICommand ShowSettingsCommand { get; set; }
 
@@ -68,17 +69,17 @@ namespace wpfBudgetSys.ViewModel
                 ViewTitle = "Transfer";
             });
 
-            //ShowTransactionCommand = new RelayCommand(o =>
-            //{
-            //    CurrentView = new TransactionPanelVM();
-            //});
+            ShowTransactionCommand = new RelayCommand(o =>
+            {
+                CurrentView = new TransactionPanelVM();
+                ViewTitle = "Transactions";
+            });
 
-            ShowTransferCommand = new RelayCommand(o =>
+            ShowPayCommand = new RelayCommand(o =>
             {
                 CurrentView = new PayPanelVM();
                 ViewTitle = "Pay";
             });
-
 
             ShowSettingsCommand = new RelayCommand(o =>
             {
