@@ -91,7 +91,7 @@
                 <!-- // Transfer // -->
                 
                 <Menu:Btn Style="{StaticResource BtnStyle}"
-                          Command="{Binding ShowTransferCommand}">
+                          Command="{Binding ShowTransferCommand}" Checked="Btn_Checked">
 
                     <Grid>
 
