@@ -5,7 +5,7 @@ using wpfBudgetSys.Model;
 
 namespace wpfBudgetSys.Repositories
 {
-    class UserRepository
+    internal class UserRepository
     {
         public int InsertUser(User user)
         {

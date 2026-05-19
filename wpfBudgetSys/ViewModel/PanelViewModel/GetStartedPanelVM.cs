@@ -5,32 +5,100 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using wpfBudgetSys.Helpers;
 using wpfBudgetSys.Model;
 using wpfBudgetSys.MVVM;
+using wpfBudgetSys.Services;
 
 namespace wpfBudgetSys.ViewModel.PanelViewModel
 {
     public class GetStartedPanelVM : ViewModelBase
     {
-        public ObservableCollection<ExpenseCategory> Categories { get; set; }
+        private readonly ExpenseCategoryServices expenseCategoryServices = new ExpenseCategoryServices();
+        public ObservableCollection<BudgetRowVM> Categories { get; set; }
 
-        public ICommand AddBlankCategoryCommand { get; set; }
-        public ICommand AddPresetCategoryCommand { get; set; }
+        private List<ExpenseCategory> allPresets = new List<ExpenseCategory>();
+        public List<ExpenseCategory> PresetCategories =>
+        allPresets
+            .Where(p => p.CategoryId == 0 ||  // always show Custom
+                   !Categories.Any(c => c.CategoryId == p.CategoryId))
+            .ToList();
+
+        public ICommand AddCategoryCommand { get; set; }
         public ICommand RemoveCategoryCommand { get; set; }
+
+        public string Fullname => SessionManager.CurrentUser?.Fullname ?? "there";
+
+        private string initialDeposit = string.Empty;
+        public string InitialDeposit
+        {
+            get => initialDeposit;
+            set { initialDeposit = value; OnPropertyChanged(); }
+        }
+
+        public event Action<BudgetRowVM>? RowAdded;
 
         public GetStartedPanelVM()
         {
-            Categories = new ObservableCollection<ExpenseCategory>();
+            Categories = new ObservableCollection<BudgetRowVM>();
+            LoadCategories();
 
-            AddBlankCategoryCommand = new RelayCommand(o => AddBlankCategory());
+            AddCategoryCommand = new RelayCommand(o =>
+            {
+                ExpenseCategory selected = o as ExpenseCategory;
+                if (selected == null) return;
+
+                BudgetRowVM newRow;
+
+                if (selected.CategoryId == 0)
+                {
+                    newRow = new BudgetRowVM
+                    {
+                        CategoryId = 0,
+                        CategoryName = "",
+                        MonthlyLimit = 0,
+                        DailyLimit = 0,
+                        IsDefault = false
+                    };
+                } else
+                {
+                    newRow = new BudgetRowVM
+                    {
+                        CategoryId = selected.CategoryId,
+                        CategoryName = selected.CategoryName,
+                        MonthlyLimit = 0,
+                        DailyLimit = 0,
+                        IsDefault = true
+                    };
+                }
+
+                Categories.Add(newRow);
+                OnPropertyChanged(nameof(PresetCategories));
+
+                RowAdded?.Invoke(newRow);
+            });
+
+            RemoveCategoryCommand = new RelayCommand(o =>
+            {
+                BudgetRowVM row = o as BudgetRowVM;
+                if (row == null) return;
+
+                Categories.Remove(row);
+
+                // Preset reappears in dropdown after removal
+                OnPropertyChanged(nameof(PresetCategories));
+            });
         }
 
-        private void AddBlankCategory()
+        private void LoadCategories()
         {
-            Categories.Add(new ExpenseCategory
+            allPresets = expenseCategoryServices.GetPresetCategories();
+
+            // Add the Custom option at the bottom
+            allPresets.Add(new ExpenseCategory
             {
-                CategoryName = "",
+                CategoryId = 0,
+                CategoryName = "+ Custom",
+                IsDefault = false
             });
         }
     }

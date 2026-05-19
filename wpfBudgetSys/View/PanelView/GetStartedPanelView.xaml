@@ -1,134 +1,237 @@
 ﻿<UserControl x:Class="wpfBudgetSys.View.PanelView.GetStartedPanelView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:wpfBudgetSys.View.PanelView"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:userControls="clr-namespace:wpfBudgetSys.View.UserControls"
-             mc:Ignorable="d" 
-             d:DesignHeight="2450" d:DesignWidth="800">
-    <Grid>
-        <ScrollViewer>
-            <Grid Margin="0, 100"
-                  Width="700">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="200"/>
-                    <RowDefinition />
-                    <RowDefinition />
-                </Grid.RowDefinitions>
+             mc:Ignorable="d"
+             d:DesignHeight="1200"
+             d:DesignWidth="800"
+             Background="{StaticResource AppPageBrush}">
 
+    <ScrollViewer VerticalScrollBarVisibility="Auto"
+                  HorizontalScrollBarVisibility="Disabled"
+                  Padding="40,32,40,48">
+        <StackPanel MaxWidth="720"
+                    HorizontalAlignment="Center">
+
+            <!-- Welcome banner -->
+            <Border Style="{StaticResource AppHeroBannerStyle}">
                 <StackPanel>
+                    <Border Height="4"
+                            Width="48"
+                            CornerRadius="2"
+                            Background="{StaticResource AppAccentBrush}"
+                            Margin="0,0,0,16"
+                            HorizontalAlignment="Left"/>
                     <TextBlock Text="Welcome to Bawal Gastos!"
-                               FontSize="36"
+                               FontSize="32"
                                FontWeight="Bold"
-                               HorizontalAlignment="Center"/>
-
+                               Foreground="White"/>
                     <StackPanel Orientation="Horizontal"
-                                HorizontalAlignment="Center">
-                        <TextBlock Text="Let's get started with your account "
-                                   FontSize="20"
-                                   FontWeight="DemiBold"
+                                Margin="0,10,0,0">
+                        <TextBlock Text="Let's set up your account, "
+                                   FontSize="17"
+                                   Foreground="#D1D5DB"
                                    VerticalAlignment="Center"/>
-
                         <TextBlock Text="{Binding Fullname}"
-                                   FontSize="20"
-                                   FontWeight="DemiBold"
+                                   FontSize="17"
+                                   FontWeight="SemiBold"
+                                   Foreground="{StaticResource AppAccentBrush}"
                                    VerticalAlignment="Center"/>
                     </StackPanel>
-                    
+                    <TextBlock Text="Complete the steps below to create your account and budget limits."
+                               FontSize="14"
+                               Foreground="#9CA3AF"
+                               Margin="0,14,0,0"
+                               TextWrapping="Wrap"/>
                 </StackPanel>
+            </Border>
 
-                <Border Grid.Row="1" 
-                        Background="White"
-                        CornerRadius="30"
-                        Padding="30"
-                        BorderBrush="LightGray"
-                        BorderThickness="2"
-                        Margin="0,0,0,50">
-
+            <!-- Main form card -->
+            <Border Style="{StaticResource AppFormCardStyle}">
+                <StackPanel>
+                    <!-- Account setup -->
                     <StackPanel>
-                        <Border Margin="0,0,0,100">
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition />
-                                    <RowDefinition />
-                                </Grid.RowDefinitions>
+                        <TextBlock Text="Account setup"
+                                   Style="{StaticResource AppSectionTitleStyle}"/>
+                        <TextBlock Text="Enter your account details and opening balance."
+                                   Style="{StaticResource AppSectionSubtitleStyle}"/>
 
-                                <TextBlock Text="Account Setup"
-                                       FontSize="24"
-                                       FontWeight="Bold"
-                                       HorizontalAlignment="Center"
-                                       VerticalAlignment="Center"/>
+                        <Border Background="{StaticResource AppInsetBrush}"
+                                CornerRadius="14"
+                                Padding="24,20"
+                                Margin="0,20,0,0"
+                                BorderBrush="#E8EAEF"
+                                BorderThickness="1">
+                            <StackPanel>
+                                <userControls:LabeledTextBox InputLabel="Account Number"
+                                                             Margin="0,0,0,16"/>
+                                <userControls:LabeledTextBox InputLabel="Account Type"
+                                                             Margin="0,0,0,16"/>
+                                <userControls:LabeledTextBox InputLabel="Initial Deposit"
+                                                             IsNumericOnly="True"
+                                                             Text="{Binding InitialDeposit}"
+                                                             ErrorMessage="Input digits only."/>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
 
-                                <StackPanel Grid.Row="1">
-                                    <userControls:LabeledTextBox InputLabel="Account Number"/>
-                                    <userControls:LabeledTextBox InputLabel="Account Type"/>
-                                    <userControls:LabeledTextBox InputLabel="Initial Deposit"
-                                                                 IsNumericOnly="True"
-                                                                 Text="{Binding InitialDeposit}"
-                                                                 ErrorMessage="Input Digits Only!"/>
-                                </StackPanel>
+                    <Separator Margin="0,32"
+                               Background="#E5E7EB"/>
 
-                            </Grid>
+                    <!-- Budget categories -->
+                    <StackPanel>
+                        <TextBlock Text="Budget categories"
+                                   Style="{StaticResource AppSectionTitleStyle}"/>
+                        <TextBlock Text="Set monthly and daily spending limits per category. Add presets or create your own."
+                                   Style="{StaticResource AppSectionSubtitleStyle}"/>
+
+                        <Border Background="White"
+                                BorderBrush="{StaticResource BudgetGridLineBrush}"
+                                BorderThickness="1"
+                                CornerRadius="12"
+                                Margin="0,20,0,0"
+                                ClipToBounds="True">
+                            <DataGrid x:Name="CategoryDataGrid"
+                                      Style="{StaticResource BudgetCategoryDataGridStyle}"
+                                      ItemsSource="{Binding Categories}"
+                                      AutoGenerateColumns="False"
+                                      CanUserAddRows="False"
+                                      CanUserDeleteRows="False"
+                                      IsReadOnly="False"
+                                      MinHeight="120">
+
+                                <DataGrid.Columns>
+                                    <DataGridTemplateColumn Header="Category" Width="2*">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                                    <TextBlock Text="{Binding CategoryName}"
+                                                               FontSize="14"
+                                                               FontWeight="Medium"
+                                                               Foreground="#1F2937"
+                                                               VerticalAlignment="Center"/>
+                                                    <Border Margin="10,0,0,0"
+                                                            Padding="8,2"
+                                                            CornerRadius="10"
+                                                            Background="#EEF0FF"
+                                                            Visibility="Collapsed">
+                                                        <Border.Style>
+                                                            <Style TargetType="Border">
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{Binding IsDefault}" Value="True">
+                                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </Border.Style>
+                                                        <TextBlock Text="Preset"
+                                                                   FontSize="11"
+                                                                   FontWeight="SemiBold"
+                                                                   Foreground="#060063"/>
+                                                    </Border>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                        <DataGridTemplateColumn.CellEditingTemplate>
+                                            <DataTemplate>
+                                                <TextBox Text="{Binding CategoryName, UpdateSourceTrigger=PropertyChanged}"
+                                                         IsReadOnly="{Binding IsDefault}"
+                                                         Style="{StaticResource BudgetCategoryCellTextBoxStyle}"/>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellEditingTemplate>
+                                    </DataGridTemplateColumn>
+
+                                    <DataGridTemplateColumn Header="Monthly limit" Width="1*">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding MonthlyLimit, StringFormat=N2}"
+                                                           FontSize="14"
+                                                           Foreground="#374151"
+                                                           VerticalAlignment="Center"/>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                        <DataGridTemplateColumn.CellEditingTemplate>
+                                            <DataTemplate>
+                                                <TextBox Text="{Binding MonthlyLimit, UpdateSourceTrigger=PropertyChanged}"
+                                                         Style="{StaticResource BudgetCategoryCellTextBoxStyle}"/>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellEditingTemplate>
+                                    </DataGridTemplateColumn>
+
+                                    <DataGridTemplateColumn Header="Daily limit" Width="1*">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding DailyLimit, StringFormat=N2}"
+                                                           FontSize="14"
+                                                           Foreground="#374151"
+                                                           VerticalAlignment="Center"/>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                        <DataGridTemplateColumn.CellEditingTemplate>
+                                            <DataTemplate>
+                                                <TextBox Text="{Binding DailyLimit, UpdateSourceTrigger=PropertyChanged}"
+                                                         Style="{StaticResource BudgetCategoryCellTextBoxStyle}"/>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellEditingTemplate>
+                                    </DataGridTemplateColumn>
+
+                                    <DataGridTemplateColumn Header="" Width="56">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Button Style="{StaticResource BudgetCategoryRemoveButtonStyle}"
+                                                        HorizontalAlignment="Center"
+                                                        Command="{Binding DataContext.RemoveCategoryCommand,
+                                                                  RelativeSource={RelativeSource AncestorType=DataGrid}}"
+                                                        CommandParameter="{Binding}"/>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                </DataGrid.Columns>
+                            </DataGrid>
                         </Border>
 
-                        <DataGrid IsReadOnly="True"
-                                  AutoGenerateColumns="False"
-                                  CanUserAddRows="False"
-                                  HeadersVisibility="Column">
-
-                            <DataGrid.Columns>
-                                <DataGridTextColumn Header="Category Name"
-                                                    MinWidth="150"
-                                                    Binding="{Binding CategoryName}" />
-
-                                <DataGridTextColumn Header="Monthly Budget"
-                                                    MinWidth="150"
-                                                    Binding="{Binding MonthlyBudget}" />
-
-                                <DataGridTextColumn Header="Daily Budget"
-                                                    MinWidth="150"
-                                                    Binding="{Binding DailyBudget}" />
-
-                                <DataGridTemplateColumn>
-
-                                    <DataGridTemplateColumn.CellTemplate>
-
-                                        <DataTemplate>
-
-                                            <Button Content="Remove"
-                                                    Command="{Binding DataContext.RemoveCategoryCommand,
-                                                    RelativeSource={RelativeSource AncestorType=DataGrid}}"
-                                                    CommandParameter="{Binding}" />
-
-                                        </DataTemplate>
-                                        
-                                    </DataGridTemplateColumn.CellTemplate>
-                                    
-                                </DataGridTemplateColumn>
-                            </DataGrid.Columns>
-                            
-                        </DataGrid>
-
-                        <!--
-                        <Button Content="+ Add Category"
-                                Command="{Binding AddRowCommand}"/>
-                        -->
-
+                        <!-- Add category -->
+                        <Border Background="{StaticResource AppInsetBrush}"
+                                CornerRadius="12"
+                                Padding="16,14"
+                                Margin="0,16,0,0"
+                                BorderBrush="#E8EAEF"
+                                BorderThickness="1">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel VerticalAlignment="Center">
+                                    <TextBlock Text="Add category"
+                                               FontWeight="SemiBold"
+                                               FontSize="14"
+                                               Foreground="{StaticResource AppNavyBrush}"/>
+                                    <TextBlock Text="Choose a preset or create a custom category."
+                                               FontSize="12"
+                                               Foreground="{StaticResource AppMutedBrush}"
+                                               Margin="0,4,0,0"/>
+                                </StackPanel>
+                                <ComboBox x:Name="CategoryComboBox"
+                                          Grid.Column="1"
+                                          Style="{StaticResource AppComboBoxStyle}"
+                                          ItemsSource="{Binding PresetCategories}"
+                                          DisplayMemberPath="CategoryName"
+                                          Margin="16,0,0,0"
+                                          SelectionChanged="CategoryComboBox_SelectionChanged"/>
+                            </Grid>
+                        </Border>
                     </StackPanel>
-                </Border>
+                </StackPanel>
+            </Border>
 
-                <Button Grid.Row="2"
-                        Content="Create Account"
-                        Height="40"
-                        Background="DarkBlue"
-                        Foreground="White"
-                        FontSize="20"
-                        FontWeight="Bold"
-                        BorderThickness="0">
-                    
-                </Button>
-            </Grid>
-        </ScrollViewer>
-    </Grid>
+            <!-- Create account -->
+            <Button Content="Create account"
+                    Style="{StaticResource AppPrimaryButtonStyle}"
+                    HorizontalAlignment="Center"
+                    Margin="0,28,0,0"/>
+        </StackPanel>
+    </ScrollViewer>
 </UserControl>

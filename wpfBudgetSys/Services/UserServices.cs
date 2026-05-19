@@ -4,7 +4,7 @@ using wpfBudgetSys.Repositories;
 
 namespace wpfBudgetSys.Services
 {
-    class UserServices
+    internal class UserServices
     {
         private readonly UserRepository userRepo = new UserRepository();
 

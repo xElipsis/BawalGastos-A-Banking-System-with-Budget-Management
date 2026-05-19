@@ -26,14 +26,10 @@
     <DataTemplate DataType="{x:Type PanelVM:SettingsPanelVM}">
         <PanelView:SettingsPanelView/>
     </DataTemplate>
-
-    <!-- FIX: Only include this DataTemplate if TransactionPanelView exists in the namespace.
-         If it does not exist, comment out or remove the following block. -->
-    <!--
+    
     <DataTemplate DataType="{x:Type PanelVM:TransactionPanelVM}">
         <PanelView:TransactionPanelView/>
     </DataTemplate>
-    -->
 
     <DataTemplate DataType="{x:Type PanelVM:PayPanelVM}">
         <PanelView:PayPanelView/>

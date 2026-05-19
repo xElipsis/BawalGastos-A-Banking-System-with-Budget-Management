@@ -11,7 +11,7 @@ namespace wpfBudgetSys.Model
         public int LimitId { get; set; }
         public int UserId { get; set; }
         public int CategoryId { get; set; }
-        public double MonthlyLimit { get; set; }
-        public double DailyLimit { get; set; }
+        public decimal MonthlyLimit { get; set; }
+        public decimal DailyLimit { get; set; }
     }
 }
