@@ -1,6 +1,4 @@
-﻿using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -56,24 +54,39 @@ namespace wpfBudgetSys.View.UserControls
         }
 
         public static readonly DependencyProperty IsNumericOnlyProperty =
-            DependencyProperty.Register("IsNumericOnly", typeof(bool),
-            typeof(LabeledTextBox), new PropertyMetadata(false));
+            DependencyProperty.Register(
+                nameof(IsNumericOnly),
+                typeof(bool),
+                typeof(LabeledTextBox),
+                new PropertyMetadata(false));
 
         public bool IsNumericOnly
         {
-            get { return (bool)GetValue(IsNumericOnlyProperty); }
-            set { SetValue(IsNumericOnlyProperty, value); }
+            get => (bool)GetValue(IsNumericOnlyProperty);
+            set => SetValue(IsNumericOnlyProperty, value);
+        }
+
+        public static readonly DependencyProperty IsReadOnlyProperty =
+            DependencyProperty.Register(
+                nameof(IsReadOnly),
+                typeof(bool),
+                typeof(LabeledTextBox),
+                new PropertyMetadata(false));
+
+        public bool IsReadOnly
+        {
+            get => (bool)GetValue(IsReadOnlyProperty);
+            set => SetValue(IsReadOnlyProperty, value);
         }
 
         private void TextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            if (IsNumericOnly)
-            {
-                Regex regex = new Regex(@"^[0-9]*\.?[0-9]*$");
-                TextBox textBox = sender as TextBox;
-                string futureText = textBox.Text.Insert(textBox.CaretIndex, e.Text);
-                e.Handled = !regex.IsMatch(futureText);
-            }
+            if (!IsNumericOnly || sender is not TextBox textBox)
+                return;
+
+            Regex regex = new Regex(@"^[0-9]*\.?[0-9]*$");
+            string futureText = textBox.Text.Insert(textBox.CaretIndex, e.Text);
+            e.Handled = !regex.IsMatch(futureText);
         }
 
         private void TextBox_Pasting(object sender, DataObjectPastingEventArgs e)
