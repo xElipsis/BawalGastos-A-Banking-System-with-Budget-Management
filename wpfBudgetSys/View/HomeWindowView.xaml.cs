@@ -25,5 +25,10 @@ namespace wpfBudgetSys.View
             InitializeComponent();
             DataContext = new HomeWindowVM();
         }
+
+        private void Btn_Checked(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

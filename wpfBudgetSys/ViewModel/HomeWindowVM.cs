@@ -69,17 +69,17 @@ namespace wpfBudgetSys.ViewModel
                 ViewTitle = "Transfer";
             });
 
-            ShowTransactionCommand = new RelayCommand(o =>
-            {
-                CurrentView = new TransactionPanelVM();
-                ViewTitle = "Transactions";
-            });
+            //ShowTransactionCommand = new RelayCommand(o =>
+            //{
+            //    CurrentView = new TransactionPanelVM();
+            //});
 
-            ShowPayCommand = new RelayCommand(o =>
+            ShowTransferCommand = new RelayCommand(o =>
             {
                 CurrentView = new PayPanelVM();
                 ViewTitle = "Pay";
             });
+
 
             ShowSettingsCommand = new RelayCommand(o =>
             {
