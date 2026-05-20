@@ -1,4 +1,4 @@
-﻿using System.Windows.Input;
+using System.Windows.Input;
 using wpfBudgetSys.MVVM;
 using wpfBudgetSys.ViewModel.PanelViewModel;
 
@@ -6,21 +6,21 @@ namespace wpfBudgetSys.ViewModel
 {
     public class HomeWindowVM : ViewModelBase
     {
-        private object currentView;
+        private object currentView = null!;
         public object CurrentView
         {
-            get { return currentView; }
-            set 
+            get => currentView;
+            set
             {
                 currentView = value;
                 OnPropertyChanged();
             }
         }
 
-        private string viewTitle;
+        private string viewTitle = string.Empty;
         public string ViewTitle
         {
-            get { return viewTitle; }
+            get => viewTitle;
             set
             {
                 viewTitle = value;
@@ -28,66 +28,109 @@ namespace wpfBudgetSys.ViewModel
             }
         }
 
-        public ICommand ShowGetStartedCommand { get; set; }
-        public ICommand ShowDashboardCommand { get; set; }
-        public ICommand ShowDepositCommand { get; set; }
-        public ICommand ShowWithdrawCommand { get; set; }
-        public ICommand ShowTransferCommand { get; set; }
-        public ICommand ShowPayCommand { get; set; }
-        public ICommand ShowTransactionCommand { get; set; }
-        public ICommand ShowSettingsCommand { get; set; }
+        private bool showBackButton;
+        public bool ShowBackButton
+        {
+            get => showBackButton;
+            set
+            {
+                showBackButton = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public ICommand ShowGetStartedCommand { get; }
+        public ICommand ShowDashboardCommand { get; }
+        public ICommand ShowDepositCommand { get; }
+        public ICommand ShowWithdrawCommand { get; }
+        public ICommand ShowTransferCommand { get; }
+        public ICommand ShowPayCommand { get; }
+        public ICommand ShowPayFromDashboardCommand { get; }
+        public ICommand ShowTransactionCommand { get; }
+        public ICommand ShowSettingsCommand { get; }
+        public ICommand GoBackCommand { get; }
 
         public HomeWindowVM()
         {
-            ShowGetStartedCommand = new RelayCommand(o =>
-            {
-                CurrentView = new GetStartedPanelVM();
-                ViewTitle = "Get Started";
-            });
-
-            ShowDashboardCommand = new RelayCommand(o =>
-            {
-                CurrentView = new HomeWindowPanelVM();
-                ViewTitle = "Dashboard";
-            });
-
-            ShowDepositCommand = new RelayCommand(o =>
+            ShowDepositCommand = new RelayCommand(_ => NavigateFromDashboard(() =>
             {
                 CurrentView = new DepositPanelVM();
                 ViewTitle = "Deposit";
-            });
+            }));
 
-            ShowWithdrawCommand = new RelayCommand(o =>
+            ShowWithdrawCommand = new RelayCommand(_ => NavigateFromDashboard(() =>
             {
                 CurrentView = new WithdrawPanelVM();
                 ViewTitle = "Withdraw";
-            });
+            }));
 
-            ShowTransferCommand = new RelayCommand(o =>
+            ShowTransferCommand = new RelayCommand(_ => NavigateFromDashboard(() =>
             {
                 CurrentView = new TransferPanelVM();
                 ViewTitle = "Transfer";
-            });
+            }));
 
-            //ShowTransactionCommand = new RelayCommand(o =>
-            //{
-            //    CurrentView = new TransactionPanelVM();
-            //});
-
-            ShowTransferCommand = new RelayCommand(o =>
+            ShowPayFromDashboardCommand = new RelayCommand(_ => NavigateFromDashboard(() =>
             {
                 CurrentView = new PayPanelVM();
                 ViewTitle = "Pay";
+            }));
+
+            ShowPayCommand = new RelayCommand(_ => NavigateFromNav(() =>
+            {
+                CurrentView = new PayPanelVM();
+                ViewTitle = "Pay";
+            }));
+
+            ShowDashboardCommand = new RelayCommand(_ =>
+            {
+                ShowBackButton = false;
+                CurrentView = CreateDashboardView();
+                ViewTitle = "Dashboard";
             });
 
+            GoBackCommand = new RelayCommand(_ => ShowDashboardCommand.Execute(null));
 
-            ShowSettingsCommand = new RelayCommand(o =>
+            ShowGetStartedCommand = new RelayCommand(_ => NavigateFromNav(() =>
+            {
+                var getStartedVm = new GetStartedPanelVM();
+                getStartedVm.OnSetupComplete = () => ShowDashboardCommand.Execute(null);
+                CurrentView = getStartedVm;
+                ViewTitle = "Get Started";
+            }));
+
+            ShowTransactionCommand = new RelayCommand(_ => NavigateFromNav(() =>
+            {
+                CurrentView = new TransactionPanelVM();
+                ViewTitle = "Transactions";
+            }));
+
+            ShowSettingsCommand = new RelayCommand(_ => NavigateFromNav(() =>
             {
                 CurrentView = new SettingsPanelVM();
                 ViewTitle = "Settings";
-            });
+            }));
 
             ShowGetStartedCommand.Execute(null);
         }
+
+        private void NavigateFromDashboard(Action navigate)
+        {
+            ShowBackButton = true;
+            navigate();
+        }
+
+        private void NavigateFromNav(Action navigate)
+        {
+            ShowBackButton = false;
+            navigate();
+        }
+
+        private HomeWindowPanelVM CreateDashboardView() =>
+            new HomeWindowPanelVM(
+                ShowDepositCommand,
+                ShowWithdrawCommand,
+                ShowTransferCommand,
+                ShowPayFromDashboardCommand);
     }
 }

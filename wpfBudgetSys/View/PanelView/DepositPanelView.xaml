@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="wpfBudgetSys.View.PanelView.DepositPanelView"
+<UserControl x:Class="wpfBudgetSys.View.PanelView.DepositPanelView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -110,11 +110,21 @@
                 </StackPanel>
             </Border>
 
+            <TextBlock Text="{Binding StatusMessage}"
+                       Foreground="#DC2626"
+                       FontSize="14"
+                       TextWrapping="Wrap"
+                       HorizontalAlignment="Center"
+                       TextAlignment="Center"
+                       Margin="0,20,0,0"
+                       MaxWidth="560"
+                       Visibility="{Binding StatusMessage, Converter={StaticResource StringNotEmptyToVisibilityConverter}}"/>
+
             <Button Content="Confirm deposit"
                     Style="{StaticResource AppPrimaryButtonStyle}"
                     Command="{Binding DepositCommand}"
                     HorizontalAlignment="Center"
-                    Margin="0,28,0,0"/>
+                    Margin="0,20,0,0"/>
         </StackPanel>
     </ScrollViewer>
 </UserControl>

@@ -1,43 +1,39 @@
-﻿using System.Text.RegularExpressions;
-using System.Windows.Controls;
-using System.Windows.Input;
+﻿using System.Windows.Controls;
+using wpfBudgetSys.Helpers;
 using wpfBudgetSys.Model;
 using wpfBudgetSys.ViewModel.PanelViewModel;
 
 namespace wpfBudgetSys.View.PanelView
 {
-    /// <summary>
-    /// Interaction logic for GetStartedPanelView.xaml
-    /// </summary>
     public partial class GetStartedPanelView : UserControl
     {
         public GetStartedPanelView()
         {
             InitializeComponent();
-            GetStartedPanelVM getStartedPanelVM = new GetStartedPanelVM();
-            DataContext = getStartedPanelVM;
+            Loaded += OnLoaded;
+        }
+
+        private void OnLoaded(object sender, System.Windows.RoutedEventArgs e)
+        {
+            if (DataContext is not GetStartedPanelVM vm)
+                return;
+
+            if (string.IsNullOrWhiteSpace(vm.AccountNumber))
+                vm.AccountNumber = AccountNumberGenerator.Generate();
         }
 
         private void CategoryComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            ComboBox comboBox = sender as ComboBox;
-            ExpenseCategory selected = comboBox?.SelectedItem as ExpenseCategory;
-            if (selected == null) return;
+            if (sender is not ComboBox comboBox)
+                return;
 
-            var vm = DataContext as GetStartedPanelVM;
-            vm?.AddCategoryCommand.Execute(selected);
+            if (comboBox.SelectedItem is not ExpenseCategory selected)
+                return;
 
-            // Reset ComboBox so same item can be re-selected after removal
+            if (DataContext is GetStartedPanelVM vm)
+                vm.AddCategoryCommand.Execute(selected);
+
             comboBox.SelectedItem = null;
         }
-
-        private void NumberOnly_PreviewTextInput(object sender, TextCompositionEventArgs e)
-        {
-            Regex regex = new Regex(@"^[0-9]*\.?[0-9]*$");
-            TextBox textBox = sender as TextBox;
-            string futureText = textBox.Text.Insert(textBox.CaretIndex, e.Text);
-            e.Handled = !regex.IsMatch(futureText);
-        }
-
     }
 }

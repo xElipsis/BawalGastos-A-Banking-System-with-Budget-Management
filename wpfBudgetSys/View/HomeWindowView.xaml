@@ -1,198 +1,236 @@
 ﻿<Window x:Class="wpfBudgetSys.View.HomeWindowView"
+
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:wpfBudgetSys.View"
-        xmlns:userControls="clr-namespace:wpfBudgetSys.View.UserControls"
+
         xmlns:Menu="clr-namespace:wpfBudgetSys.MVVM"
+
         mc:Ignorable="d"
+
         Title="Bawal Gastos" Height="450" Width="800"
+
         WindowStartupLocation="CenterScreen"
+
         WindowState="Maximized" Icon="/Assets/logowwordclear.png">
+
     <Grid>
 
+
+
         <Grid.ColumnDefinitions>
+
             <ColumnDefinition Width="2*"/>
+
             <ColumnDefinition Width="8*"/>
+
         </Grid.ColumnDefinitions>
 
+
+
         <Grid Background="#060063">
+
             <Grid.RowDefinitions>
+
                 <RowDefinition Height="1.5*"/>
+
                 <RowDefinition Height="8.5*"/>
+
             </Grid.RowDefinitions>
 
+
+
             <StackPanel VerticalAlignment="Center">
+
                 <Image Height="250" Width="250" Source="/Assets/ChatGPT Image May 16, 2026, 07_26_56 PM.png" HorizontalAlignment="Left"/>
+
             </StackPanel>
+
             
+
             <StackPanel Grid.Row="1">
 
-                <!-- // Dashboard // -->
-                
+
+
                 <Menu:Btn Style="{StaticResource BtnStyle}"
+
                           Command="{Binding ShowDashboardCommand}">
 
                     <Grid>
 
-                        <Rectangle Fill="White" 
-                                   Style="{StaticResource Image_Style}">
+                        <Rectangle Fill="White" Style="{StaticResource Image_Style}">
+
                             <Rectangle.OpacityMask>
+
                                 <ImageBrush ImageSource="pack://application:,,,/Assets/Icons/dashboard-100.png"/>
+
                             </Rectangle.OpacityMask>
+
                         </Rectangle>
 
-                        <TextBlock Text="Dashboard"
-                                   Style="{StaticResource Text_Style}"/>
-                    </Grid>
-                    
-                </Menu:Btn>
+                        <TextBlock Text="Dashboard" Style="{StaticResource Text_Style}"/>
 
-                <!-- // Deposit // -->
-                
-                <Menu:Btn Style="{StaticResource BtnStyle}"
-                          Command="{Binding ShowDepositCommand}">
-
-                    <Grid>
-                        <Rectangle Fill="White" 
-                                   Style="{StaticResource Image_Style}">
-                            <Rectangle.OpacityMask>
-                                <ImageBrush ImageSource="pack://application:,,,/Assets/Icons/plus-100.png"/>
-                            </Rectangle.OpacityMask>
-                        </Rectangle>
-
-                        <TextBlock Text="Deposit"
-                                   Style="{StaticResource Text_Style}"/>
                     </Grid>
 
                 </Menu:Btn>
 
-                <!-- // Withdraw // -->
-                
-                <Menu:Btn Style="{StaticResource BtnStyle}"
-                          Command="{Binding ShowWithdrawCommand}">
 
-                    <Grid>
-
-                        <Rectangle Fill="White" 
-                                   Style="{StaticResource Image_Style}">
-                            <Rectangle.OpacityMask>
-                                <ImageBrush ImageSource="pack://application:,,,/Assets/Icons/arrow-bottom_left_corner-100.png"/>
-                            </Rectangle.OpacityMask>
-                        </Rectangle>
-
-                        <TextBlock Text="Withdraw"
-                                   Style="{StaticResource Text_Style}"/>
-                    </Grid>
-
-                </Menu:Btn>
-
-                <!-- // Transfer // -->
-                
-                <Menu:Btn Style="{StaticResource BtnStyle}"
-                          Command="{Binding ShowTransferCommand}" Checked="Btn_Checked">
-
-                    <Grid>
-
-                        <Rectangle Fill="White" 
-                                   Style="{StaticResource Image_Style}">
-                            <Rectangle.OpacityMask>
-                                <ImageBrush ImageSource="pack://application:,,,/Assets/Icons/arrow-top_right_corner-100.png"/>
-                            </Rectangle.OpacityMask>
-                        </Rectangle>
-
-                        <TextBlock Text="Transfer"
-                   Style="{StaticResource Text_Style}"/>
-                    </Grid>
-
-                </Menu:Btn>
-                
-                <!-- // Pay // -->
 
                 <Menu:Btn Style="{StaticResource BtnStyle}"
+
                           Command="{Binding ShowPayCommand}">
 
                     <Grid>
 
-                        <Rectangle Fill="White" 
-                                   Style="{StaticResource Image_Style}">
+                        <Rectangle Fill="White" Style="{StaticResource Image_Style}">
+
                             <Rectangle.OpacityMask>
+
                                 <ImageBrush ImageSource="pack://application:,,,/Assets/Icons/cash-100.png"/>
+
                             </Rectangle.OpacityMask>
+
                         </Rectangle>
 
-                        <TextBlock Text="Pay"
-                                   Style="{StaticResource Text_Style}"/>
+                        <TextBlock Text="Pay" Style="{StaticResource Text_Style}"/>
+
                     </Grid>
 
                 </Menu:Btn>
-                
-                <!-- // Transaction // -->
+
+
 
                 <Menu:Btn Style="{StaticResource BtnStyle}"
+
                           Command="{Binding ShowTransactionCommand}">
 
                     <Grid>
 
-                        <Rectangle Fill="White" 
-                                   Style="{StaticResource Image_Style}">
+                        <Rectangle Fill="White" Style="{StaticResource Image_Style}">
+
                             <Rectangle.OpacityMask>
+
                                 <ImageBrush ImageSource="pack://application:,,,/Assets/Icons/transaction-100.png"/>
+
                             </Rectangle.OpacityMask>
+
                         </Rectangle>
 
-                        <TextBlock Text="Transaction"
-                                   Style="{StaticResource Text_Style}"/>
+                        <TextBlock Text="Transactions" Style="{StaticResource Text_Style}"/>
+
                     </Grid>
 
                 </Menu:Btn>
-                
-                <!-- // Settings // -->
+
+
 
                 <Menu:Btn Style="{StaticResource BtnStyle}"
+
                           Command="{Binding ShowSettingsCommand}">
 
                     <Grid>
 
-                        <Rectangle Fill="White" 
-                                   Style="{StaticResource Image_Style}">
+                        <Rectangle Fill="White" Style="{StaticResource Image_Style}">
+
                             <Rectangle.OpacityMask>
+
                                 <ImageBrush ImageSource="pack://application:,,,/Assets/Icons/settings-100.png"/>
+
                             </Rectangle.OpacityMask>
+
                         </Rectangle>
 
-                        <TextBlock Text="Settings"
-                                   Style="{StaticResource Text_Style}"/>
+                        <TextBlock Text="Settings" Style="{StaticResource Text_Style}"/>
+
                     </Grid>
 
                 </Menu:Btn>
 
+
+
             </StackPanel>
+
         </Grid>
 
-        <Grid Grid.Column="1" Background="LightGray">
+
+
+        <Grid Grid.Column="1" Background="{StaticResource AppPageBrush}">
+
             <Grid.RowDefinitions>
+
                 <RowDefinition Height="1.5*"/>
+
                 <RowDefinition Height="8.5*"/>
+
             </Grid.RowDefinitions>
 
-            <Border Background="Transparent"
-                    Padding="20">
 
-                <TextBlock Text="{Binding ViewTitle}"
-                           FontSize="20"
-                           FontWeight="SemiBold"/>
+
+            <Border Background="Transparent" Padding="20,20,20,12">
+
+                <Grid>
+
+                    <Grid.ColumnDefinitions>
+
+                        <ColumnDefinition Width="Auto"/>
+
+                        <ColumnDefinition Width="*"/>
+
+                    </Grid.ColumnDefinitions>
+
+
+
+                    <Button Grid.Column="0"
+
+                            Content="←  Back"
+
+                            Style="{StaticResource AppBackButtonStyle}"
+
+                            Command="{Binding GoBackCommand}"
+
+                            Visibility="{Binding ShowBackButton, Converter={StaticResource BooleanToVisibilityConverter}}"
+
+                            Margin="0,0,16,0"
+
+                            VerticalAlignment="Center"/>
+
+
+
+                    <TextBlock Grid.Column="1"
+
+                               Text="{Binding ViewTitle}"
+
+                               FontSize="22"
+
+                               FontWeight="SemiBold"
+
+                               Foreground="{StaticResource AppNavyBrush}"
+
+                               VerticalAlignment="Center"/>
+
+                </Grid>
 
             </Border>
 
+
+
             <Border Grid.Row="1"
+
                     Background="Transparent"
+
                     BorderThickness="0">
 
                 <ContentControl Content="{Binding CurrentView}" BorderThickness="0"/>
 
             </Border>
+
         </Grid>
+
     </Grid>
+
 </Window>
+

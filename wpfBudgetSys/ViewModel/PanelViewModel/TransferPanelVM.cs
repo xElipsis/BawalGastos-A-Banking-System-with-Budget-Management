@@ -1,12 +1,118 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Globalization;
+using System.Windows;
+using System.Windows.Input;
+using wpfBudgetSys.Model;
+using wpfBudgetSys.MVVM;
+using wpfBudgetSys.Services;
 
 namespace wpfBudgetSys.ViewModel.PanelViewModel
 {
-    public class TransferPanelVM
+    public class TransferPanelVM : ViewModelBase
     {
+        private readonly TransactionService transactionService = new();
+        private readonly AccountServices accountService = new();
+
+        private string fromAccount = string.Empty;
+        public string FromAccount
+        {
+            get => fromAccount;
+            set { fromAccount = value; OnPropertyChanged(); }
+        }
+
+        private string toAccount = string.Empty;
+        public string ToAccount
+        {
+            get => toAccount;
+            set { toAccount = value; OnPropertyChanged(); }
+        }
+
+        private string amount = string.Empty;
+        public string Amount
+        {
+            get => amount;
+            set { amount = value; OnPropertyChanged(); }
+        }
+
+        private string statusMessage = string.Empty;
+        public string StatusMessage
+        {
+            get => statusMessage;
+            set { statusMessage = value; OnPropertyChanged(); }
+        }
+
+        public ICommand TransferCommand { get; set; }
+
+        public TransferPanelVM()
+        {
+            var userAccount = accountService.GetAccountForCurrentUser();
+            if (userAccount != null)
+                FromAccount = userAccount.AccountNumber;
+
+            TransferCommand = new RelayCommand(_ => ExecuteTransfer());
+        }
+
+        private void ExecuteTransfer()
+        {
+            StatusMessage = string.Empty;
+
+            if (SessionManager.CurrentUser == null)
+            {
+                StatusMessage = "You must be logged in.";
+                return;
+            }
+            if (string.IsNullOrWhiteSpace(FromAccount) || string.IsNullOrWhiteSpace(ToAccount))
+            {
+                StatusMessage = "Enter both account numbers.";
+                return;
+            }
+
+            if (!TryParseAmount(Amount, out decimal transferAmount))
+            {
+                StatusMessage = "Enter a valid transfer amount greater than zero.";
+                return;
+            }
+
+            var fromAccountRecord = accountService.GetAccountByAccountNumber(FromAccount.Trim());
+            var toAccountRecord = accountService.GetAccountByAccountNumber(ToAccount.Trim());
+            if (fromAccountRecord == null)
+            {
+                StatusMessage = "Account number not found.";
+                return;
+            }
+
+            if (toAccountRecord == null)
+            {
+                StatusMessage = "Destination Account number not found.";
+                return;
+            }
+
+            if (fromAccountRecord == toAccountRecord)
+            {
+                StatusMessage = "Cannot transfer to the same account.";
+                return;
+            }
+
+            try
+            {
+                transactionService.Transfer(fromAccountRecord.AccountId, toAccountRecord.AccountId, transferAmount);
+                MessageBox.Show(
+                    $"Withdrew ₱{transferAmount:N2} successfully.",
+                    "Transfer",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Information);
+                Amount = string.Empty;
+            }
+            catch (Exception ex)
+            {
+                StatusMessage = $"Transfer failed: {ex.Message}";
+            }
+        }
+        private static bool TryParseAmount(string value, out decimal amount)
+        {
+            if (decimal.TryParse(value, NumberStyles.Number, CultureInfo.InvariantCulture, out amount) && amount > 0)
+                return true;
+
+            return decimal.TryParse(value, out amount) && amount > 0;
+        }
     }
 }

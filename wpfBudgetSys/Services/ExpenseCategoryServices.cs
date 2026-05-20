@@ -16,5 +16,10 @@ namespace wpfBudgetSys.Services
         {
             return expensesCategoryRepo.GetDefaultCategories();
         }
+
+        public List<ExpenseCategory> GetUserBudgetCategories(int userId)
+        {
+            return expensesCategoryRepo.GetCategoriesForUser(userId);
+        }
     }
 }

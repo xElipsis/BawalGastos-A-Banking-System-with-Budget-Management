@@ -1,57 +1,203 @@
 ﻿<UserControl x:Class="wpfBudgetSys.View.PanelView.HomeWindowPanelView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:wpfBudgetSys.View.PanelView"
-             mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800" >
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
+             d:DesignHeight="700"
+             d:DesignWidth="900"
+             Background="{StaticResource AppPageBrush}">
 
-        <Border CornerRadius="25" 
-                Background="White"
-                Padding="30">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                </Grid.RowDefinitions>
-                
-                <TextBlock Text="0.00php"
-                           FontSize="36"
-                           FontWeight="DemiBold"
-                           HorizontalAlignment="Center" 
-                           VerticalAlignment="Bottom"/>
+    <ScrollViewer VerticalScrollBarVisibility="Auto"
+                  HorizontalScrollBarVisibility="Disabled"
+                  Padding="40,32,40,48">
+        <StackPanel MaxWidth="800"
+                    HorizontalAlignment="Center">
 
-                <StackPanel Grid.Row="1"
-                            Orientation="Horizontal"
-                            HorizontalAlignment="Center">
-                    <Button Content="Deposit"
-                            Width="100"
-                            Height="40"
-                            Margin="20,0"
-                            Command="{Binding ShowDepositCommand}"/>
-                    <Button Content="Withdraw"
-                            Width="100"
-                            Height="40"
-                            Margin="20,0"
-                            Command="{Binding ShowWithdrawCommand}"/>
-                    <Button Content="Transfer"
-                            Width="100"
-                            Height="40"
-                            Margin="20,0"
-                            Command="{Binding ShowTransferCommand}"/>
-                    <Button Content="Pay"
-                            Width="100"
-                            Height="40"
-                            Margin="20,0"
-                            Command="{Binding ShowPayCommand}"/>
+            <!-- Welcome -->
+            <Border Style="{StaticResource AppHeroBannerStyle}">
+                <StackPanel>
+                    <Border Height="4"
+                            Width="48"
+                            CornerRadius="2"
+                            Background="{StaticResource AppAccentBrush}"
+                            Margin="0,0,0,16"
+                            HorizontalAlignment="Left"/>
+                    <TextBlock FontSize="17"
+                               Foreground="#D1D5DB">
+                        <Run Text="Welcome back,"/>
+                        <Run Text="{Binding GreetingName, Mode=OneWay}"
+                             FontWeight="SemiBold"
+                             Foreground="{StaticResource AppAccentBrush}"/>
+                    </TextBlock>
+                    <TextBlock Text="Here's an overview of your account."
+                               FontSize="14"
+                               Foreground="#9CA3AF"
+                               Margin="0,10,0,0"/>
                 </StackPanel>
-            </Grid>
-        </Border>
-    </Grid>
+            </Border>
+
+            <!-- Balance card -->
+            <Border Style="{StaticResource AppFormCardStyle}"
+                    Margin="0,0,0,20">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Text="Available balance"
+                               FontSize="14"
+                               Foreground="{StaticResource AppMutedBrush}"/>
+
+                    <TextBlock Grid.Row="1"
+                               Text="{Binding FormattedBalance}"
+                               FontSize="42"
+                               FontWeight="Bold"
+                               Foreground="{StaticResource AppNavyBrush}"
+                               Margin="0,8,0,20"/>
+
+                    <UniformGrid Grid.Row="2"
+                                 Columns="3"
+                                 Margin="0,4,0,0">
+                        <StackPanel Margin="0,0,12,0">
+                            <TextBlock Text="Account number"
+                                       FontSize="12"
+                                       Foreground="{StaticResource AppMutedBrush}"/>
+                            <TextBlock Text="{Binding AccountNumber}"
+                                       FontSize="14"
+                                       FontWeight="SemiBold"
+                                       Foreground="#1F2937"
+                                       Margin="0,4,0,0"
+                                       TextWrapping="Wrap"/>
+                        </StackPanel>
+                        <StackPanel Margin="0,0,12,0">
+                            <TextBlock Text="Account type"
+                                       FontSize="12"
+                                       Foreground="{StaticResource AppMutedBrush}"/>
+                            <TextBlock Text="{Binding AccountType}"
+                                       FontSize="14"
+                                       FontWeight="SemiBold"
+                                       Foreground="#1F2937"
+                                       Margin="0,4,0,0"/>
+                        </StackPanel>
+                        <StackPanel>
+                            <TextBlock Text="Status"
+                                       FontSize="12"
+                                       Foreground="{StaticResource AppMutedBrush}"/>
+                            <TextBlock Text="{Binding AccountStatus}"
+                                       FontSize="14"
+                                       FontWeight="SemiBold"
+                                       Foreground="#1F2937"
+                                       Margin="0,4,0,0"/>
+                        </StackPanel>
+                    </UniformGrid>
+                </Grid>
+            </Border>
+
+            <!-- Budget summary -->
+            <Border Background="{StaticResource AppInsetBrush}"
+                    CornerRadius="14"
+                    Padding="20,16"
+                    Margin="0,0,0,24"
+                    BorderBrush="#E8EAEF"
+                    BorderThickness="1">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel>
+                        <TextBlock Text="Budget setup"
+                                   FontWeight="SemiBold"
+                                   FontSize="15"
+                                   Foreground="{StaticResource AppNavyBrush}"/>
+                        <TextBlock Text="{Binding BudgetCategorySummary, Mode=OneWay}"
+                                   FontSize="13"
+                                   Foreground="{StaticResource AppMutedBrush}"
+                                   Margin="0,4,0,0"/>
+                    </StackPanel>
+                    <Border Grid.Column="1"
+                            Background="#EEF0FF"
+                            CornerRadius="10"
+                            Padding="12,8"
+                            VerticalAlignment="Center">
+                        <TextBlock Text="Active"
+                                   FontSize="12"
+                                   FontWeight="SemiBold"
+                                   Foreground="{StaticResource AppNavyBrush}"/>
+                    </Border>
+                </Grid>
+            </Border>
+
+            <!-- Quick actions -->
+            <TextBlock Text="Quick actions"
+                       Style="{StaticResource AppSectionTitleStyle}"
+                       Margin="0,0,0,16"/>
+
+            <UniformGrid Columns="2"
+                         HorizontalAlignment="Stretch">
+                <Button Style="{StaticResource AppQuickActionButtonStyle}"
+                        Command="{Binding ShowDepositCommand}"
+                        Margin="0,0,10,10">
+                    <StackPanel HorizontalAlignment="Center">
+                        <Rectangle Width="28" Height="28" Fill="{StaticResource AppNavyBrush}" Margin="0,0,0,10">
+                            <Rectangle.OpacityMask>
+                                <ImageBrush ImageSource="pack://application:,,,/Assets/Icons/plus-100.png"/>
+                            </Rectangle.OpacityMask>
+                        </Rectangle>
+                        <TextBlock Text="Deposit"
+                                   FontWeight="SemiBold"
+                                   Foreground="{StaticResource AppNavyBrush}"/>
+                    </StackPanel>
+                </Button>
+
+                <Button Style="{StaticResource AppQuickActionButtonStyle}"
+                        Command="{Binding ShowWithdrawCommand}"
+                        Margin="10,0,0,10">
+                    <StackPanel HorizontalAlignment="Center">
+                        <Rectangle Width="28" Height="28" Fill="{StaticResource AppNavyBrush}" Margin="0,0,0,10">
+                            <Rectangle.OpacityMask>
+                                <ImageBrush ImageSource="pack://application:,,,/Assets/Icons/arrow-bottom_left_corner-100.png"/>
+                            </Rectangle.OpacityMask>
+                        </Rectangle>
+                        <TextBlock Text="Withdraw"
+                                   FontWeight="SemiBold"
+                                   Foreground="{StaticResource AppNavyBrush}"/>
+                    </StackPanel>
+                </Button>
+
+                <Button Style="{StaticResource AppQuickActionButtonStyle}"
+                        Command="{Binding ShowTransferCommand}"
+                        Margin="0,10,10,0">
+                    <StackPanel HorizontalAlignment="Center">
+                        <Rectangle Width="28" Height="28" Fill="{StaticResource AppNavyBrush}" Margin="0,0,0,10">
+                            <Rectangle.OpacityMask>
+                                <ImageBrush ImageSource="pack://application:,,,/Assets/Icons/arrow-top_right_corner-100.png"/>
+                            </Rectangle.OpacityMask>
+                        </Rectangle>
+                        <TextBlock Text="Transfer"
+                                   FontWeight="SemiBold"
+                                   Foreground="{StaticResource AppNavyBrush}"/>
+                    </StackPanel>
+                </Button>
+
+                <Button Style="{StaticResource AppQuickActionButtonStyle}"
+                        Command="{Binding ShowPayCommand}"
+                        Margin="10,10,0,0">
+                    <StackPanel HorizontalAlignment="Center">
+                        <Rectangle Width="28" Height="28" Fill="{StaticResource AppNavyBrush}" Margin="0,0,0,10">
+                            <Rectangle.OpacityMask>
+                                <ImageBrush ImageSource="pack://application:,,,/Assets/Icons/cash-100.png"/>
+                            </Rectangle.OpacityMask>
+                        </Rectangle>
+                        <TextBlock Text="Pay"
+                                   FontWeight="SemiBold"
+                                   Foreground="{StaticResource AppNavyBrush}"/>
+                    </StackPanel>
+                </Button>
+            </UniformGrid>
+        </StackPanel>
+    </ScrollViewer>
 </UserControl>
