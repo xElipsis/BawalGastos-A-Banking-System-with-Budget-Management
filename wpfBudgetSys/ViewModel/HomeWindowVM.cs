@@ -46,6 +46,8 @@ namespace wpfBudgetSys.ViewModel
         public ICommand ShowTransferCommand { get; }
         public ICommand ShowPayCommand { get; }
         public ICommand ShowPayFromDashboardCommand { get; }
+        public ICommand ShowBudgetsCommand { get; }
+        public ICommand ShowAlertsCommand { get; }
         public ICommand ShowTransactionCommand { get; }
         public ICommand ShowSettingsCommand { get; }
         public ICommand GoBackCommand { get; }
@@ -80,6 +82,18 @@ namespace wpfBudgetSys.ViewModel
             {
                 CurrentView = new PayPanelVM();
                 ViewTitle = "Pay";
+            }));
+
+            ShowBudgetsCommand = new RelayCommand(_ => NavigateFromNav(() =>
+            {
+                CurrentView = new BudgetsPanelVM();
+                ViewTitle = "Budgets";
+            }));
+
+            ShowAlertsCommand = new RelayCommand(_ => NavigateFromNav(() =>
+            {
+                CurrentView = new AlertsPanelVM();
+                ViewTitle = "Alerts";
             }));
 
             ShowDashboardCommand = new RelayCommand(_ =>

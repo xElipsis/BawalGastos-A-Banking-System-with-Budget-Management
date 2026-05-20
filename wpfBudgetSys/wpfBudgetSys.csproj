@@ -10,8 +10,10 @@
 
   <ItemGroup>
     <None Remove="Assets\dads-removebg-preview.png" />
+    <None Remove="Assets\Icons\alerts-100.png" />
     <None Remove="Assets\Icons\arrow-bottom_left_corner-100.png" />
     <None Remove="Assets\Icons\arrow-top_right_corner-100.png" />
+    <None Remove="Assets\Icons\budget-100.png" />
     <None Remove="Assets\Icons\cash-100.png" />
     <None Remove="Assets\Icons\dashboard-100.png" />
     <None Remove="Assets\Icons\plus-100.png" />
@@ -37,8 +39,10 @@
 
   <ItemGroup>
     <Resource Include="Assets\dads-removebg-preview.png" />
+    <Resource Include="Assets\Icons\alerts-100.png" />
     <Resource Include="Assets\Icons\arrow-bottom_left_corner-100.png" />
     <Resource Include="Assets\Icons\arrow-top_right_corner-100.png" />
+    <Resource Include="Assets\Icons\budget-100.png" />
     <Resource Include="Assets\Icons\cash-100.png" />
     <Resource Include="Assets\Icons\dashboard-100.png" />
     <Resource Include="Assets\Icons\plus-100.png" />

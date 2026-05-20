@@ -35,4 +35,12 @@
         <PanelView:PayPanelView/>
     </DataTemplate>
 
+    <DataTemplate DataType="{x:Type PanelVM:BudgetsPanelVM}">
+        <PanelView:BudgetsPanelView/>
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type PanelVM:AlertsPanelVM}">
+        <PanelView:AlertsPanelView/>
+    </DataTemplate>
+
 </ResourceDictionary>
