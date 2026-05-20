@@ -23,7 +23,9 @@ namespace wpfBudgetSys.View
         public HomeWindowView()
         {
             InitializeComponent();
-            DataContext = new HomeWindowVM();
+            var vm = new HomeWindowVM();
+            vm.CloseAction = Close;
+            DataContext = vm;
         }
 
     }

@@ -9,8 +9,8 @@ namespace wpfBudgetSys.ViewModel.PanelViewModel
 {
     public class TransferPanelVM : ViewModelBase
     {
-        private readonly TransactionService transactionService = new();
-        private readonly AccountServices accountService = new();
+        private readonly TransactionService transactionServices = new();
+        private readonly AccountServices accountServices = new();
 
         private string fromAccount = string.Empty;
         public string FromAccount
@@ -44,7 +44,7 @@ namespace wpfBudgetSys.ViewModel.PanelViewModel
 
         public TransferPanelVM()
         {
-            var userAccount = accountService.GetAccountForCurrentUser();
+            var userAccount = accountServices.GetAccountForCurrentUser();
             if (userAccount != null)
                 FromAccount = userAccount.AccountNumber;
 
@@ -72,8 +72,8 @@ namespace wpfBudgetSys.ViewModel.PanelViewModel
                 return;
             }
 
-            var fromAccountRecord = accountService.GetAccountByAccountNumber(FromAccount.Trim());
-            var toAccountRecord = accountService.GetAccountByAccountNumber(ToAccount.Trim());
+            var fromAccountRecord = accountServices.GetAccountByAccountNumber(FromAccount.Trim());
+            var toAccountRecord = accountServices.GetAccountByAccountNumber(ToAccount.Trim());
             if (fromAccountRecord == null)
             {
                 StatusMessage = "Account number not found.";
@@ -94,7 +94,7 @@ namespace wpfBudgetSys.ViewModel.PanelViewModel
 
             try
             {
-                transactionService.Transfer(fromAccountRecord.AccountId, toAccountRecord.AccountId, transferAmount);
+                transactionServices.Transfer(fromAccountRecord.AccountId, toAccountRecord.AccountId, transferAmount);
                 MessageBox.Show(
                     $"Transfered ₱{transferAmount:N2} successfully.",
                     "Transfer",

@@ -73,6 +73,16 @@
                 </StackPanel>
             </Border>
 
+            <TextBlock Text="{Binding StatusMessage}"
+                       Foreground="#DC2626"
+                       FontSize="14"
+                       TextWrapping="Wrap"
+                       HorizontalAlignment="Center"
+                       TextAlignment="Center"
+                       Margin="0,20,0,0"
+                       MaxWidth="560"
+                       Visibility="{Binding StatusMessage, Converter={StaticResource StringNotEmptyToVisibilityConverter}}"/>
+
             <Button Content="Confirm payment"
                     Style="{StaticResource AppPrimaryButtonStyle}"
                     Command="{Binding PayCommand}"

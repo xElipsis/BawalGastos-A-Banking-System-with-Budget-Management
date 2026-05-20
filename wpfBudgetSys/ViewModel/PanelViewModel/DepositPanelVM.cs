@@ -8,8 +8,8 @@ namespace wpfBudgetSys.ViewModel.PanelViewModel
 {
     public class DepositPanelVM : ViewModelBase
     {
-        private readonly TransactionService transactionService = new();
-        private readonly AccountServices accountService = new();
+        private readonly TransactionService transactionServices = new();
+        private readonly AccountServices accountServices = new();
 
         private string account = string.Empty;
         public string Account
@@ -36,7 +36,7 @@ namespace wpfBudgetSys.ViewModel.PanelViewModel
 
         public DepositPanelVM()
         {
-            var userAccount = accountService.GetAccountForCurrentUser();
+            var userAccount = accountServices.GetAccountForCurrentUser();
             if (userAccount != null)
                 Account = userAccount.AccountNumber;
 
@@ -65,7 +65,7 @@ namespace wpfBudgetSys.ViewModel.PanelViewModel
                 return;
             }
 
-            var accountRecord = accountService.GetAccountByAccountNumber(Account.Trim());
+            var accountRecord = accountServices.GetAccountByAccountNumber(Account.Trim());
             if (accountRecord == null)
             {
                 StatusMessage = "Account number not found.";
@@ -80,7 +80,7 @@ namespace wpfBudgetSys.ViewModel.PanelViewModel
 
             try
             {
-                transactionService.Deposit(accountRecord.AccountId, depositAmount);
+                transactionServices.Deposit(accountRecord.AccountId, depositAmount);
                 MessageBox.Show(
                     $"Deposited ₱{depositAmount:N2} successfully.",
                     "Deposit",

@@ -1,43 +1,38 @@
+using System.Windows;
 using System.Windows.Input;
 using wpfBudgetSys.MVVM;
+using wpfBudgetSys.Services;
+using wpfBudgetSys.View;
 using wpfBudgetSys.ViewModel.PanelViewModel;
 
 namespace wpfBudgetSys.ViewModel
 {
     public class HomeWindowVM : ViewModelBase
     {
+        private readonly AccountServices accountServices = new();
+
         private object currentView = null!;
         public object CurrentView
         {
             get => currentView;
-            set
-            {
-                currentView = value;
-                OnPropertyChanged();
-            }
+            set { currentView = value; OnPropertyChanged(); }
         }
 
         private string viewTitle = string.Empty;
         public string ViewTitle
         {
             get => viewTitle;
-            set
-            {
-                viewTitle = value;
-                OnPropertyChanged();
-            }
+            set { viewTitle = value; OnPropertyChanged(); }
         }
 
         private bool showBackButton;
         public bool ShowBackButton
         {
             get => showBackButton;
-            set
-            {
-                showBackButton = value;
-                OnPropertyChanged();
-            }
+            set { showBackButton = value; OnPropertyChanged(); }
         }
+
+        public Action? CloseAction { get; set; }
 
         public ICommand ShowGetStartedCommand { get; }
         public ICommand ShowDashboardCommand { get; }
@@ -51,6 +46,7 @@ namespace wpfBudgetSys.ViewModel
         public ICommand ShowTransactionCommand { get; }
         public ICommand ShowSettingsCommand { get; }
         public ICommand GoBackCommand { get; }
+        public ICommand LogoutCommand { get; }
 
         public HomeWindowVM()
         {
@@ -96,6 +92,18 @@ namespace wpfBudgetSys.ViewModel
                 ViewTitle = "Alerts";
             }));
 
+            ShowTransactionCommand = new RelayCommand(_ => NavigateFromNav(() =>
+            {
+                CurrentView = new TransactionPanelVM();
+                ViewTitle = "Transactions";
+            }));
+
+            ShowSettingsCommand = new RelayCommand(_ => NavigateFromNav(() =>
+            {
+                CurrentView = new SettingsPanelVM();
+                ViewTitle = "Settings";
+            }));
+
             ShowDashboardCommand = new RelayCommand(_ =>
             {
                 ShowBackButton = false;
@@ -113,19 +121,17 @@ namespace wpfBudgetSys.ViewModel
                 ViewTitle = "Get Started";
             }));
 
-            ShowTransactionCommand = new RelayCommand(_ => NavigateFromNav(() =>
-            {
-                CurrentView = new TransactionPanelVM();
-                ViewTitle = "Transactions";
-            }));
+            LogoutCommand = new RelayCommand(_ => Logout());
 
-            ShowSettingsCommand = new RelayCommand(_ => NavigateFromNav(() =>
-            {
-                CurrentView = new SettingsPanelVM();
-                ViewTitle = "Settings";
-            }));
+            NavigateToInitialView();
+        }
 
-            ShowGetStartedCommand.Execute(null);
+        public void NavigateToInitialView()
+        {
+            if (accountServices.CurrentUserHasAccount())
+                ShowDashboardCommand.Execute(null);
+            else
+                ShowGetStartedCommand.Execute(null);
         }
 
         private void NavigateFromDashboard(Action navigate)
@@ -138,6 +144,14 @@ namespace wpfBudgetSys.ViewModel
         {
             ShowBackButton = false;
             navigate();
+        }
+
+        private void Logout()
+        {
+            SessionManager.Logout();
+            var loginWindow = new LoginPage();
+            loginWindow.Show();
+            CloseAction?.Invoke();
         }
 
         private HomeWindowPanelVM CreateDashboardView() =>

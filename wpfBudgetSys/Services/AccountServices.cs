@@ -17,6 +17,8 @@ namespace wpfBudgetSys.Services
             return accountRepository.GetByUserId(SessionManager.CurrentUser.UserId);
         }
 
+        public bool CurrentUserHasAccount() => GetAccountForCurrentUser() != null;
+
         public Account? GetAccountByAccountNumber(string accountNumber)
         {
 
