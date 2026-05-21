@@ -44,22 +44,18 @@ namespace wpfBudgetSys.Services
 
         public void Deposit(int accountId, decimal amount)
         {
-            // Validate amount
             if (amount <= 0)
                 throw new ArgumentException("Deposit amount must be greater than zero.");
 
             using MySqlConnection conn = DBConnection.GetConnection();
             conn.Open();
 
-            // Wrap both operations in a MySQL transaction
             using MySqlTransaction sqlTransaction = conn.BeginTransaction();
 
             try
             {
-                // Step 1 ? update the balance
                 accountRepository.UpdateBalance(accountId, amount, conn, sqlTransaction);
 
-                // Step 2 ? record the transaction
                 Transaction transaction = new Transaction
                 {
                     AccountId = accountId,
@@ -83,12 +79,10 @@ namespace wpfBudgetSys.Services
                     transaction: sqlTransaction
                 );
 
-                // Both succeeded ? commit
                 sqlTransaction.Commit();
             }
             catch
             {
-                // Something failed ? roll back both operations
                 sqlTransaction.Rollback();
                 throw;
             }

@@ -4,8 +4,8 @@
     {
         public int LoginId { get; set; }
         public int UserId { get; set; }
-        public string? Username { get; set; }
-        public string? PasswordHash { get; set; }
+        public string Username { get; set; } = string.Empty;
+        public string PasswordHash { get; set; } = string.Empty;
         public DateTime? LastLogin { get; set; }
         public int FailedAttempts { get; set; }
         public bool IsLocked { get; set; }

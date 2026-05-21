@@ -110,6 +110,42 @@ namespace wpfBudgetSys.Repositories
         }
 
         // Mark all notifications as read for a user
+        public void InsertStandalone(Notification notification)
+        {
+            const string query = @"
+            INSERT INTO notifications (user_id, title, message, type, is_read, created_at)
+            VALUES (@UserId, @Title, @Message, @Type, 0, @CreatedAt)";
+
+            using MySqlConnection conn = DBConnection.GetConnection();
+            conn.Open();
+            using MySqlCommand cmd = new MySqlCommand(query, conn);
+            cmd.Parameters.AddWithValue("@UserId", notification.UserId);
+            cmd.Parameters.AddWithValue("@Title", notification.Title);
+            cmd.Parameters.AddWithValue("@Message", notification.Message);
+            cmd.Parameters.AddWithValue("@Type", notification.Type);
+            cmd.Parameters.AddWithValue("@CreatedAt", notification.CreatedAt == default ? DateTime.Now : notification.CreatedAt);
+            cmd.ExecuteNonQuery();
+        }
+
+        public void InsertForAllUsers(string title, string message, string type)
+        {
+            const string query = @"
+            INSERT INTO notifications (user_id, title, message, type, is_read, created_at)
+            SELECT u.user_id, @Title, @Message, @Type, 0, @CreatedAt
+            FROM users u
+            WHERE u.role_id = @UserRole";
+
+            using MySqlConnection conn = DBConnection.GetConnection();
+            conn.Open();
+            using MySqlCommand cmd = new MySqlCommand(query, conn);
+            cmd.Parameters.AddWithValue("@Title", title);
+            cmd.Parameters.AddWithValue("@Message", message);
+            cmd.Parameters.AddWithValue("@Type", type);
+            cmd.Parameters.AddWithValue("@CreatedAt", DateTime.Now);
+            cmd.Parameters.AddWithValue("@UserRole", 2);
+            cmd.ExecuteNonQuery();
+        }
+
         public void MarkAllAsRead(int userId)
         {
             const string query = @"

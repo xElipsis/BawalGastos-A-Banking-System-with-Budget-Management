@@ -109,6 +109,12 @@ namespace wpfBudgetSys.ViewModel.PanelViewModel
                 return;
             }
 
+            if (accountRecord.Status == "Frozen")
+            {
+                StatusMessage = "This account is frozen. You cannot deposit into a frozen account.";
+                return;
+            }
+
             if (SelectedCategory == null)
             {
                 StatusMessage = "Select a budget category.";

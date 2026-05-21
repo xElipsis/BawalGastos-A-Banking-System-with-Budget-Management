@@ -1,169 +1,166 @@
-﻿<Window x:Class="wpfBudgetSys.View.HomeWindowView"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:Menu="clr-namespace:wpfBudgetSys.MVVM"
-        mc:Ignorable="d"
-        Title="Bawal Gastos" Height="450" Width="800"
-        WindowStartupLocation="CenterScreen"
-        WindowState="Maximized" Icon="/Assets/logowwordclear.png">
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="2*"/>
-            <ColumnDefinition Width="8*"/>
-        </Grid.ColumnDefinitions>
-
-        <Grid Background="#060063">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
-
-            <Image Grid.Row="0" Height="64" Width="64" Margin="20,16,0,8"
-                   Source="/Assets/logowwordclear.png"
-                   HorizontalAlignment="Left" Stretch="Uniform"/>
-
-            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
-                <StackPanel Margin="0,4,0,8">
-                    <Menu:Btn Style="{StaticResource BtnStyle}" Command="{Binding ShowDashboardCommand}">
-                        <Grid>
-                            <Rectangle Fill="White" Style="{StaticResource Image_Style}">
-                                <Rectangle.OpacityMask>
-                                    <ImageBrush ImageSource="pack://application:,,,/Assets/Icons/dashboard-100.png"/>
-                                </Rectangle.OpacityMask>
-                            </Rectangle>
-                            <TextBlock Text="Dashboard" Style="{StaticResource Text_Style}"/>
-                        </Grid>
-                    </Menu:Btn>
-
-                    <Menu:Btn Style="{StaticResource BtnStyle}" Command="{Binding ShowPayCommand}">
-                        <Grid>
-                            <Rectangle Fill="White" Style="{StaticResource Image_Style}">
-                                <Rectangle.OpacityMask>
-                                    <ImageBrush ImageSource="pack://application:,,,/Assets/Icons/cash-100.png"/>
-                                </Rectangle.OpacityMask>
-                            </Rectangle>
-                            <TextBlock Text="Pay" Style="{StaticResource Text_Style}"/>
-                        </Grid>
-                    </Menu:Btn>
-
-                    <Menu:Btn Style="{StaticResource BtnStyle}" Command="{Binding ShowBudgetsCommand}">
-                        <Grid>
-                            <Rectangle Fill="White" Style="{StaticResource Image_Style}">
-                                <Rectangle.OpacityMask>
-                                    <ImageBrush ImageSource="pack://application:,,,/Assets/Icons/budget-100.png"/>
-                                </Rectangle.OpacityMask>
-                            </Rectangle>
-                            <TextBlock Text="Budgets" Style="{StaticResource Text_Style}"/>
-                        </Grid>
-                    </Menu:Btn>
-
-                    <Grid Margin="0,2,0,0">
-                        <Menu:Btn Style="{StaticResource BtnStyle}" Command="{Binding ShowAlertsCommand}">
-                            <Grid>
-                                <Rectangle Fill="White" Style="{StaticResource Image_Style}">
-                                    <Rectangle.OpacityMask>
-                                        <ImageBrush ImageSource="pack://application:,,,/Assets/Icons/alerts-100.png"/>
-                                    </Rectangle.OpacityMask>
-                                </Rectangle>
-                                <TextBlock Text="Alerts" Style="{StaticResource Text_Style}"/>
-                            </Grid>
-                        </Menu:Btn>
-                        <Ellipse Width="10" Height="10" Fill="#EF4444" HorizontalAlignment="Right" VerticalAlignment="Top"
-                                 Margin="0,14,24,0"
-                                 Visibility="{Binding HasUnreadAlerts, Converter={StaticResource BooleanToVisibilityConverter}}"/>
-                    </Grid>
-
-                    <Grid Margin="0,2,0,0">
-                        <Menu:Btn Style="{StaticResource BtnStyle}" Command="{Binding ShowNotificationsCommand}">
-                            <Grid>
-                                <Rectangle Fill="White" Style="{StaticResource Image_Style}">
-                                    <Rectangle.OpacityMask>
-                                        <ImageBrush ImageSource="pack://application:,,,/Assets/Icons/notification-100.png"/>
-                                    </Rectangle.OpacityMask>
-                                </Rectangle>
-                                <TextBlock Text="Notifications" Style="{StaticResource Text_Style}"/>
-                            </Grid>
-                        </Menu:Btn>
-                        <Ellipse Width="10" Height="10" Fill="#EF4444" HorizontalAlignment="Right" VerticalAlignment="Top"
-                                 Margin="0,14,24,0"
-                                 Visibility="{Binding HasUnreadNotifications, Converter={StaticResource BooleanToVisibilityConverter}}"/>
-                    </Grid>
-
-                    <Menu:Btn Style="{StaticResource BtnStyle}" Command="{Binding ShowTransactionCommand}">
-                        <Grid>
-                            <Rectangle Fill="White" Style="{StaticResource Image_Style}">
-                                <Rectangle.OpacityMask>
-                                    <ImageBrush ImageSource="pack://application:,,,/Assets/Icons/transaction-100.png"/>
-                                </Rectangle.OpacityMask>
-                            </Rectangle>
-                            <TextBlock Text="Transactions" Style="{StaticResource Text_Style}"/>
-                        </Grid>
-                    </Menu:Btn>
-
-                    <Menu:Btn Style="{StaticResource BtnStyle}" Command="{Binding ShowSettingsCommand}">
-                        <Grid>
-                            <Rectangle Fill="White" Style="{StaticResource Image_Style}">
-                                <Rectangle.OpacityMask>
-                                    <ImageBrush ImageSource="pack://application:,,,/Assets/Icons/settings-100.png"/>
-                                </Rectangle.OpacityMask>
-                            </Rectangle>
-                            <TextBlock Text="Settings" Style="{StaticResource Text_Style}"/>
-                        </Grid>
-                    </Menu:Btn>
-                </StackPanel>
-            </ScrollViewer>
-
-            <StackPanel Grid.Row="2" Margin="0,8,0,16">
-                <Border Height="1" Background="#2a2a9a" Margin="12,0,12,8"/>
-                <Menu:Btn Style="{StaticResource BtnStyle}" Command="{Binding LogoutCommand}">
-                    <Grid>
-                        <Rectangle Fill="White" Style="{StaticResource Image_Style}">
-                            <Rectangle.OpacityMask>
-                                <ImageBrush ImageSource="pack://application:,,,/Assets/Icons/logout-100.png"/>
-                            </Rectangle.OpacityMask>
-                        </Rectangle>
-                        <TextBlock Text="Logout" Style="{StaticResource Text_Style}"/>
-                    </Grid>
-                </Menu:Btn>
-            </StackPanel>
-        </Grid>
-
-        <Grid Grid.Column="1" Background="{StaticResource AppPageBrush}">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="1.5*"/>
-                <RowDefinition Height="8.5*"/>
-            </Grid.RowDefinitions>
-
-            <Border Background="Transparent" Padding="20,20,20,12">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-
-                    <Button Grid.Column="0"
-                            Content="←  Back"
-                            Style="{StaticResource AppBackButtonStyle}"
-                            Command="{Binding GoBackCommand}"
-                            Visibility="{Binding ShowBackButton, Converter={StaticResource BooleanToVisibilityConverter}}"
-                            Margin="0,0,16,0"
-                            VerticalAlignment="Center"/>
-
-                    <TextBlock Grid.Column="1"
-                               Text="{Binding ViewTitle}"
-                               FontSize="22"
-                               FontWeight="SemiBold"
-                               Foreground="{StaticResource AppNavyBrush}"
-                               VerticalAlignment="Center"/>
-                </Grid>
-            </Border>
-
-            <Border Grid.Row="1" Background="Transparent" BorderThickness="0">
-                <ContentControl Content="{Binding CurrentView}" BorderThickness="0"/>
-            </Border>
-        </Grid>
-    </Grid>
-</Window>
+﻿<Window x:Class="wpfBudgetSys.View.HomeWindowView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:Menu="clr-namespace:wpfBudgetSys.MVVM"
+        mc:Ignorable="d"
+        Title="Bawal Gastos" Height="450" Width="800"
+        WindowStartupLocation="CenterScreen"
+        WindowState="Maximized" Icon="/Assets/logowwordclear.png">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="8*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid Background="#060063">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <Image Grid.Row="0" Height="64" Width="64" Margin="20,16,0,8"
+                   Source="/Assets/logowwordclear.png"
+                   HorizontalAlignment="Left" Stretch="Uniform"/>
+
+            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                <StackPanel Margin="0,4,0,8">
+
+                    <Menu:Btn Style="{StaticResource BtnStyle}" Command="{Binding ShowDashboardCommand}"
+                              IsChecked="{Binding SelectedNav, Converter={StaticResource NavMatchConverter}, ConverterParameter=Dashboard, Mode=TwoWay}">
+                        <Grid>
+                            <Rectangle Fill="White" Style="{StaticResource Image_Style}">
+                                <Rectangle.OpacityMask>
+                                    <ImageBrush ImageSource="pack://application:,,,/Assets/Icons/dashboard-100.png"/>
+                                </Rectangle.OpacityMask>
+                            </Rectangle>
+                            <TextBlock Text="Dashboard" Style="{StaticResource Text_Style}"/>
+                        </Grid>
+                    </Menu:Btn>
+
+                    <Menu:Btn Style="{StaticResource BtnStyle}" Command="{Binding ShowPayCommand}"
+                              IsChecked="{Binding SelectedNav, Converter={StaticResource NavMatchConverter}, ConverterParameter=Pay, Mode=TwoWay}">
+                        <Grid>
+                            <Rectangle Fill="White" Style="{StaticResource Image_Style}">
+                                <Rectangle.OpacityMask>
+                                    <ImageBrush ImageSource="pack://application:,,,/Assets/Icons/cash-100.png"/>
+                                </Rectangle.OpacityMask>
+                            </Rectangle>
+                            <TextBlock Text="Pay" Style="{StaticResource Text_Style}"/>
+                        </Grid>
+                    </Menu:Btn>
+
+                    <Menu:Btn Style="{StaticResource BtnStyle}" Command="{Binding ShowBudgetsCommand}"
+                              IsChecked="{Binding SelectedNav, Converter={StaticResource NavMatchConverter}, ConverterParameter=Budgets, Mode=TwoWay}">
+                        <Grid>
+                            <Rectangle Fill="White" Style="{StaticResource Image_Style}">
+                                <Rectangle.OpacityMask>
+                                    <ImageBrush ImageSource="pack://application:,,,/Assets/Icons/budget-100.png"/>
+                                </Rectangle.OpacityMask>
+                            </Rectangle>
+                            <TextBlock Text="Budgets" Style="{StaticResource Text_Style}"/>
+                        </Grid>
+                    </Menu:Btn>
+
+                    <Menu:Btn Style="{StaticResource BtnStyle}" Command="{Binding ShowAlertsCommand}"
+                              IsChecked="{Binding SelectedNav, Converter={StaticResource NavMatchConverter}, ConverterParameter=Alerts, Mode=TwoWay}">
+                        <Grid>
+                            <Grid Width="30" Height="30" Margin="22,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                <Rectangle Fill="White" Width="30" Height="30" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                    <Rectangle.OpacityMask>
+                                        <ImageBrush ImageSource="pack://application:,,,/Assets/Icons/alerts-100.png"/>
+                                    </Rectangle.OpacityMask>
+                                </Rectangle>
+                                <Ellipse Width="9" Height="9" Fill="#EF4444" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,-1,-1,0"
+                                         Visibility="{Binding HasUnreadAlerts, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                            </Grid>
+                            <TextBlock Text="Alerts" Style="{StaticResource Text_Style}"/>
+                        </Grid>
+                    </Menu:Btn>
+
+                    <Menu:Btn Style="{StaticResource BtnStyle}" Command="{Binding ShowNotificationsCommand}"
+                              IsChecked="{Binding SelectedNav, Converter={StaticResource NavMatchConverter}, ConverterParameter=Notifications, Mode=TwoWay}">
+                        <Grid>
+                            <Grid Width="30" Height="30" Margin="22,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                <Rectangle Fill="White" Width="30" Height="30" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                    <Rectangle.OpacityMask>
+                                        <ImageBrush ImageSource="pack://application:,,,/Assets/Icons/notification-100.png"/>
+                                    </Rectangle.OpacityMask>
+                                </Rectangle>
+                                <Ellipse Width="9" Height="9" Fill="#EF4444" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,-1,-1,0"
+                                         Visibility="{Binding HasUnreadNotifications, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                            </Grid>
+                            <TextBlock Text="Notifications" Style="{StaticResource Text_Style}"/>
+                        </Grid>
+                    </Menu:Btn>
+
+                    <Menu:Btn Style="{StaticResource BtnStyle}" Command="{Binding ShowTransactionCommand}"
+                              IsChecked="{Binding SelectedNav, Converter={StaticResource NavMatchConverter}, ConverterParameter=Transactions, Mode=TwoWay}">
+                        <Grid>
+                            <Rectangle Fill="White" Style="{StaticResource Image_Style}">
+                                <Rectangle.OpacityMask>
+                                    <ImageBrush ImageSource="pack://application:,,,/Assets/Icons/transaction-100.png"/>
+                                </Rectangle.OpacityMask>
+                            </Rectangle>
+                            <TextBlock Text="Transactions" Style="{StaticResource Text_Style}"/>
+                        </Grid>
+                    </Menu:Btn>
+
+                    <Menu:Btn Style="{StaticResource BtnStyle}" Command="{Binding ShowSettingsCommand}"
+                              IsChecked="{Binding SelectedNav, Converter={StaticResource NavMatchConverter}, ConverterParameter=Settings, Mode=TwoWay}">
+                        <Grid>
+                            <Rectangle Fill="White" Style="{StaticResource Image_Style}">
+                                <Rectangle.OpacityMask>
+                                    <ImageBrush ImageSource="pack://application:,,,/Assets/Icons/settings-100.png"/>
+                                </Rectangle.OpacityMask>
+                            </Rectangle>
+                            <TextBlock Text="Settings" Style="{StaticResource Text_Style}"/>
+                        </Grid>
+                    </Menu:Btn>
+                </StackPanel>
+            </ScrollViewer>
+
+            <StackPanel Grid.Row="2" Margin="0,8,0,16">
+                <Border Height="1" Background="#2a2a9a" Margin="12,0,12,8"/>
+                <Menu:Btn Style="{StaticResource BtnStyle}" Command="{Binding LogoutCommand}">
+                    <Grid>
+                        <Rectangle Fill="White" Style="{StaticResource Image_Style}">
+                            <Rectangle.OpacityMask>
+                                <ImageBrush ImageSource="pack://application:,,,/Assets/Icons/logout-100.png"/>
+                            </Rectangle.OpacityMask>
+                        </Rectangle>
+                        <TextBlock Text="Logout" Style="{StaticResource Text_Style}"/>
+                    </Grid>
+                </Menu:Btn>
+            </StackPanel>
+        </Grid>
+
+        <Grid Grid.Column="1" Background="{StaticResource AppPageBrush}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1.5*"/>
+                <RowDefinition Height="8.5*"/>
+            </Grid.RowDefinitions>
+
+            <Border Background="Transparent" Padding="20,20,20,12">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button Grid.Column="0" Content="←  Back" Style="{StaticResource AppBackButtonStyle}"
+                            Command="{Binding GoBackCommand}"
+                            Visibility="{Binding ShowBackButton, Converter={StaticResource BooleanToVisibilityConverter}}"
+                            Margin="0,0,16,0" VerticalAlignment="Center"/>
+                    <TextBlock Grid.Column="1" Text="{Binding ViewTitle}" FontSize="22" FontWeight="SemiBold"
+                               Foreground="{StaticResource AppNavyBrush}" VerticalAlignment="Center"/>
+                </Grid>
+            </Border>
+
+            <Border Grid.Row="1" Background="Transparent" BorderThickness="0">
+                <ContentControl Content="{Binding CurrentView}" BorderThickness="0"/>
+            </Border>
+        </Grid>
+    </Grid>
+</Window>

@@ -14,6 +14,7 @@
                 <ResourceDictionary Source="Styles/Page.xaml"/>
                 <ResourceDictionary Source="Styles/Text.xaml"/>
                 <ResourceDictionary Source="MVVM/DataTemplate.xaml"/>
+                <ResourceDictionary Source="MVVM/AdminDataTemplate.xaml"/>
                 <ResourceDictionary Source="Styles/ToggleSwitch.xaml"/>
                 <ResourceDictionary Source="Styles/DataGrid.xaml"/>
                 <ResourceDictionary Source="Styles/AppPanel.xaml"/>

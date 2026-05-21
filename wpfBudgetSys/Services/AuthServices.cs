@@ -67,6 +67,13 @@ namespace wpfBudgetSys.Services
 
             login.PasswordHash = null;
             User user = userRepository.GetById(login.UserId);
+            if (user.Status == "Suspended")
+            {
+                MessageBox.Show("Your account has been suspended. Please contact support.", "Suspension Notice", MessageBoxButton.OK, MessageBoxImage.Error);
+                return false;
+            }
+
+            loginRepository.UpdateLastLogin(login.LoginId);
             SessionManager.Login(user, login);
 
             return true;

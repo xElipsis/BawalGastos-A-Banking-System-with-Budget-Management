@@ -7,9 +7,11 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using wpfBudgetSys.Enums;
 using wpfBudgetSys.MVVM;
 using wpfBudgetSys.Services;
 using wpfBudgetSys.View;
+using wpfBudgetSys.View.Admin;
 
 namespace wpfBudgetSys.ViewModel
 {
@@ -57,8 +59,17 @@ namespace wpfBudgetSys.ViewModel
                     return;
                 }
 
-                HomeWindowView homeWindow = new HomeWindowView();
-                homeWindow.Show();
+                if (SessionManager.CurrentUser?.Role == AppEnums.UserRole.Admin)
+                {
+                    var adminWindow = new AdminWindowView();
+                    adminWindow.Show();
+                }
+                else
+                {
+                    var homeWindow = new HomeWindowView();
+                    homeWindow.Show();
+                }
+
                 CloseAction?.Invoke();
             });
 

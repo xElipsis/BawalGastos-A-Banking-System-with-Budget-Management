@@ -39,13 +39,6 @@
 
                     <ControlTemplate.Triggers>
                         
-                        <Trigger Property="IsMouseOver"
-                                 Value="True">
-                            <Setter Property="Visibility"
-                                    TargetName="Indicator"
-                                    Value="Visible"/>
-                        </Trigger>
-
                         <EventTrigger RoutedEvent="Border.MouseEnter"
                                       SourceName="border">
 

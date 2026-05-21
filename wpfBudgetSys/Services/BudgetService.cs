@@ -10,6 +10,7 @@ namespace wpfBudgetSys.Services
     {
         private readonly SpendingLimitsRepository spendingLimitsRepository = new();
         private readonly ExpenseCategoryRepository expenseCategoryRepository = new();
+        private readonly AlertRepository alertRepository = new();
 
         public List<BudgetLimitRow> GetBudgetsForCurrentUser()
         {
@@ -126,11 +127,14 @@ namespace wpfBudgetSys.Services
             if (SessionManager.CurrentUser == null)
                 return "You must be logged in.";
 
-            var existing = spendingLimitsRepository.GetByLimitId(limitId, SessionManager.CurrentUser.UserId);
+            int userId = SessionManager.CurrentUser.UserId;
+            var existing = spendingLimitsRepository.GetByLimitId(limitId, userId);
             if (existing == null)
                 return "Budget entry not found.";
 
-            spendingLimitsRepository.Delete(limitId, SessionManager.CurrentUser.UserId);
+            spendingLimitsRepository.Delete(limitId, userId);
+            alertRepository.DeleteByUserIdAndCategoryId(userId, existing.CategoryId);
+            Helpers.NavBadgeNotifier.Notify();
             return null;
         }
 

@@ -122,5 +122,34 @@ namespace wpfBudgetSys.Repositories
             cmd.Parameters.AddWithValue("@LoginId", excludeLoginId);
             return Convert.ToInt32(cmd.ExecuteScalar()) > 0;
         }
+
+        public void UnlockLogin(int loginId)
+        {
+            using MySqlConnection conn = DBConnection.GetConnection();
+            conn.Open();
+            const string query = @"
+                UPDATE logins SET failed_attempts = 0, is_locked = 0, locked_until = NULL
+                WHERE login_id = @LoginId";
+            using MySqlCommand cmd = new MySqlCommand(query, conn);
+            cmd.Parameters.AddWithValue("@LoginId", loginId);
+            cmd.ExecuteNonQuery();
+        }
+
+        public void UpdateLastLogin(int loginId)
+        {
+            using MySqlConnection conn = DBConnection.GetConnection();
+            conn.Open();
+            const string query = "UPDATE logins SET last_login = @LastLogin WHERE login_id = @LoginId";
+            using MySqlCommand cmd = new MySqlCommand(query, conn);
+            cmd.Parameters.AddWithValue("@LoginId", loginId);
+            cmd.Parameters.AddWithValue("@LastLogin", DateTime.Now);
+            cmd.ExecuteNonQuery();
+        }
+
+        public void ResetPassword(int loginId, string passwordHash)
+        {
+            UpdatePasswordHash(loginId, passwordHash);
+            UnlockLogin(loginId);
+        }
     }
 }

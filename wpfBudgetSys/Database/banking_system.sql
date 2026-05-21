@@ -192,7 +192,8 @@ CREATE TABLE `transactions` (
   `amount` decimal(10,0) NOT NULL,
   `description` varchar(255) NOT NULL,
   `reference_number` varchar(255) NOT NULL,
-  `date` datetime NOT NULL DEFAULT current_timestamp()
+  `date` datetime NOT NULL DEFAULT current_timestamp(),
+  `is_flagged` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --

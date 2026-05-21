@@ -10,6 +10,14 @@ namespace wpfBudgetSys.ViewModel
 {
     public class HomeWindowVM : ViewModelBase
     {
+        public const string NavDashboard = "Dashboard";
+        public const string NavPay = "Pay";
+        public const string NavBudgets = "Budgets";
+        public const string NavAlerts = "Alerts";
+        public const string NavNotifications = "Notifications";
+        public const string NavTransactions = "Transactions";
+        public const string NavSettings = "Settings";
+
         private readonly AccountServices accountServices = new();
         private readonly AlertService alertService = new();
         private readonly NotificationService notificationService = new();
@@ -26,6 +34,13 @@ namespace wpfBudgetSys.ViewModel
         {
             get => viewTitle;
             set { viewTitle = value; OnPropertyChanged(); }
+        }
+
+        private string selectedNav = NavDashboard;
+        public string SelectedNav
+        {
+            get => selectedNav;
+            set { selectedNav = value; OnPropertyChanged(); }
         }
 
         private bool showBackButton;
@@ -94,37 +109,37 @@ namespace wpfBudgetSys.ViewModel
                 ViewTitle = "Pay";
             }));
 
-            ShowPayCommand = new RelayCommand(_ => NavigateFromNav(() =>
+            ShowPayCommand = new RelayCommand(_ => NavigateFromNav(NavPay, () =>
             {
                 CurrentView = new PayPanelVM();
                 ViewTitle = "Pay";
             }));
 
-            ShowBudgetsCommand = new RelayCommand(_ => NavigateFromNav(() =>
+            ShowBudgetsCommand = new RelayCommand(_ => NavigateFromNav(NavBudgets, () =>
             {
                 CurrentView = new BudgetsPanelVM();
                 ViewTitle = "Budgets";
             }));
 
-            ShowAlertsCommand = new RelayCommand(_ => NavigateFromNav(() =>
+            ShowAlertsCommand = new RelayCommand(_ => NavigateFromNav(NavAlerts, () =>
             {
                 CurrentView = new AlertsPanelVM();
                 ViewTitle = "Alerts";
             }));
 
-            ShowNotificationsCommand = new RelayCommand(_ => NavigateFromNav(() =>
+            ShowNotificationsCommand = new RelayCommand(_ => NavigateFromNav(NavNotifications, () =>
             {
                 CurrentView = new NotificationsPanelVM();
                 ViewTitle = "Notifications";
             }));
 
-            ShowTransactionCommand = new RelayCommand(_ => NavigateFromNav(() =>
+            ShowTransactionCommand = new RelayCommand(_ => NavigateFromNav(NavTransactions, () =>
             {
                 CurrentView = new TransactionPanelVM();
                 ViewTitle = "Transactions";
             }));
 
-            ShowSettingsCommand = new RelayCommand(_ => NavigateFromNav(() =>
+            ShowSettingsCommand = new RelayCommand(_ => NavigateFromNav(NavSettings, () =>
             {
                 CurrentView = new SettingsPanelVM();
                 ViewTitle = "Settings";
@@ -133,13 +148,14 @@ namespace wpfBudgetSys.ViewModel
             ShowDashboardCommand = new RelayCommand(_ =>
             {
                 ShowBackButton = false;
+                SelectedNav = NavDashboard;
                 CurrentView = CreateDashboardView();
                 ViewTitle = "Dashboard";
             });
 
             GoBackCommand = new RelayCommand(_ => ShowDashboardCommand.Execute(null));
 
-            ShowGetStartedCommand = new RelayCommand(_ => NavigateFromNav(() =>
+            ShowGetStartedCommand = new RelayCommand(_ => NavigateFromNav(NavDashboard, () =>
             {
                 var getStartedVm = new GetStartedPanelVM();
                 getStartedVm.OnSetupComplete = () => ShowDashboardCommand.Execute(null);
@@ -167,9 +183,10 @@ namespace wpfBudgetSys.ViewModel
             navigate();
         }
 
-        private void NavigateFromNav(Action navigate)
+        private void NavigateFromNav(string navKey, Action navigate)
         {
             ShowBackButton = false;
+            SelectedNav = navKey;
             navigate();
         }
 

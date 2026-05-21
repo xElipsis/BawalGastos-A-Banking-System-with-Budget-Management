@@ -2,6 +2,7 @@ using System.Text;
 using MySql.Data.MySqlClient;
 using wpfBudgetSys.Database;
 using wpfBudgetSys.Model;
+using wpfBudgetSys.Model.Admin;
 
 namespace wpfBudgetSys.Repositories
 {
@@ -143,6 +144,104 @@ namespace wpfBudgetSys.Repositories
             cmd.Parameters.AddWithValue("@ReferenceNumber", transaction.ReferenceNumber);
             cmd.Parameters.AddWithValue("@Date", transaction.Date);
             cmd.ExecuteNonQuery();
+        }
+
+        public List<AdminTransactionRow> GetAllForAdmin(
+            DateTime? fromDate,
+            DateTime? toDate,
+            string? transactionType,
+            int? userId,
+            string? accountNumber)
+        {
+            var where = new StringBuilder(" WHERE 1=1 ");
+            var parameters = new List<MySqlParameter>();
+
+            if (fromDate.HasValue)
+            {
+                where.Append(" AND t.date >= @FromDate ");
+                parameters.Add(new MySqlParameter("@FromDate", fromDate.Value));
+            }
+
+            if (toDate.HasValue)
+            {
+                where.Append(" AND t.date < @ToDate ");
+                parameters.Add(new MySqlParameter("@ToDate", toDate.Value.Date.AddDays(1)));
+            }
+
+            if (!string.IsNullOrWhiteSpace(transactionType) && transactionType != "All")
+            {
+                where.Append(" AND t.type = @Type ");
+                parameters.Add(new MySqlParameter("@Type", transactionType == "Credit" ? "Credit" : "Debit"));
+            }
+
+            if (userId.HasValue)
+            {
+                where.Append(" AND a.user_id = @UserId ");
+                parameters.Add(new MySqlParameter("@UserId", userId.Value));
+            }
+
+            if (!string.IsNullOrWhiteSpace(accountNumber))
+            {
+                where.Append(" AND a.account_number LIKE @AccountNumber ");
+                parameters.Add(new MySqlParameter("@AccountNumber", $"%{accountNumber.Trim()}%"));
+            }
+
+            string query = @"
+                SELECT t.transaction_id, t.type, t.amount, t.description, t.reference_number, t.date,
+                       COALESCE(t.is_flagged, 0) AS is_flagged,
+                       a.account_number, u.full_name, ec.category_name
+                FROM transactions t
+                INNER JOIN accounts a ON t.account_id = a.account_id
+                INNER JOIN users u ON a.user_id = u.user_id
+                LEFT JOIN expense_categories ec ON t.category_id = ec.category_id "
+                + where + " ORDER BY t.date DESC LIMIT 500";
+
+            var rows = new List<AdminTransactionRow>();
+            using MySqlConnection conn = DBConnection.GetConnection();
+            conn.Open();
+            using MySqlCommand cmd = new MySqlCommand(query, conn);
+            foreach (var p in parameters)
+                cmd.Parameters.Add(p);
+
+            using MySqlDataReader reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                rows.Add(new AdminTransactionRow
+                {
+                    TransactionId = reader.GetInt32("transaction_id"),
+                    AccountNumber = reader.GetString("account_number"),
+                    OwnerName = reader.GetString("full_name"),
+                    Type = reader.GetString("type"),
+                    Amount = reader.GetDecimal("amount"),
+                    Description = reader.GetString("description"),
+                    ReferenceNumber = reader.GetString("reference_number"),
+                    Date = reader.GetDateTime("date"),
+                    CategoryName = reader.IsDBNull(reader.GetOrdinal("category_name")) ? null : reader.GetString("category_name"),
+                    IsFlagged = reader.GetBoolean("is_flagged")
+                });
+            }
+
+            return rows;
+        }
+
+        public void SetFlagged(int transactionId, bool flagged)
+        {
+            using MySqlConnection conn = DBConnection.GetConnection();
+            conn.Open();
+            const string query = "UPDATE transactions SET is_flagged = @Flagged WHERE transaction_id = @Id";
+            using MySqlCommand cmd = new MySqlCommand(query, conn);
+            cmd.Parameters.AddWithValue("@Flagged", flagged);
+            cmd.Parameters.AddWithValue("@Id", transactionId);
+            cmd.ExecuteNonQuery();
+        }
+
+        public int CountToday()
+        {
+            using MySqlConnection conn = DBConnection.GetConnection();
+            conn.Open();
+            const string query = "SELECT COUNT(*) FROM transactions WHERE DATE(date) = CURDATE()";
+            using MySqlCommand cmd = new MySqlCommand(query, conn);
+            return Convert.ToInt32(cmd.ExecuteScalar());
         }
 
         private static Transaction MapTransaction(MySqlDataReader reader) => new()

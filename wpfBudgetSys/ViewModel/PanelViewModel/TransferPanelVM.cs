@@ -92,6 +92,17 @@ namespace wpfBudgetSys.ViewModel.PanelViewModel
                 return;
             }
 
+            if (fromAccountRecord.Status == "Frozen")
+            {
+                StatusMessage = "This account is frozen. You cannot transfer from a frozen account.";
+                return;
+            }
+
+            if (toAccountRecord.Status == "Frozen")
+            {
+                StatusMessage = "This account is frozen. You cannot transfer to a frozen account.";
+                return;
+            }
             try
             {
                 transactionServices.Transfer(fromAccountRecord, toAccountRecord, transferAmount);

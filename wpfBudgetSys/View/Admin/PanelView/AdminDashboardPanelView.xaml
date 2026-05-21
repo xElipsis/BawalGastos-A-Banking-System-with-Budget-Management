@@ -1,0 +1,39 @@
+<UserControl x:Class="wpfBudgetSys.View.Admin.PanelView.AdminDashboardPanelView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Background="{StaticResource AppPageBrush}">
+    <ScrollViewer Padding="32">
+        <WrapPanel Margin="0,8,0,0">
+            <Border Style="{StaticResource AppFormCardStyle}" Margin="8" Width="220">
+                <StackPanel>
+                    <TextBlock Text="Total Users" Foreground="{StaticResource AppMutedBrush}"/>
+                    <TextBlock Text="{Binding TotalUsers}" FontSize="32" FontWeight="Bold" Foreground="{StaticResource AppNavyBrush}"/>
+                </StackPanel>
+            </Border>
+            <Border Style="{StaticResource AppFormCardStyle}" Margin="8" Width="220">
+                <StackPanel>
+                    <TextBlock Text="Active Accounts" Foreground="{StaticResource AppMutedBrush}"/>
+                    <TextBlock Text="{Binding ActiveAccounts}" FontSize="32" FontWeight="Bold" Foreground="{StaticResource AppNavyBrush}"/>
+                </StackPanel>
+            </Border>
+            <Border Style="{StaticResource AppFormCardStyle}" Margin="8" Width="220">
+                <StackPanel>
+                    <TextBlock Text="Locked Accounts" Foreground="{StaticResource AppMutedBrush}"/>
+                    <TextBlock Text="{Binding LockedAccounts}" FontSize="32" FontWeight="Bold" Foreground="#DC2626"/>
+                </StackPanel>
+            </Border>
+            <Border Style="{StaticResource AppFormCardStyle}" Margin="8" Width="220">
+                <StackPanel>
+                    <TextBlock Text="Today's Transactions" Foreground="{StaticResource AppMutedBrush}"/>
+                    <TextBlock Text="{Binding TodaysTransactions}" FontSize="32" FontWeight="Bold" Foreground="{StaticResource AppNavyBrush}"/>
+                </StackPanel>
+            </Border>
+            <Border Style="{StaticResource AppFormCardStyle}" Margin="8" Width="320">
+                <StackPanel>
+                    <TextBlock Text="Total System Balance" Foreground="{StaticResource AppMutedBrush}"/>
+                    <TextBlock Text="{Binding TotalSystemBalance}" FontSize="32" FontWeight="Bold" Foreground="{StaticResource AppNavyBrush}"/>
+                </StackPanel>
+            </Border>
+        </WrapPanel>
+    </ScrollViewer>
+</UserControl>

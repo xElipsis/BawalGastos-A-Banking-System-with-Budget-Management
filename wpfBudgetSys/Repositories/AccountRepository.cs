@@ -2,6 +2,7 @@ using System;
 using MySql.Data.MySqlClient;
 using wpfBudgetSys.Database;
 using wpfBudgetSys.Model;
+using wpfBudgetSys.Model.Admin;
 
 namespace wpfBudgetSys.Repositories
 {
@@ -113,6 +114,49 @@ namespace wpfBudgetSys.Repositories
                 Balance = reader.GetDecimal("balance"),
                 Status = reader.GetString("status")
             };
+        }
+
+        public List<AdminAccountRow> GetAllForAdmin()
+        {
+            var rows = new List<AdminAccountRow>();
+            const string query = @"
+                SELECT a.account_id, a.user_id, a.account_number, a.account_type, a.balance, a.status, a.created_at,
+                       u.full_name
+                FROM accounts a
+                INNER JOIN users u ON a.user_id = u.user_id
+                ORDER BY a.created_at DESC";
+
+            using MySqlConnection conn = DBConnection.GetConnection();
+            conn.Open();
+            using MySqlCommand cmd = new MySqlCommand(query, conn);
+            using MySqlDataReader reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                rows.Add(new AdminAccountRow
+                {
+                    AccountId = reader.GetInt32("account_id"),
+                    UserId = reader.GetInt32("user_id"),
+                    OwnerName = reader.GetString("full_name"),
+                    AccountNumber = reader.GetString("account_number"),
+                    AccountType = reader.GetString("account_type"),
+                    Balance = reader.GetDecimal("balance"),
+                    Status = reader.GetString("status"),
+                    CreatedAt = reader.GetDateTime("created_at")
+                });
+            }
+
+            return rows;
+        }
+
+        public void UpdateStatus(int accountId, string status)
+        {
+            using MySqlConnection conn = DBConnection.GetConnection();
+            conn.Open();
+            const string query = "UPDATE accounts SET status = @Status WHERE account_id = @AccountId";
+            using MySqlCommand cmd = new MySqlCommand(query, conn);
+            cmd.Parameters.AddWithValue("@Status", status);
+            cmd.Parameters.AddWithValue("@AccountId", accountId);
+            cmd.ExecuteNonQuery();
         }
     }
 }

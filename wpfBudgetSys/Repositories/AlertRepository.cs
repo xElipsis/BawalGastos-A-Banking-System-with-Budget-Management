@@ -84,6 +84,19 @@ namespace wpfBudgetSys.Repositories
             cmd.ExecuteNonQuery();
         }
 
+        public void DeleteByUserIdAndCategoryId(int userId, int categoryId)
+        {
+            const string query = "DELETE FROM alerts WHERE user_id = @UserId AND category_id = @CategoryId";
+
+            using MySqlConnection conn = DBConnection.GetConnection();
+            conn.Open();
+
+            using MySqlCommand cmd = new MySqlCommand(query, conn);
+            cmd.Parameters.AddWithValue("@UserId", userId);
+            cmd.Parameters.AddWithValue("@CategoryId", categoryId);
+            cmd.ExecuteNonQuery();
+        }
+
         public void MarkAllAsRead(int userId)
         {
             const string query = "UPDATE alerts SET is_read = 1 WHERE user_id = @UserId AND is_read = 0";
