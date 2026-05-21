@@ -93,12 +93,19 @@ namespace wpfBudgetSys.ViewModel.PanelViewModel
 
             try
             {
-                transactionServices.Withdraw(accountRecord.AccountId, withdrawAmount);
+                string referenceNumber = transactionServices.Withdraw(accountRecord.AccountId, withdrawAmount);
 
                 AppDialog.Show(
                     $"Withdrew ₱{withdrawAmount:N2} successfully.",
                     "Withdraw Successful",
                     AppDialogIcon.Success);
+
+                string body = EmailTemplates.WithdrawalConfirmation(accountRecord.AccountNumber, withdrawAmount, referenceNumber);
+
+                EmailHelper.SendEmail(
+                    SessionManager.CurrentUser.Email,
+                    "Withdrawal Confirmation",
+                    body);
 
                 Amount = string.Empty;
             }

@@ -124,7 +124,7 @@ namespace wpfBudgetSys.ViewModel.PanelViewModel
 
             try
             {
-                transactionServices.Pay(accountRecord.AccountId, SelectedCategory, Payee, payAmount);
+                string referenceNumber = transactionServices.Pay(accountRecord.AccountId, SelectedCategory, Payee, payAmount);
 
                 string message = $"Paid ₱{payAmount:N2} successfully.";
 
@@ -132,6 +132,13 @@ namespace wpfBudgetSys.ViewModel.PanelViewModel
                     $"Paid ₱{payAmount:N2} successfully.",
                     "Payment Successful",
                     AppDialogIcon.Success);
+
+                string body = EmailTemplates.PaymentConfirmation(accountRecord.AccountNumber, SelectedCategory.CategoryName, Payee, payAmount, referenceNumber);
+
+                EmailHelper.SendEmail(
+                    SessionManager.CurrentUser.Email,
+                    "Payment Confirmation",
+                    body);
 
                 Amount = string.Empty;
                 Payee = string.Empty;

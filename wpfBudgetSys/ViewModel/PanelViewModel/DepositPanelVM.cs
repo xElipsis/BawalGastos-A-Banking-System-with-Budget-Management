@@ -87,12 +87,19 @@ namespace wpfBudgetSys.ViewModel.PanelViewModel
 
             try
             {
-                transactionServices.Deposit(accountRecord.AccountId, depositAmount);
+                var referenceNumber = transactionServices.Deposit(accountRecord.AccountId, depositAmount);
 
                 AppDialog.Show(
                     $"Deposited ₱{depositAmount:N2} successfully.",
                     "Deposit Successful",
                     AppDialogIcon.Success);
+
+                string body = EmailTemplates.DepositConfirmation(accountRecord.AccountNumber, depositAmount, referenceNumber);
+
+                EmailHelper.SendEmail(
+                    SessionManager.CurrentUser.Email,
+                    "Deposit Confirmation",
+                    body);
 
                 Amount = string.Empty;
             }

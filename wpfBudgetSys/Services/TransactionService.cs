@@ -42,7 +42,7 @@ namespace wpfBudgetSys.Services
                 pageSize);
         }
 
-        public void Deposit(int accountId, decimal amount)
+        public string Deposit(int accountId, decimal amount)
         {
             if (amount <= 0)
                 throw new ArgumentException("Deposit amount must be greater than zero.");
@@ -80,6 +80,8 @@ namespace wpfBudgetSys.Services
                 );
 
                 sqlTransaction.Commit();
+
+                return transaction.ReferenceNumber;
             }
             catch
             {
@@ -88,7 +90,7 @@ namespace wpfBudgetSys.Services
             }
         }
 
-        public void Withdraw(int accountId, decimal amount)
+        public string Withdraw(int accountId, decimal amount)
         {
             if(amount <= 0)
                 throw new ArgumentException("Withdraw amount must be greater than zero.");
@@ -126,6 +128,8 @@ namespace wpfBudgetSys.Services
                 );
 
                 sqlTransaction.Commit();
+
+                return transaction.ReferenceNumber;
             } 
             catch
             {
@@ -134,7 +138,7 @@ namespace wpfBudgetSys.Services
             }
         }
 
-        public void Transfer(Account fromAccount, Account toAccount, decimal amount)
+        public string Transfer(Account fromAccount, Account toAccount, decimal amount)
         {
             Debug.Write("Hello");
 
@@ -184,6 +188,8 @@ namespace wpfBudgetSys.Services
                 );
 
                 sqlTransaction.Commit();
+
+                return transaction.ReferenceNumber;
             }
             catch
             {
@@ -192,7 +198,7 @@ namespace wpfBudgetSys.Services
             }
         }
 
-        public void Pay(int accountId, ExpenseCategory category, string description, decimal amount)
+        public string Pay(int accountId, ExpenseCategory category, string description, decimal amount)
         {
             if (amount <= 0)
                 throw new ArgumentException("Payment amount must be greater than zero.");
@@ -233,6 +239,8 @@ namespace wpfBudgetSys.Services
 
                 if (SessionManager.CurrentUser != null)
                     alertService.EvaluateBudgetAlertsAfterPayment(SessionManager.CurrentUser.UserId, category.CategoryId);
+
+                return transaction.ReferenceNumber;
             }
             catch
             {

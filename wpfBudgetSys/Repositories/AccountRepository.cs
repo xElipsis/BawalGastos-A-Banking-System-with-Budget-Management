@@ -96,6 +96,27 @@ namespace wpfBudgetSys.Repositories
             return MapAccount(reader);
         }
 
+        public string GetEmailByUserId(int userId)
+        {
+            const string query = @"
+                SELECT email
+                FROM users
+                WHERE user_id = @UserId
+                LIMIT 1";
+    
+            using MySqlConnection conn = DBConnection.GetConnection();
+            conn.Open();
+    
+            using MySqlCommand cmd = new MySqlCommand(query, conn);
+            cmd.Parameters.AddWithValue("@UserId", userId);
+    
+            using MySqlDataReader reader = cmd.ExecuteReader();
+            if (!reader.Read())
+                return null;
+    
+            return reader.GetString("email");
+        }
+
         private static Account MapAccount(MySqlDataReader reader) => new()
         {
             AccountId = reader.GetInt32("account_id"),

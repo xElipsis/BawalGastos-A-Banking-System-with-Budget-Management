@@ -106,12 +106,26 @@ namespace wpfBudgetSys.ViewModel.PanelViewModel
             }
             try
             {
-                transactionServices.Transfer(fromAccountRecord, toAccountRecord, transferAmount);
+                string referenceNumber = transactionServices.Transfer(fromAccountRecord, toAccountRecord, transferAmount);
 
                 AppDialog.Show(
                     $"Transfered ₱{transferAmount:N2} successfully.",
                     "Transfer Successful",
                     AppDialogIcon.Success);
+
+                string body = EmailTemplates.TransferConfirmation(fromAccountRecord.AccountNumber, toAccountRecord.AccountNumber, transferAmount, referenceNumber);
+
+                EmailHelper.SendEmail(
+                    SessionManager.CurrentUser.Email,
+                    "Transfer Confirmation",
+                    body);
+
+                body = EmailTemplates.ReceivedTransferNotification(fromAccountRecord.AccountNumber, toAccountRecord.AccountNumber, transferAmount, referenceNumber);
+
+                EmailHelper.SendEmail(
+                    accountServices.GetEmailByUserId(toAccountRecord.UserId),
+                    "Transfer Received",
+                    body);
 
                 Amount = string.Empty;
             }

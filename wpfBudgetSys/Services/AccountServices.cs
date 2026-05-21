@@ -8,6 +8,7 @@ namespace wpfBudgetSys.Services
     {
         private readonly AccountRepository accountRepository = new();
         private readonly SpendingLimitsRepository spendingLimitsRepository = new();
+        private readonly UserRepository userRepository = new();
 
         public Account? GetAccountForCurrentUser()
         {
@@ -43,6 +44,11 @@ namespace wpfBudgetSys.Services
                 return 0;
 
             return spendingLimitsRepository.CountByUserId(SessionManager.CurrentUser.UserId);
+        }
+
+        public string GetEmailByUserId(int userId)
+        {
+            return accountRepository.GetEmailByUserId(userId);
         }
     }
 }
