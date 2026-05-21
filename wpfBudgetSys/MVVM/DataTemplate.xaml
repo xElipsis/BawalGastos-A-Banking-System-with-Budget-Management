@@ -54,5 +54,9 @@
     <DataTemplate DataType="{x:Type PanelVM:NotificationsPanelVM}">
         <PanelView:NotificationsPanelView/>
     </DataTemplate>
-    
+
+    <DataTemplate DataType="{x:Type PanelVM:AccountClosedPanelVM}">
+        <PanelView:AccountClosedPanelView/>
+    </DataTemplate>
+
 </ResourceDictionary>

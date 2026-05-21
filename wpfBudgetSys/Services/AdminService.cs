@@ -71,9 +71,43 @@ namespace wpfBudgetSys.Services
             if (status is not ("Active" or "Frozen" or "Closed"))
                 return "Invalid account status.";
 
+            var account = accountRepository.GetById(accountId);
+            if (account == null)
+                return "Account not found.";
+
+            string previousStatus = account.Status ?? "";
             accountRepository.UpdateStatus(accountId, status);
+
+            if (status == "Closed")
+            {
+                notificationRepository.InsertStandalone(new Notification
+                {
+                    UserId = account.UserId,
+                    Title = "Account closed",
+                    Message = "Your bank account has been closed. You can still sign in, but deposits, withdrawals, transfers, and payments are disabled. Contact an administrator to reopen your account — you do not need to register again.",
+                    Type = "account",
+                    CreatedAt = DateTime.Now
+                });
+                NavBadgeNotifier.Notify();
+            }
+            else if (status == "Active" && previousStatus == "Closed")
+            {
+                notificationRepository.InsertStandalone(new Notification
+                {
+                    UserId = account.UserId,
+                    Title = "Account reactivated",
+                    Message = "Your bank account has been reopened. You can use all banking features again.",
+                    Type = "account",
+                    CreatedAt = DateTime.Now
+                });
+                NavBadgeNotifier.Notify();
+            }
+
             return null;
         }
+
+        public AdminAccountRow? GetAccountById(int accountId) =>
+            GetAccounts().FirstOrDefault(a => a.AccountId == accountId);
 
         public List<AdminTransactionRow> GetTransactions(
             DateTime? fromDate, DateTime? toDate, string? type, int? userId, string? accountNumber) =>

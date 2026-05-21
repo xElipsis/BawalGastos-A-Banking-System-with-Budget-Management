@@ -4,27 +4,45 @@
              Background="{StaticResource AppPageBrush}">
     <ScrollViewer Padding="24">
         <StackPanel>
-            <Button Content="Refresh" Style="{StaticResource AppBackButtonStyle}" HorizontalAlignment="Right"
-                    Command="{Binding RefreshCommand}" Margin="0,0,0,12"/>
-            <DataGrid ItemsSource="{Binding Accounts}" AutoGenerateColumns="False" CanUserAddRows="False"
-                      Style="{StaticResource BudgetCategoryDataGridStyle}" MinHeight="320">
+            <Border Style="{StaticResource AppFormCardStyle}" Margin="0,0,0,12">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBox Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" Height="40" Padding="12,8" FontSize="14"/>
+                    <Button Grid.Column="1" Content="Refresh" Style="{StaticResource AppBackButtonStyle}" Margin="12,0,0,0"
+                            Command="{Binding RefreshCommand}"/>
+                </Grid>
+            </Border>
+
+            <Border Style="{StaticResource AppFormCardStyle}" Margin="0,0,0,12">
+                <StackPanel Orientation="Horizontal">
+                    <Button Content="Freeze" Style="{StaticResource AppBackButtonStyle}" Margin="0,0,8,0" Command="{Binding FreezeCommand}"/>
+                    <Button Content="Unfreeze" Style="{StaticResource AppBackButtonStyle}" Margin="0,0,8,0" Command="{Binding UnfreezeCommand}"/>
+                    <Button Content="Close account" Style="{StaticResource AppBackButtonStyle}" Margin="0,0,8,0" Command="{Binding CloseAccountCommand}"/>
+                    <Button Content="Reactivate" Style="{StaticResource AppPrimaryButtonStyle}" MinWidth="120" Height="40"
+                            Command="{Binding ReactivateCommand}"/>
+                    <TextBlock Text="Select a row first." VerticalAlignment="Center" Margin="16,0,0,0"
+                               Foreground="{StaticResource AppMutedBrush}" FontSize="13"/>
+                </StackPanel>
+            </Border>
+
+            <DataGrid ItemsSource="{Binding Accounts}" SelectedItem="{Binding SelectedAccount, Mode=TwoWay}"
+                      AutoGenerateColumns="False" CanUserAddRows="False"
+                      Style="{StaticResource BudgetCategoryDataGridStyle}" MinHeight="360">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Owner" Binding="{Binding OwnerName}" Width="*"/>
                     <DataGridTextColumn Header="Account #" Binding="{Binding AccountNumber}" Width="*"/>
                     <DataGridTextColumn Header="Type" Binding="{Binding AccountType}" Width="80"/>
                     <DataGridTextColumn Header="Balance" Binding="{Binding Balance, StringFormat=N2}" Width="*"/>
-                    <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="80"/>
-                    <DataGridTemplateColumn Header="Actions" Width="220">
+                    <DataGridTemplateColumn Header="Status" Width="100">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <StackPanel Orientation="Horizontal">
-                                    <Button Content="Freeze" Style="{StaticResource AppBackButtonStyle}" Padding="8,4" Margin="0,0,4,0" FontSize="11"
-                                            Command="{Binding DataContext.FreezeCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}" CommandParameter="{Binding}"/>
-                                    <Button Content="Unfreeze" Style="{StaticResource AppBackButtonStyle}" Padding="8,4" Margin="0,0,4,0" FontSize="11"
-                                            Command="{Binding DataContext.UnfreezeCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}" CommandParameter="{Binding}"/>
-                                    <Button Content="Close" Style="{StaticResource AppBackButtonStyle}" Padding="8,4" FontSize="11"
-                                            Command="{Binding DataContext.CloseAccountCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}" CommandParameter="{Binding}"/>
-                                </StackPanel>
+                                <Border CornerRadius="8" Padding="8,4" HorizontalAlignment="Left"
+                                        Background="{Binding Status, Converter={StaticResource StatusBrushConverter}, ConverterParameter=account}">
+                                    <TextBlock Text="{Binding Status}" Foreground="White" FontWeight="SemiBold" FontSize="12"/>
+                                </Border>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>

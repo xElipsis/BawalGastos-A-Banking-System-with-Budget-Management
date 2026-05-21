@@ -4,8 +4,8 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 using wpfBudgetSys.Enums;
+using wpfBudgetSys.Helpers;
 using wpfBudgetSys.Helpers;
 using wpfBudgetSys.Model;
 using wpfBudgetSys.MVVM;
@@ -17,9 +17,15 @@ namespace wpfBudgetSys.Services
     {
         private readonly UserRepository userRepository = new UserRepository();
         private readonly LoginRepository loginRepository = new LoginRepository();
+        private readonly OtpService otpService = new OtpService();
 
-        public void Register(string fullName, string email, string phone, string username, string password)
+        public bool Register(string fullName, string email, string phone, string username, string password, string otpCode)
         {
+            bool isValid = otpService.VerifyOtp(email, otpCode);
+
+            if (!isValid)
+                return false;
+
             User newUser = new User
             {
                 Role = AppEnums.UserRole.User,
@@ -39,6 +45,7 @@ namespace wpfBudgetSys.Services
             };
 
             loginRepository.InsertLogin(newLogin, hashedPassword);
+            return true;
         }
 
         public bool Login(string username, string password)
@@ -47,13 +54,13 @@ namespace wpfBudgetSys.Services
 
             if (login == null)
             {
-                MessageBox.Show("Username does not exist.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                AppDialog.Show("Username does not exist.", "Sign in", AppDialogIcon.Error);
                 return false;
             }
 
             if (login.IsLocked)
             {
-                MessageBox.Show("Your account has been locked. Please contact support.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                AppDialog.Show("Your account has been locked. Please contact support.", "Sign in", AppDialogIcon.Error);
                 return false;
             }
 
@@ -69,7 +76,7 @@ namespace wpfBudgetSys.Services
             User user = userRepository.GetById(login.UserId);
             if (user.Status == "Suspended")
             {
-                MessageBox.Show("Your account has been suspended. Please contact support.", "Suspension Notice", MessageBoxButton.OK, MessageBoxImage.Error);
+                AppDialog.Show("Your account has been suspended. Please contact support.", "Account suspended", AppDialogIcon.Warning);
                 return false;
             }
 
@@ -77,6 +84,14 @@ namespace wpfBudgetSys.Services
             SessionManager.Login(user, login);
 
             return true;
+        }
+
+        public void SendRegistrationOtp(string email)
+        {
+            if (string.IsNullOrWhiteSpace(email))
+                throw new ArgumentException("Email is required.");
+
+            otpService.SendOtp(email.Trim());
         }
     }
 }

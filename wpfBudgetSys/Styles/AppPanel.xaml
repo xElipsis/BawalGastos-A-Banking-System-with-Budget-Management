@@ -6,6 +6,8 @@
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
     <helpers:InverseBoolToVisibilityConverter x:Key="InverseBooleanToVisibilityConverter"/>
     <helpers:NavMatchConverter x:Key="NavMatchConverter"/>
+    <helpers:IntAtLeastToVisibilityConverter x:Key="IntAtLeastToVisibilityConverter" Minimum="1"/>
+    <helpers:StatusBrushConverter x:Key="StatusBrushConverter"/>
 
     <SolidColorBrush x:Key="AppNavyBrush" Color="#060063"/>
     <SolidColorBrush x:Key="AppAccentBrush" Color="#DDEC00"/>

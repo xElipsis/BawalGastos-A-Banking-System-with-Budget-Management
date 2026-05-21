@@ -34,7 +34,7 @@ namespace wpfBudgetSys.Repositories
 
         public int GetUnreadCount(int userId)
         {
-            const string query = "SELECT COUNT(*) FROM notifications WHERE user_id = @UserId AND is_read = 0";
+            const string query = "SELECT COUNT(*) FROM notifications WHERE user_id = @UserId AND (is_read = 0 OR is_read IS NULL)";
 
             using MySqlConnection conn = DBConnection.GetConnection();
             conn.Open();

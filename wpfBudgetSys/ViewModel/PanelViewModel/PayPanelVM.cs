@@ -2,6 +2,7 @@
 using System.Globalization;
 using System.Windows;
 using System.Windows.Input;
+using wpfBudgetSys.Helpers;
 using wpfBudgetSys.Model;
 using wpfBudgetSys.MVVM;
 using wpfBudgetSys.Services;
@@ -126,7 +127,12 @@ namespace wpfBudgetSys.ViewModel.PanelViewModel
                 transactionServices.Pay(accountRecord.AccountId, SelectedCategory, Payee, payAmount);
 
                 string message = $"Paid ₱{payAmount:N2} successfully.";
-                MessageBox.Show(message, "Payment", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                AppDialog.Show(
+                    $"Paid ₱{payAmount:N2} successfully.",
+                    "Payment Successful",
+                    AppDialogIcon.Success);
+
                 Amount = string.Empty;
                 Payee = string.Empty;
             }

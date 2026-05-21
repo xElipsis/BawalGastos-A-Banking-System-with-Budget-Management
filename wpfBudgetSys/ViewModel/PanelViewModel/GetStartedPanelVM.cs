@@ -5,6 +5,7 @@ using System.Globalization;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
+using wpfBudgetSys.Helpers;
 using wpfBudgetSys.Model;
 using wpfBudgetSys.MVVM;
 using wpfBudgetSys.Services;
@@ -160,7 +161,7 @@ namespace wpfBudgetSys.ViewModel.PanelViewModel
             }
 
             StatusMessage = result.Message;
-            MessageBox.Show(result.Message, "Account setup", MessageBoxButton.OK, MessageBoxImage.Information);
+            AppDialog.Show(result.Message, "Account setup", AppDialogIcon.Info);
             OnSetupComplete?.Invoke();
         }
 

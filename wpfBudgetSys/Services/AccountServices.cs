@@ -19,6 +19,15 @@ namespace wpfBudgetSys.Services
 
         public bool CurrentUserHasAccount() => GetAccountForCurrentUser() != null;
 
+        public bool CurrentUserHasActiveAccount()
+        {
+            var account = GetAccountForCurrentUser();
+            return account != null && account.Status == "Active";
+        }
+
+        public bool CurrentUserAccountIsClosed() =>
+            GetAccountForCurrentUser()?.Status == "Closed";
+
         public Account? GetAccountByAccountNumber(string accountNumber)
         {
 

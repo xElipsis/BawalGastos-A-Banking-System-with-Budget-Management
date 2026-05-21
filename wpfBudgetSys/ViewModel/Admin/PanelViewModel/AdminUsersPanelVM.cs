@@ -1,6 +1,6 @@
 using System.Collections.ObjectModel;
-using System.Windows;
 using System.Windows.Input;
+using wpfBudgetSys.Helpers;
 using wpfBudgetSys.Model.Admin;
 using wpfBudgetSys.MVVM;
 using wpfBudgetSys.Services;
@@ -10,8 +10,25 @@ namespace wpfBudgetSys.ViewModel.Admin.PanelViewModel
     public class AdminUsersPanelVM : ViewModelBase
     {
         private readonly AdminService adminService = new();
+        private readonly List<AdminUserRow> allUsers = new();
 
         public ObservableCollection<AdminUserRow> Users { get; } = new();
+
+        private AdminUserRow? selectedUser;
+        public AdminUserRow? SelectedUser
+        {
+            get => selectedUser;
+            set { selectedUser = value; OnPropertyChanged(); OnPropertyChanged(nameof(HasSelection)); }
+        }
+
+        public bool HasSelection => SelectedUser != null;
+
+        private string searchText = string.Empty;
+        public string SearchText
+        {
+            get => searchText;
+            set { searchText = value; OnPropertyChanged(); ApplyFilter(); }
+        }
 
         public ICommand RefreshCommand { get; }
         public ICommand ActivateCommand { get; }
@@ -22,49 +39,69 @@ namespace wpfBudgetSys.ViewModel.Admin.PanelViewModel
         public AdminUsersPanelVM()
         {
             RefreshCommand = new RelayCommand(_ => Load());
-            ActivateCommand = new RelayCommand(o => SetStatus(o, "Active"));
-            SuspendCommand = new RelayCommand(o => SetStatus(o, "Suspended"));
-            UnlockCommand = new RelayCommand(o =>
+            ActivateCommand = new RelayCommand(_ => SetStatus("Active"), _ => HasSelection);
+            SuspendCommand = new RelayCommand(_ => SetStatus("Suspended"), _ => HasSelection);
+            UnlockCommand = new RelayCommand(_ =>
             {
-                if (o is not AdminUserRow row) return;
-                adminService.UnlockUser(row.LoginId);
+                if (SelectedUser == null) return;
+                adminService.UnlockUser(SelectedUser.LoginId);
                 Load();
-                MessageBox.Show($"Unlocked {row.Username}.", "Users", MessageBoxButton.OK, MessageBoxImage.Information);
-            });
-            ResetPasswordCommand = new RelayCommand(o =>
+                AppDialog.Show($"Unlocked {SelectedUser.Username}.", "User Management", AppDialogIcon.Success);
+            }, _ => HasSelection);
+            ResetPasswordCommand = new RelayCommand(_ =>
             {
-                if (o is not AdminUserRow row) return;
-                string? error = adminService.ResetUserPassword(row.LoginId, "TempPass123!");
+                if (SelectedUser == null) return;
+                if (!AppDialog.Confirm($"Reset password for {SelectedUser.Username} to TempPass123!?", "Reset password"))
+                    return;
+
+                string? error = adminService.ResetUserPassword(SelectedUser.LoginId, "TempPass123!");
                 if (error != null)
                 {
-                    MessageBox.Show(error, "Reset password", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    AppDialog.Show(error, "Reset password", AppDialogIcon.Warning);
                     return;
                 }
 
-                MessageBox.Show($"Password reset to TempPass123! for {row.Username}. User must change it after login.",
-                    "Users", MessageBoxButton.OK, MessageBoxImage.Information);
-            });
+                AppDialog.Show("Temporary password set to TempPass123!. The user should change it after login.",
+                    "User Management", AppDialogIcon.Success);
+            }, _ => HasSelection);
 
             Load();
         }
 
-        private void SetStatus(object? o, string status)
+        private void SetStatus(string status)
         {
-            if (o is not AdminUserRow row) return;
-            string? error = adminService.SetUserStatus(row.UserId, status);
+            if (SelectedUser == null) return;
+            string? error = adminService.SetUserStatus(SelectedUser.UserId, status);
             if (error != null)
             {
-                MessageBox.Show(error, "Users", MessageBoxButton.OK, MessageBoxImage.Warning);
+                AppDialog.Show(error, "User Management", AppDialogIcon.Warning);
                 return;
             }
 
             Load();
+            AppDialog.Show($"User status set to {status}.", "User Management", AppDialogIcon.Success);
         }
 
         private void Load()
         {
+            allUsers.Clear();
+            allUsers.AddRange(adminService.GetUsers());
+            ApplyFilter();
+        }
+
+        private void ApplyFilter()
+        {
             Users.Clear();
-            foreach (var u in adminService.GetUsers())
+            string term = searchText.Trim();
+            IEnumerable<AdminUserRow> filtered = string.IsNullOrEmpty(term)
+                ? allUsers
+                : allUsers.Where(u =>
+                    u.FullName.Contains(term, StringComparison.OrdinalIgnoreCase) ||
+                    u.Username.Contains(term, StringComparison.OrdinalIgnoreCase) ||
+                    u.Email.Contains(term, StringComparison.OrdinalIgnoreCase) ||
+                    (u.AccountNumber?.Contains(term, StringComparison.OrdinalIgnoreCase) ?? false));
+
+            foreach (var u in filtered)
                 Users.Add(u);
         }
     }

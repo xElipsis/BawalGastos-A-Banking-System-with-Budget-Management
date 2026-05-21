@@ -16,8 +16,8 @@
         </Grid.ColumnDefinitions>
 
         <Border Grid.Column="0" Style="{StaticResource AppHeroBannerStyle}" Margin="32" CornerRadius="20">
-            <StackPanel VerticalAlignment="Center" Margin="40">
-                <Image Source="/Assets/logowwordclear.png" Height="120" Width="120" HorizontalAlignment="Left" Margin="0,0,0,24"/>
+            <StackPanel VerticalAlignment="Center" Margin="20,0,20,0" Height="460">
+                <Image Source="/Assets/ChatGPT_Image_May_5__2026__09_36_31_PM-removebg-preview.png" Width="300" HorizontalAlignment="Center"/>
                 <TextBlock Text="Bawal Gastos" FontSize="36" FontWeight="Bold" Foreground="White"/>
                 <TextBlock Text="Track spending, set budgets, and stay on top of your money."
                            FontSize="15" Foreground="#9CA3AF" TextWrapping="Wrap" MaxWidth="380" Margin="0,12,0,0"/>

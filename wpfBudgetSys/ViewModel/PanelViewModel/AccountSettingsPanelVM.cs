@@ -1,5 +1,6 @@
 using System.Windows;
 using System.Windows.Input;
+using wpfBudgetSys.Helpers;
 using wpfBudgetSys.MVVM;
 using wpfBudgetSys.Services;
 
@@ -94,7 +95,7 @@ namespace wpfBudgetSys.ViewModel.PanelViewModel
                 }
 
                 StatusMessage = string.Empty;
-                MessageBox.Show("Profile updated.", "Account settings", MessageBoxButton.OK, MessageBoxImage.Information);
+                AppDialog.Show("Profile updated.", "Account settings", AppDialogIcon.Info);
             });
 
             SaveUsernameCommand = new RelayCommand(_ =>
@@ -107,7 +108,7 @@ namespace wpfBudgetSys.ViewModel.PanelViewModel
                 }
 
                 StatusMessage = string.Empty;
-                MessageBox.Show("Username updated.", "Account settings", MessageBoxButton.OK, MessageBoxImage.Information);
+                AppDialog.Show("Username updated.", "Account settings", AppDialogIcon.Info);
             });
 
             ChangePasswordCommand = new RelayCommand(_ =>
@@ -127,7 +128,7 @@ namespace wpfBudgetSys.ViewModel.PanelViewModel
                 OnPropertyChanged(nameof(ConfirmPassword));
 
                 StatusMessage = string.Empty;
-                MessageBox.Show("Password changed.", "Account settings", MessageBoxButton.OK, MessageBoxImage.Information);
+                AppDialog.Show("Password changed successfully.", "Account settings", AppDialogIcon.Success);
             });
         }
     }

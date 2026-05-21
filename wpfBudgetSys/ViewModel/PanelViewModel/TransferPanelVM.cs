@@ -1,6 +1,7 @@
 ﻿using System.Globalization;
 using System.Windows;
 using System.Windows.Input;
+using wpfBudgetSys.Helpers;
 using wpfBudgetSys.Model;
 using wpfBudgetSys.MVVM;
 using wpfBudgetSys.Services;
@@ -106,11 +107,12 @@ namespace wpfBudgetSys.ViewModel.PanelViewModel
             try
             {
                 transactionServices.Transfer(fromAccountRecord, toAccountRecord, transferAmount);
-                MessageBox.Show(
+
+                AppDialog.Show(
                     $"Transfered ₱{transferAmount:N2} successfully.",
-                    "Transfer",
-                    MessageBoxButton.OK,
-                    MessageBoxImage.Information);
+                    "Transfer Successful",
+                    AppDialogIcon.Success);
+
                 Amount = string.Empty;
             }
             catch (Exception ex)

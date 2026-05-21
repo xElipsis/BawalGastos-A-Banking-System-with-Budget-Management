@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
+using wpfBudgetSys.Helpers;
 using wpfBudgetSys.Model;
 using wpfBudgetSys.MVVM;
 using wpfBudgetSys.Services;
@@ -89,7 +90,7 @@ namespace wpfBudgetSys.ViewModel.PanelViewModel
 
                 StatusMessage = string.Empty;
                 Reload();
-                MessageBox.Show("All budgets saved.", "Budgets", MessageBoxButton.OK, MessageBoxImage.Information);
+                AppDialog.Show("All budgets saved.", "Budgets", AppDialogIcon.Info);
             });
 
             DeleteBudgetCommand = new RelayCommand(o =>
@@ -104,11 +105,9 @@ namespace wpfBudgetSys.ViewModel.PanelViewModel
                     return;
                 }
 
-                if (MessageBox.Show(
+                if (AppDialog.Confirm(
                         $"Remove budget for \"{row.CategoryName}\"?",
-                        "Confirm delete",
-                        MessageBoxButton.YesNo,
-                        MessageBoxImage.Warning) != MessageBoxResult.Yes)
+                    "Confirm delete") != true)
                     return;
 
                 string? error = budgetService.DeleteBudget(row.LimitId);

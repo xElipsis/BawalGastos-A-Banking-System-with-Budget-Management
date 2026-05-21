@@ -11,7 +11,7 @@ using wpfBudgetSys.Enums;
 using wpfBudgetSys.MVVM;
 using wpfBudgetSys.Services;
 using wpfBudgetSys.View;
-using wpfBudgetSys.View.Admin;
+using wpfBudgetSys.Helpers;
 
 namespace wpfBudgetSys.ViewModel
 {
@@ -47,7 +47,7 @@ namespace wpfBudgetSys.ViewModel
                 if(string.IsNullOrEmpty(inputUsername) ||
                     string.IsNullOrEmpty(password))
                 {
-                    MessageBox.Show("Please enter both username and password.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    AppDialog.Show("Please enter both username and password.", "Sign in", AppDialogIcon.Warning);
                     return;
                 }
 
@@ -55,21 +55,11 @@ namespace wpfBudgetSys.ViewModel
 
                 if (!success)
                 {
-                    MessageBox.Show("Invalid username or password.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    AppDialog.Show("Invalid username or password.", "Sign in", AppDialogIcon.Error);
                     return;
                 }
 
-                if (SessionManager.CurrentUser?.Role == AppEnums.UserRole.Admin)
-                {
-                    var adminWindow = new AdminWindowView();
-                    adminWindow.Show();
-                }
-                else
-                {
-                    var homeWindow = new HomeWindowView();
-                    homeWindow.Show();
-                }
-
+                new HomeWindowView().Show();
                 CloseAction?.Invoke();
             });
 

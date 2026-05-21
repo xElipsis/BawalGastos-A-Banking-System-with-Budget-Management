@@ -61,6 +61,20 @@ namespace wpfBudgetSys.Repositories
             cmd.ExecuteNonQuery();
         }
 
+        public Account? GetById(int accountId)
+        {
+            const string query = @"
+                SELECT account_id, user_id, account_number, account_type, balance, status
+                FROM accounts WHERE account_id = @AccountId";
+
+            using MySqlConnection conn = DBConnection.GetConnection();
+            conn.Open();
+            using MySqlCommand cmd = new MySqlCommand(query, conn);
+            cmd.Parameters.AddWithValue("@AccountId", accountId);
+            using MySqlDataReader reader = cmd.ExecuteReader();
+            return reader.Read() ? MapAccount(reader) : null;
+        }
+
         public Account? GetByUserId(int userId)
         {
             const string query = @"
@@ -79,16 +93,18 @@ namespace wpfBudgetSys.Repositories
             if (!reader.Read())
                 return null;
 
-            return new Account
-            {
-                AccountId = reader.GetInt32("account_id"),
-                UserId = reader.GetInt32("user_id"),
-                AccountNumber = reader.GetString("account_number"),
-                AccountType = reader.GetString("account_type"),
-                Balance = reader.GetDecimal("balance"),
-                Status = reader.GetString("status")
-            };
+            return MapAccount(reader);
         }
+
+        private static Account MapAccount(MySqlDataReader reader) => new()
+        {
+            AccountId = reader.GetInt32("account_id"),
+            UserId = reader.GetInt32("user_id"),
+            AccountNumber = reader.GetString("account_number"),
+            AccountType = reader.GetString("account_type"),
+            Balance = reader.GetDecimal("balance"),
+            Status = reader.GetString("status")
+        };
 
         public Account? GetByAccountNumber(string accountNumber)
         {
@@ -105,15 +121,7 @@ namespace wpfBudgetSys.Repositories
             if (!reader.Read())
                 return null;
 
-            return new Account
-            {
-                AccountId = reader.GetInt32("account_id"),
-                UserId = reader.GetInt32("user_id"),
-                AccountNumber = reader.GetString("account_number"),
-                AccountType = reader.GetString("account_type"),
-                Balance = reader.GetDecimal("balance"),
-                Status = reader.GetString("status")
-            };
+            return MapAccount(reader);
         }
 
         public List<AdminAccountRow> GetAllForAdmin()

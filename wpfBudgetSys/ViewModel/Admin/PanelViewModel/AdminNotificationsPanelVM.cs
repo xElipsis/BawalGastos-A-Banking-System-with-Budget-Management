@@ -1,6 +1,6 @@
 using System.Collections.ObjectModel;
-using System.Windows;
 using System.Windows.Input;
+using wpfBudgetSys.Helpers;
 using wpfBudgetSys.Model.Admin;
 using wpfBudgetSys.MVVM;
 using wpfBudgetSys.Services;
@@ -63,7 +63,7 @@ namespace wpfBudgetSys.ViewModel.Admin.PanelViewModel
 
                 if (error != null)
                 {
-                    MessageBox.Show(error, "Notifications", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    AppDialog.Show(error, "Notifications", AppDialogIcon.Warning);
                     return;
                 }
 
@@ -71,7 +71,7 @@ namespace wpfBudgetSys.ViewModel.Admin.PanelViewModel
                 Message = string.Empty;
                 OnPropertyChanged(nameof(Title));
                 OnPropertyChanged(nameof(Message));
-                MessageBox.Show("Notification sent.", "Notifications", MessageBoxButton.OK, MessageBoxImage.Information);
+                AppDialog.Show("Notification sent.", "Notifications", AppDialogIcon.Success);
             });
         }
     }

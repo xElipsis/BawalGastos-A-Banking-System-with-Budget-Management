@@ -1,9 +1,11 @@
 using System.Windows;
 using System.Windows.Input;
+using wpfBudgetSys.Enums;
 using wpfBudgetSys.Helpers;
 using wpfBudgetSys.MVVM;
 using wpfBudgetSys.Services;
 using wpfBudgetSys.View;
+using wpfBudgetSys.ViewModel.Admin.PanelViewModel;
 using wpfBudgetSys.ViewModel.PanelViewModel;
 
 namespace wpfBudgetSys.ViewModel
@@ -17,10 +19,16 @@ namespace wpfBudgetSys.ViewModel
         public const string NavNotifications = "Notifications";
         public const string NavTransactions = "Transactions";
         public const string NavSettings = "Settings";
+        public const string NavAdminUsers = "Users";
+        public const string NavAdminAccounts = "Accounts";
+        public const string NavAdminReports = "Reports";
 
         private readonly AccountServices accountServices = new();
         private readonly AlertService alertService = new();
         private readonly NotificationService notificationService = new();
+
+        public bool IsAdmin { get; }
+        public bool IsRegularUser => !IsAdmin;
 
         private object currentView = null!;
         public object CurrentView
@@ -50,18 +58,18 @@ namespace wpfBudgetSys.ViewModel
             set { showBackButton = value; OnPropertyChanged(); }
         }
 
-        private bool hasUnreadAlerts;
-        public bool HasUnreadAlerts
+        private int unreadAlertCount;
+        public int UnreadAlertCount
         {
-            get => hasUnreadAlerts;
-            set { hasUnreadAlerts = value; OnPropertyChanged(); }
+            get => unreadAlertCount;
+            set { unreadAlertCount = value; OnPropertyChanged(); }
         }
 
-        private bool hasUnreadNotifications;
-        public bool HasUnreadNotifications
+        private int unreadNotificationCount;
+        public int UnreadNotificationCount
         {
-            get => hasUnreadNotifications;
-            set { hasUnreadNotifications = value; OnPropertyChanged(); }
+            get => unreadNotificationCount;
+            set { unreadNotificationCount = value; OnPropertyChanged(); }
         }
 
         public Action? CloseAction { get; set; }
@@ -78,64 +86,72 @@ namespace wpfBudgetSys.ViewModel
         public ICommand ShowNotificationsCommand { get; }
         public ICommand ShowTransactionCommand { get; }
         public ICommand ShowSettingsCommand { get; }
+        public ICommand ShowAdminUsersCommand { get; }
+        public ICommand ShowAdminAccountsCommand { get; }
+        public ICommand ShowAdminTransactionsCommand { get; }
+        public ICommand ShowAdminNotificationsCommand { get; }
+        public ICommand ShowAdminReportsCommand { get; }
         public ICommand GoBackCommand { get; }
         public ICommand LogoutCommand { get; }
 
         public HomeWindowVM()
         {
-            NavBadgeNotifier.BadgesChanged += RefreshNavBadges;
+            IsAdmin = SessionManager.CurrentUser?.Role == AppEnums.UserRole.Admin;
+
+            if (!IsAdmin)
+                NavBadgeNotifier.BadgesChanged += RefreshNavBadges;
 
             ShowDepositCommand = new RelayCommand(_ => NavigateFromDashboard(() =>
             {
                 CurrentView = new DepositPanelVM();
                 ViewTitle = "Deposit";
-            }));
+            }), _ => !IsAdmin);
 
             ShowWithdrawCommand = new RelayCommand(_ => NavigateFromDashboard(() =>
             {
                 CurrentView = new WithdrawPanelVM();
                 ViewTitle = "Withdraw";
-            }));
+            }), _ => !IsAdmin);
 
             ShowTransferCommand = new RelayCommand(_ => NavigateFromDashboard(() =>
             {
                 CurrentView = new TransferPanelVM();
                 ViewTitle = "Transfer";
-            }));
+            }), _ => !IsAdmin);
 
             ShowPayFromDashboardCommand = new RelayCommand(_ => NavigateFromDashboard(() =>
             {
                 CurrentView = new PayPanelVM();
                 ViewTitle = "Pay";
-            }));
+            }), _ => !IsAdmin);
 
             ShowPayCommand = new RelayCommand(_ => NavigateFromNav(NavPay, () =>
             {
                 CurrentView = new PayPanelVM();
                 ViewTitle = "Pay";
-            }));
+            }), _ => !IsAdmin);
 
             ShowBudgetsCommand = new RelayCommand(_ => NavigateFromNav(NavBudgets, () =>
             {
                 CurrentView = new BudgetsPanelVM();
                 ViewTitle = "Budgets";
-            }));
+            }), _ => !IsAdmin);
 
             ShowAlertsCommand = new RelayCommand(_ => NavigateFromNav(NavAlerts, () =>
             {
                 CurrentView = new AlertsPanelVM();
                 ViewTitle = "Alerts";
-            }));
+            }), _ => !IsAdmin);
 
             ShowNotificationsCommand = new RelayCommand(_ => NavigateFromNav(NavNotifications, () =>
             {
-                CurrentView = new NotificationsPanelVM();
+                CurrentView = IsAdmin ? new AdminNotificationsPanelVM() : new NotificationsPanelVM();
                 ViewTitle = "Notifications";
             }));
 
             ShowTransactionCommand = new RelayCommand(_ => NavigateFromNav(NavTransactions, () =>
             {
-                CurrentView = new TransactionPanelVM();
+                CurrentView = IsAdmin ? new AdminTransactionsPanelVM() : new TransactionPanelVM();
                 ViewTitle = "Transactions";
             }));
 
@@ -143,17 +159,55 @@ namespace wpfBudgetSys.ViewModel
             {
                 CurrentView = new SettingsPanelVM();
                 ViewTitle = "Settings";
-            }));
+            }), _ => !IsAdmin);
+
+            ShowAdminUsersCommand = new RelayCommand(_ => NavigateFromNav(NavAdminUsers, () =>
+            {
+                CurrentView = new AdminUsersPanelVM();
+                ViewTitle = "User Management";
+            }), _ => IsAdmin);
+
+            ShowAdminAccountsCommand = new RelayCommand(_ => NavigateFromNav(NavAdminAccounts, () =>
+            {
+                CurrentView = new AdminAccountsPanelVM();
+                ViewTitle = "Account Management";
+            }), _ => IsAdmin);
+
+            ShowAdminTransactionsCommand = new RelayCommand(_ => NavigateFromNav(NavTransactions, () =>
+            {
+                CurrentView = new AdminTransactionsPanelVM();
+                ViewTitle = "Transaction Oversight";
+            }), _ => IsAdmin);
+
+            ShowAdminNotificationsCommand = new RelayCommand(_ => NavigateFromNav(NavNotifications, () =>
+            {
+                CurrentView = new AdminNotificationsPanelVM();
+                ViewTitle = "Send Notifications";
+            }), _ => IsAdmin);
+
+            ShowAdminReportsCommand = new RelayCommand(_ => NavigateFromNav(NavAdminReports, () =>
+            {
+                CurrentView = new AdminReportsPanelVM();
+                ViewTitle = "Reports";
+            }), _ => IsAdmin);
 
             ShowDashboardCommand = new RelayCommand(_ =>
             {
                 ShowBackButton = false;
                 SelectedNav = NavDashboard;
-                CurrentView = CreateDashboardView();
-                ViewTitle = "Dashboard";
+                if (IsAdmin)
+                {
+                    CurrentView = new AdminDashboardPanelVM();
+                    ViewTitle = "Admin Dashboard";
+                }
+                else
+                {
+                    CurrentView = CreateDashboardView();
+                    ViewTitle = "Dashboard";
+                }
             });
 
-            GoBackCommand = new RelayCommand(_ => ShowDashboardCommand.Execute(null));
+            GoBackCommand = new RelayCommand(_ => ShowDashboardCommand.Execute(null), _ => !IsAdmin);
 
             ShowGetStartedCommand = new RelayCommand(_ => NavigateFromNav(NavDashboard, () =>
             {
@@ -161,17 +215,35 @@ namespace wpfBudgetSys.ViewModel
                 getStartedVm.OnSetupComplete = () => ShowDashboardCommand.Execute(null);
                 CurrentView = getStartedVm;
                 ViewTitle = "Get Started";
-            }));
+            }), _ => !IsAdmin);
 
             LogoutCommand = new RelayCommand(_ => Logout());
 
             NavigateToInitialView();
-            RefreshNavBadges();
+            if (!IsAdmin)
+                RefreshNavBadges();
         }
 
         public void NavigateToInitialView()
         {
-            if (accountServices.CurrentUserHasAccount())
+            if (IsAdmin)
+            {
+                ShowDashboardCommand.Execute(null);
+                return;
+            }
+
+            if (accountServices.CurrentUserAccountIsClosed())
+            {
+                ShowBackButton = false;
+                SelectedNav = NavDashboard;
+                CurrentView = new AccountClosedPanelVM();
+                ViewTitle = "Account Closed";
+                return;
+            }
+
+            if (accountServices.CurrentUserHasActiveAccount())
+                ShowDashboardCommand.Execute(null);
+            else if (accountServices.CurrentUserHasAccount())
                 ShowDashboardCommand.Execute(null);
             else
                 ShowGetStartedCommand.Execute(null);
@@ -192,16 +264,17 @@ namespace wpfBudgetSys.ViewModel
 
         private void RefreshNavBadges()
         {
-            HasUnreadAlerts = alertService.GetUnreadCountForCurrentUser() > 0;
-            HasUnreadNotifications = notificationService.GetUnreadCountForCurrentUser() > 0;
+            UnreadAlertCount = alertService.GetUnreadCountForCurrentUser();
+            UnreadNotificationCount = notificationService.GetUnreadCountForCurrentUser();
         }
 
         private void Logout()
         {
-            NavBadgeNotifier.BadgesChanged -= RefreshNavBadges;
+            if (!IsAdmin)
+                NavBadgeNotifier.BadgesChanged -= RefreshNavBadges;
+
             SessionManager.Logout();
-            var loginWindow = new LoginPage();
-            loginWindow.Show();
+            new LoginPage().Show();
             CloseAction?.Invoke();
         }
 

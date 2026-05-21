@@ -174,6 +174,15 @@ namespace wpfBudgetSys.Services
                     transaction: sqlTransaction
                 );
 
+                notificationService.Send(
+                    userId: SessionManager.CurrentUser!.UserId,
+                    title: "Transfer Successful",
+                    message: $"Your have received ₱{amount:N2} from account number {fromAccount.AccountNumber}.",
+                    type: "transaction",
+                    conn: conn,
+                    transaction: sqlTransaction
+                );
+
                 sqlTransaction.Commit();
             }
             catch

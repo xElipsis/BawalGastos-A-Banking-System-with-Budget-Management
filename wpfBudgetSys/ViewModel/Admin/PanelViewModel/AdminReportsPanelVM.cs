@@ -1,5 +1,5 @@
-using System.Windows;
 using System.Windows.Input;
+using wpfBudgetSys.Helpers;
 using wpfBudgetSys.MVVM;
 using wpfBudgetSys.Services;
 
@@ -21,7 +21,6 @@ namespace wpfBudgetSys.ViewModel.Admin.PanelViewModel
         }
 
         private void Export(string name) =>
-            MessageBox.Show(adminService.ExportReportPlaceholder(name), "Reports",
-                MessageBoxButton.OK, MessageBoxImage.Information);
+            AppDialog.Show(adminService.ExportReportPlaceholder(name), "Reports", AppDialogIcon.Info);
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System.Globalization;
 using System.Windows;
 using System.Windows.Input;
+using wpfBudgetSys.Helpers;
 using wpfBudgetSys.MVVM;
 using wpfBudgetSys.Services;
 
@@ -93,11 +94,12 @@ namespace wpfBudgetSys.ViewModel.PanelViewModel
             try
             {
                 transactionServices.Withdraw(accountRecord.AccountId, withdrawAmount);
-                MessageBox.Show(
+
+                AppDialog.Show(
                     $"Withdrew ₱{withdrawAmount:N2} successfully.",
-                    "Withdraw",
-                    MessageBoxButton.OK,
-                    MessageBoxImage.Information);
+                    "Withdraw Successful",
+                    AppDialogIcon.Success);
+
                 Amount = string.Empty;
             }
             catch (Exception ex)

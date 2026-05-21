@@ -1,0 +1,47 @@
+<Window x:Class="wpfBudgetSys.View.AppDialogWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="NoResize" SizeToContent="WidthAndHeight"
+        WindowStyle="None" AllowsTransparency="True" Background="Transparent"
+        ShowInTaskbar="False">
+    <Border CornerRadius="16" Background="White" BorderBrush="#E2E4EC" BorderThickness="1"
+            MinWidth="360" MaxWidth="480" Margin="16">
+        <Border.Effect>
+            <DropShadowEffect BlurRadius="24" ShadowDepth="4" Opacity="0.2"/>
+        </Border.Effect>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <Border Grid.Row="0" CornerRadius="16,16,0,0" Padding="20,16">
+                <Border.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                        <GradientStop Color="#060063" Offset="0"/>
+                        <GradientStop Color="#0a0080" Offset="1"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+                <StackPanel Orientation="Horizontal">
+                    <Border x:Name="IconBadge" Width="32" Height="32" CornerRadius="16" Background="#DDEC00" Margin="0,0,12,0">
+                        <TextBlock x:Name="IconText" Text="i" FontWeight="Bold" FontSize="16"
+                                   Foreground="#060063" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                    <TextBlock x:Name="TitleText" Text="Title" FontSize="18" FontWeight="Bold" Foreground="White" VerticalAlignment="Center"/>
+                </StackPanel>
+            </Border>
+
+            <TextBlock x:Name="MessageText" Grid.Row="1" Text="Message" TextWrapping="Wrap"
+                       FontSize="14" Foreground="#374151" Margin="24,20,24,8" LineHeight="22"/>
+
+            <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="16,8,16,16">
+                <Button x:Name="CancelButton" Content="Cancel" Style="{StaticResource AppBackButtonStyle}"
+                        Margin="0,0,8,0" Visibility="Collapsed" Click="CancelButton_Click"/>
+                <Button x:Name="OkButton" Content="OK" Style="{StaticResource AppPrimaryButtonStyle}"
+                        MinWidth="100" Height="44" Click="OkButton_Click"/>
+            </StackPanel>
+        </Grid>
+    </Border>
+</Window>

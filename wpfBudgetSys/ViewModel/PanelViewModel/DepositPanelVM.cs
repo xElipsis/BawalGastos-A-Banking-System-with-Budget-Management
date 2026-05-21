@@ -1,6 +1,7 @@
 ﻿using System.Globalization;
 using System.Windows;
 using System.Windows.Input;
+using wpfBudgetSys.Helpers;
 using wpfBudgetSys.MVVM;
 using wpfBudgetSys.Services;
 
@@ -87,11 +88,12 @@ namespace wpfBudgetSys.ViewModel.PanelViewModel
             try
             {
                 transactionServices.Deposit(accountRecord.AccountId, depositAmount);
-                MessageBox.Show(
+
+                AppDialog.Show(
                     $"Deposited ₱{depositAmount:N2} successfully.",
-                    "Deposit",
-                    MessageBoxButton.OK,
-                    MessageBoxImage.Information);
+                    "Deposit Successful",
+                    AppDialogIcon.Success);
+
                 Amount = string.Empty;
             }
             catch (Exception ex)
