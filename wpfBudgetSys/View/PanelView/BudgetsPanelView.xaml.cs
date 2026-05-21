@@ -1,28 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+﻿using System.Windows.Controls;
+using wpfBudgetSys.Model;
+using wpfBudgetSys.ViewModel.PanelViewModel;
 
 namespace wpfBudgetSys.View.PanelView
 {
-    /// <summary>
-    /// Interaction logic for BudgetsPanelView.xaml
-    /// </summary>
     public partial class BudgetsPanelView : UserControl
     {
         public BudgetsPanelView()
         {
             InitializeComponent();
+        }
+
+        private void BudgetCategoryComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (sender is not ComboBox comboBox)
+                return;
+
+            if (comboBox.SelectedItem is not ExpenseCategory selected)
+                return;
+
+            if (DataContext is BudgetsPanelVM vm)
+                vm.AddBudgetCommand.Execute(selected);
+
+            comboBox.SelectedItem = null;
         }
     }
 }

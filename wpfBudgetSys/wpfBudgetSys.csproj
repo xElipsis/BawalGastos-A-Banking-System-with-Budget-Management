@@ -16,6 +16,7 @@
     <None Remove="Assets\Icons\budget-100.png" />
     <None Remove="Assets\Icons\cash-100.png" />
     <None Remove="Assets\Icons\dashboard-100.png" />
+    <None Remove="Assets\Icons\logout-100.png" />
     <None Remove="Assets\Icons\plus-100.png" />
     <None Remove="Assets\Icons\settings-100.png" />
     <None Remove="Assets\Icons\transaction-100.png" />
@@ -45,6 +46,7 @@
     <Resource Include="Assets\Icons\budget-100.png" />
     <Resource Include="Assets\Icons\cash-100.png" />
     <Resource Include="Assets\Icons\dashboard-100.png" />
+    <Resource Include="Assets\Icons\logout-100.png" />
     <Resource Include="Assets\Icons\plus-100.png" />
     <Resource Include="Assets\Icons\settings-100.png" />
     <Resource Include="Assets\Icons\transaction-100.png" />

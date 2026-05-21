@@ -4,70 +4,112 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d"
-             d:DesignHeight="700"
-             d:DesignWidth="900"
+             d:DesignHeight="700" d:DesignWidth="900"
              Background="{StaticResource AppPageBrush}">
 
-    <ScrollViewer VerticalScrollBarVisibility="Auto"
-                  HorizontalScrollBarVisibility="Disabled"
-                  Padding="40,32,40,48">
-        <StackPanel MaxWidth="800" HorizontalAlignment="Center">
+    <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="40,32,40,48">
+        <StackPanel MaxWidth="900" HorizontalAlignment="Center">
 
             <Border Style="{StaticResource AppHeroBannerStyle}">
                 <StackPanel>
                     <Border Height="4" Width="48" CornerRadius="2" Background="{StaticResource AppAccentBrush}"
                             Margin="0,0,0,16" HorizontalAlignment="Left"/>
                     <TextBlock Text="Transaction history" FontSize="28" FontWeight="Bold" Foreground="White"/>
-                    <TextBlock Text="View all activity on your account."
+                    <TextBlock Text="Filter, browse, and export your account activity."
                                FontSize="14" Foreground="#9CA3AF" Margin="0,10,0,0"/>
                 </StackPanel>
             </Border>
 
             <Border Style="{StaticResource AppFormCardStyle}">
                 <StackPanel>
-                    <TextBlock Text="Recent transactions" Style="{StaticResource AppSectionTitleStyle}"/>
-                    <TextBlock Text="Deposits, withdrawals, transfers, and payments appear below."
-                               Style="{StaticResource AppSectionSubtitleStyle}"/>
+                    <TextBlock Text="Filters" Style="{StaticResource AppSectionTitleStyle}"/>
 
-                    <Border Background="White"
-                            BorderBrush="{StaticResource BudgetGridLineBrush}"
-                            BorderThickness="1"
-                            CornerRadius="12"
-                            Margin="0,20,0,0"
-                            ClipToBounds="True"
-                            MinHeight="200">
+                    <Border Background="{StaticResource AppInsetBrush}" CornerRadius="14" Padding="20,16"
+                            Margin="0,16,0,0" BorderBrush="#E8EAEF" BorderThickness="1">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel Margin="0,0,12,12">
+                                <TextBlock Text="Date range" Style="{StaticResource LabeledTextBoxLabelStyle}"/>
+                                <ComboBox ItemsSource="{Binding DateRangeOptions}" SelectedItem="{Binding SelectedDateRange}"
+                                          Style="{StaticResource AppComboBoxStyle}"/>
+                            </StackPanel>
+                            <StackPanel Grid.Column="1" Margin="0,0,12,12">
+                                <TextBlock Text="Transaction type" Style="{StaticResource LabeledTextBoxLabelStyle}"/>
+                                <ComboBox ItemsSource="{Binding TransactionKindOptions}" SelectedItem="{Binding SelectedTransactionKind}"
+                                          Style="{StaticResource AppComboBoxStyle}"/>
+                            </StackPanel>
+                            <StackPanel Grid.Column="2" Margin="0,0,0,12">
+                                <TextBlock Text="Category" Style="{StaticResource LabeledTextBoxLabelStyle}"/>
+                                <ComboBox ItemsSource="{Binding CategoryFilterOptions}" SelectedItem="{Binding SelectedCategoryFilter}"
+                                          DisplayMemberPath="CategoryName" Style="{StaticResource AppComboBoxStyle}"/>
+                            </StackPanel>
+
+                            <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Bottom">
+                                <Button Content="Apply filters" Style="{StaticResource AppPrimaryButtonStyle}"
+                                        Command="{Binding ApplyFiltersCommand}" Padding="20,0" Height="42" MinWidth="140"/>
+                                <Button Content="Export" Style="{StaticResource AppBackButtonStyle}" Margin="12,0,0,0"
+                                        Command="{Binding ExportCommand}" Height="42" ToolTip="Wire up export in ViewModel"/>
+                            </StackPanel>
+                            <StackPanel Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right" Orientation="Horizontal">
+                                <TextBlock Text="Rows per page" Style="{StaticResource LabeledTextBoxLabelStyle}" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                                <ComboBox ItemsSource="{Binding PageSizeOptions}" SelectedItem="{Binding PageSize}"
+                                          Style="{StaticResource AppComboBoxStyle}" Width="80"/>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+
+                    <Border Background="White" BorderBrush="{StaticResource BudgetGridLineBrush}"
+                            BorderThickness="1" CornerRadius="12" Margin="0,20,0,0" ClipToBounds="True" MinHeight="200">
                         <Grid>
                             <DataGrid Style="{StaticResource BudgetCategoryDataGridStyle}"
                                       ItemsSource="{Binding Transactions}"
-                                      AutoGenerateColumns="False"
-                                      IsReadOnly="True"
+                                      AutoGenerateColumns="False" IsReadOnly="True"
                                       Visibility="{Binding HasTransactions, Converter={StaticResource BooleanToVisibilityConverter}}">
                                 <DataGrid.Columns>
-                                    <DataGridTextColumn Header="Date" Binding="{Binding Date, StringFormat=d}" Width="*"/>
-                                    <DataGridTextColumn Header="Type" Binding="{Binding Type}" Width="*"/>
+                                    <DataGridTextColumn Header="Date" Binding="{Binding Date, StringFormat=g}" Width="*"/>
+                                    <DataGridTextColumn Header="Type" Binding="{Binding Type}" Width="80"/>
                                     <DataGridTextColumn Header="Category" Binding="{Binding CategoryName}" Width="*"/>
                                     <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="2*"/>
                                     <DataGridTextColumn Header="Amount" Binding="{Binding Amount, StringFormat=N2}" Width="*"/>
                                     <DataGridTextColumn Header="Reference" Binding="{Binding ReferenceNumber}" Width="*"/>
                                 </DataGrid.Columns>
                             </DataGrid>
-
-                            <StackPanel VerticalAlignment="Center"
-                                        HorizontalAlignment="Center"
-                                        Margin="24"
+                            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="24"
                                         Visibility="{Binding HasTransactions, Converter={StaticResource InverseBooleanToVisibilityConverter}}">
-                                <TextBlock Text="No transactions yet"
-                                           FontSize="16"
-                                           FontWeight="SemiBold"
-                                           Foreground="{StaticResource AppNavyBrush}"
-                                           HorizontalAlignment="Center"/>
-                                <TextBlock Text="{Binding EmptyMessage, Mode=OneWay}"
-                                           FontSize="13"
-                                           Foreground="{StaticResource AppMutedBrush}"
-                                           TextWrapping="Wrap"
-                                           TextAlignment="Center"
-                                           Margin="0,8,0,0"
-                                           MaxWidth="400"/>
+                                <TextBlock Text="No matching transactions" FontSize="16" FontWeight="SemiBold"
+                                           Foreground="{StaticResource AppNavyBrush}" HorizontalAlignment="Center"/>
+                                <TextBlock Text="{Binding EmptyMessage, Mode=OneWay}" FontSize="13"
+                                           Foreground="{StaticResource AppMutedBrush}" TextAlignment="Center" Margin="0,8,0,0"/>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+
+                    <Border Background="{StaticResource AppInsetBrush}" CornerRadius="10" Padding="12,10" Margin="0,16,0,0">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="{Binding PageInfo, Mode=OneWay}" VerticalAlignment="Center"
+                                       Foreground="{StaticResource AppNavyBrush}" FontWeight="SemiBold"/>
+                            <StackPanel Grid.Column="1" Orientation="Horizontal">
+                                <Button Content="«" Style="{StaticResource AppBackButtonStyle}" Width="36" Margin="0,0,4,0"
+                                        Command="{Binding FirstPageCommand}"/>
+                                <Button Content="‹" Style="{StaticResource AppBackButtonStyle}" Width="36" Margin="0,0,4,0"
+                                        Command="{Binding PreviousPageCommand}"/>
+                                <Button Content="›" Style="{StaticResource AppBackButtonStyle}" Width="36" Margin="0,0,4,0"
+                                        Command="{Binding NextPageCommand}"/>
+                                <Button Content="»" Style="{StaticResource AppBackButtonStyle}" Width="36"
+                                        Command="{Binding LastPageCommand}"/>
                             </StackPanel>
                         </Grid>
                     </Border>

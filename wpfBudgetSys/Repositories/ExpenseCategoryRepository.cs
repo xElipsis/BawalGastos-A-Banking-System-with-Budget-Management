@@ -76,6 +76,22 @@ namespace wpfBudgetSys.Repositories
             return categories;
         }
 
+        public int InsertCustomCategory(ExpenseCategory category)
+        {
+            const string query = @"
+                INSERT INTO expense_categories (user_id, category_name, is_default)
+                VALUES (@UserId, @CategoryName, 0)";
+
+            using MySqlConnection conn = DBConnection.GetConnection();
+            conn.Open();
+
+            using MySqlCommand cmd = new MySqlCommand(query, conn);
+            cmd.Parameters.AddWithValue("@UserId", category.UserId);
+            cmd.Parameters.AddWithValue("@CategoryName", category.CategoryName);
+            cmd.ExecuteNonQuery();
+            return (int)cmd.LastInsertedId;
+        }
+
         public int InsertCustomCategory(ExpenseCategory category, MySqlConnection conn, MySqlTransaction transaction)
         {
             const string query = @"
