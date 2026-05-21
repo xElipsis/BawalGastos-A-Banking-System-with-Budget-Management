@@ -59,5 +59,22 @@ namespace wpfBudgetSys.Repositories
                 }
             }
         }
+
+        public void UpdateProfile(int userId, string fullName, string email, string phone)
+        {
+            using MySqlConnection conn = DBConnection.GetConnection();
+            conn.Open();
+
+            const string query = @"
+                UPDATE users SET full_name = @FullName, email = @Email, phone = @Phone
+                WHERE user_id = @UserId";
+
+            using MySqlCommand cmd = new MySqlCommand(query, conn);
+            cmd.Parameters.AddWithValue("@UserId", userId);
+            cmd.Parameters.AddWithValue("@FullName", fullName);
+            cmd.Parameters.AddWithValue("@Email", email);
+            cmd.Parameters.AddWithValue("@Phone", phone);
+            cmd.ExecuteNonQuery();
+        }
     }
 }

@@ -9,8 +9,8 @@ namespace wpfBudgetSys.MVVM
 {
     public static class SessionManager
     {
-        public static User CurrentUser { get; private set; }
-        public static Login CurrentLogin { get; private set; }
+        public static User? CurrentUser { get; set; }
+        public static Login? CurrentLogin { get; set; }
 
         public static bool IsLoggedIn => CurrentUser != null;
 

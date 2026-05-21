@@ -84,6 +84,30 @@ namespace wpfBudgetSys.Repositories
             cmd.ExecuteNonQuery();
         }
 
+        public void MarkAllAsRead(int userId)
+        {
+            const string query = "UPDATE alerts SET is_read = 1 WHERE user_id = @UserId AND is_read = 0";
+
+            using MySqlConnection conn = DBConnection.GetConnection();
+            conn.Open();
+
+            using MySqlCommand cmd = new MySqlCommand(query, conn);
+            cmd.Parameters.AddWithValue("@UserId", userId);
+            cmd.ExecuteNonQuery();
+        }
+
+        public int GetUnreadCount(int userId)
+        {
+            const string query = "SELECT COUNT(*) FROM alerts WHERE user_id = @UserId AND is_read = 0";
+
+            using MySqlConnection conn = DBConnection.GetConnection();
+            conn.Open();
+
+            using MySqlCommand cmd = new MySqlCommand(query, conn);
+            cmd.Parameters.AddWithValue("@UserId", userId);
+            return Convert.ToInt32(cmd.ExecuteScalar());
+        }
+
         private static Alert MapAlert(MySqlDataReader reader) => new()
         {
             AlertId = reader.GetInt32("alert_id"),

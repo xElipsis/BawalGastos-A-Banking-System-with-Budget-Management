@@ -1,4 +1,4 @@
-using MySql.Data.MySqlClient;
+﻿using MySql.Data.MySqlClient;
 using System.Diagnostics;
 using wpfBudgetSys.Database;
 using wpfBudgetSys.Helpers;
@@ -13,6 +13,7 @@ namespace wpfBudgetSys.Services
         private readonly TransactionRepository transactionRepository = new();
         private readonly AccountRepository accountRepository = new();
         private readonly AlertService alertService = new();
+        private readonly NotificationService notificationService = new();
 
         public List<Transaction> GetTransactionsForCurrentUser()
         {
@@ -73,6 +74,15 @@ namespace wpfBudgetSys.Services
 
                 transactionRepository.Insert(transaction, conn, sqlTransaction);
 
+                notificationService.Send(
+                    userId: SessionManager.CurrentUser!.UserId,
+                    title: "Deposit Successful",
+                    message: $"You deposited ₱{amount:N2} to your account.",
+                    type: "transaction",
+                    conn: conn,
+                    transaction: sqlTransaction
+                );
+
                 // Both succeeded ? commit
                 sqlTransaction.Commit();
             }
@@ -112,6 +122,15 @@ namespace wpfBudgetSys.Services
 
                 transactionRepository.Insert(transaction, conn, sqlTransaction);
 
+                notificationService.Send(
+                    userId: SessionManager.CurrentUser!.UserId,
+                    title: "Withdraw Successful",
+                    message: $"You withdrawed ₱{amount:N2} from your account.",
+                    type: "transaction",
+                    conn: conn,
+                    transaction: sqlTransaction
+                );
+
                 sqlTransaction.Commit();
             } 
             catch
@@ -121,7 +140,7 @@ namespace wpfBudgetSys.Services
             }
         }
 
-        public void Transfer(int fromAccountId, int toAccountId, decimal amount)
+        public void Transfer(Account fromAccount, Account toAccount, decimal amount)
         {
             Debug.Write("Hello");
 
@@ -135,14 +154,14 @@ namespace wpfBudgetSys.Services
 
             try
             {
-                accountRepository.UpdateBalance(fromAccountId, -amount, conn, sqlTransaction);
-                accountRepository.UpdateBalance(toAccountId, amount, conn, sqlTransaction);
+                accountRepository.UpdateBalance(fromAccount.AccountId, -amount, conn, sqlTransaction);
+                accountRepository.UpdateBalance(toAccount.AccountId, amount, conn, sqlTransaction);
 
                 Transaction transaction = new Transaction
                 {
-                    AccountId = fromAccountId,
+                    AccountId = fromAccount.AccountId,
                     CategoryId = null,
-                    RelatedAccountId = toAccountId,
+                    RelatedAccountId = toAccount.AccountId,
                     Type = "Debit",
                     Amount = amount,
                     Description = "Transfer",
@@ -151,6 +170,15 @@ namespace wpfBudgetSys.Services
                 };
 
                 transactionRepository.Insert(transaction, conn, sqlTransaction);
+
+                notificationService.Send(
+                    userId: SessionManager.CurrentUser!.UserId,
+                    title: "Transfer Successful",
+                    message: $"You transferred ₱{amount:N2} from your account to account number {toAccount.AccountNumber}.",
+                    type: "transaction",
+                    conn: conn,
+                    transaction: sqlTransaction
+                );
 
                 sqlTransaction.Commit();
             }
@@ -161,7 +189,7 @@ namespace wpfBudgetSys.Services
             }
         }
 
-        public void Pay(int accountId, int categoryId, string description, decimal amount)
+        public void Pay(int accountId, ExpenseCategory category, string description, decimal amount)
         {
             if (amount <= 0)
                 throw new ArgumentException("Payment amount must be greater than zero.");
@@ -178,7 +206,7 @@ namespace wpfBudgetSys.Services
                 Transaction transaction = new Transaction
                 {
                     AccountId = accountId,
-                    CategoryId = categoryId,
+                    CategoryId = category.CategoryId,
                     RelatedAccountId = null,
                     Type = "Debit",
                     Amount = amount,
@@ -189,10 +217,19 @@ namespace wpfBudgetSys.Services
 
                 transactionRepository.Insert(transaction, conn, sqlTransaction);
 
+                notificationService.Send(
+                    userId: SessionManager.CurrentUser!.UserId,
+                    title: "Payment Successful",
+                    message: $"You payed ₱{amount:N2} to {category.CategoryName}.",
+                    type: "transaction",
+                    conn: conn,
+                    transaction: sqlTransaction
+                );
+
                 sqlTransaction.Commit();
 
                 if (SessionManager.CurrentUser != null)
-                    alertService.EvaluateBudgetAlertsAfterPayment(SessionManager.CurrentUser.UserId, categoryId);
+                    alertService.EvaluateBudgetAlertsAfterPayment(SessionManager.CurrentUser.UserId, category.CategoryId);
             }
             catch
             {

@@ -1,3 +1,4 @@
+using wpfBudgetSys.Helpers;
 using wpfBudgetSys.Model;
 using wpfBudgetSys.MVVM;
 using wpfBudgetSys.Repositories;
@@ -20,10 +21,28 @@ namespace wpfBudgetSys.Services
             return alertRepository.GetByUserId(SessionManager.CurrentUser.UserId);
         }
 
-        public int GetUnreadCountForCurrentUser() =>
-            GetAlertsForCurrentUser().Count(a => !a.IsRead);
+        public int GetUnreadCountForCurrentUser()
+        {
+            if (SessionManager.CurrentUser == null)
+                return 0;
 
-        public void MarkAsRead(int alertId) => alertRepository.MarkAsRead(alertId);
+            return alertRepository.GetUnreadCount(SessionManager.CurrentUser.UserId);
+        }
+
+        public void MarkAsRead(int alertId)
+        {
+            alertRepository.MarkAsRead(alertId);
+            NavBadgeNotifier.Notify();
+        }
+
+        public void MarkAllAsRead()
+        {
+            if (SessionManager.CurrentUser == null)
+                return;
+
+            alertRepository.MarkAllAsRead(SessionManager.CurrentUser.UserId);
+            NavBadgeNotifier.Notify();
+        }
 
         /// <summary>
         /// After a payment, checks monthly spend vs budget and creates alerts at 50/75/90/100% thresholds.
@@ -66,6 +85,9 @@ namespace wpfBudgetSys.Services
                 alertRepository.Insert(alert, dbConn);
                 created.Add(alert);
             }
+
+            if (created.Count > 0)
+                NavBadgeNotifier.Notify();
 
             return created;
         }

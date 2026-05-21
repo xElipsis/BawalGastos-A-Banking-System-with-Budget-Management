@@ -1,5 +1,6 @@
 using System.Windows;
 using System.Windows.Input;
+using wpfBudgetSys.Helpers;
 using wpfBudgetSys.MVVM;
 using wpfBudgetSys.Services;
 using wpfBudgetSys.View;
@@ -10,6 +11,8 @@ namespace wpfBudgetSys.ViewModel
     public class HomeWindowVM : ViewModelBase
     {
         private readonly AccountServices accountServices = new();
+        private readonly AlertService alertService = new();
+        private readonly NotificationService notificationService = new();
 
         private object currentView = null!;
         public object CurrentView
@@ -32,6 +35,20 @@ namespace wpfBudgetSys.ViewModel
             set { showBackButton = value; OnPropertyChanged(); }
         }
 
+        private bool hasUnreadAlerts;
+        public bool HasUnreadAlerts
+        {
+            get => hasUnreadAlerts;
+            set { hasUnreadAlerts = value; OnPropertyChanged(); }
+        }
+
+        private bool hasUnreadNotifications;
+        public bool HasUnreadNotifications
+        {
+            get => hasUnreadNotifications;
+            set { hasUnreadNotifications = value; OnPropertyChanged(); }
+        }
+
         public Action? CloseAction { get; set; }
 
         public ICommand ShowGetStartedCommand { get; }
@@ -43,6 +60,7 @@ namespace wpfBudgetSys.ViewModel
         public ICommand ShowPayFromDashboardCommand { get; }
         public ICommand ShowBudgetsCommand { get; }
         public ICommand ShowAlertsCommand { get; }
+        public ICommand ShowNotificationsCommand { get; }
         public ICommand ShowTransactionCommand { get; }
         public ICommand ShowSettingsCommand { get; }
         public ICommand GoBackCommand { get; }
@@ -50,6 +68,8 @@ namespace wpfBudgetSys.ViewModel
 
         public HomeWindowVM()
         {
+            NavBadgeNotifier.BadgesChanged += RefreshNavBadges;
+
             ShowDepositCommand = new RelayCommand(_ => NavigateFromDashboard(() =>
             {
                 CurrentView = new DepositPanelVM();
@@ -92,6 +112,12 @@ namespace wpfBudgetSys.ViewModel
                 ViewTitle = "Alerts";
             }));
 
+            ShowNotificationsCommand = new RelayCommand(_ => NavigateFromNav(() =>
+            {
+                CurrentView = new NotificationsPanelVM();
+                ViewTitle = "Notifications";
+            }));
+
             ShowTransactionCommand = new RelayCommand(_ => NavigateFromNav(() =>
             {
                 CurrentView = new TransactionPanelVM();
@@ -124,6 +150,7 @@ namespace wpfBudgetSys.ViewModel
             LogoutCommand = new RelayCommand(_ => Logout());
 
             NavigateToInitialView();
+            RefreshNavBadges();
         }
 
         public void NavigateToInitialView()
@@ -146,8 +173,15 @@ namespace wpfBudgetSys.ViewModel
             navigate();
         }
 
+        private void RefreshNavBadges()
+        {
+            HasUnreadAlerts = alertService.GetUnreadCountForCurrentUser() > 0;
+            HasUnreadNotifications = notificationService.GetUnreadCountForCurrentUser() > 0;
+        }
+
         private void Logout()
         {
+            NavBadgeNotifier.BadgesChanged -= RefreshNavBadges;
             SessionManager.Logout();
             var loginWindow = new LoginPage();
             loginWindow.Show();

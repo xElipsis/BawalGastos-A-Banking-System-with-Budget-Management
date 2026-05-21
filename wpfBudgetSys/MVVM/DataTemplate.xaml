@@ -26,6 +26,14 @@
     <DataTemplate DataType="{x:Type PanelVM:SettingsPanelVM}">
         <PanelView:SettingsPanelView/>
     </DataTemplate>
+
+    <DataTemplate DataType="{x:Type PanelVM:AccountSettingsPanelVM}">
+        <PanelView:AccountSettingsPanelView/>
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type PanelVM:AppSettingsPanelVM}">
+        <PanelView:AppSettingsPanelView/>
+    </DataTemplate>
     
     <DataTemplate DataType="{x:Type PanelVM:TransactionPanelVM}">
         <PanelView:TransactionPanelView/>
@@ -42,5 +50,9 @@
     <DataTemplate DataType="{x:Type PanelVM:AlertsPanelVM}">
         <PanelView:AlertsPanelView/>
     </DataTemplate>
-
+    
+    <DataTemplate DataType="{x:Type PanelVM:NotificationsPanelVM}">
+        <PanelView:NotificationsPanelView/>
+    </DataTemplate>
+    
 </ResourceDictionary>

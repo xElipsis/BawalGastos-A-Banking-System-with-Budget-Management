@@ -117,7 +117,7 @@ namespace wpfBudgetSys.ViewModel.PanelViewModel
 
             try
             {
-                transactionServices.Pay(accountRecord.AccountId, SelectedCategory.CategoryId, Payee, payAmount);
+                transactionServices.Pay(accountRecord.AccountId, SelectedCategory, Payee, payAmount);
 
                 string message = $"Paid ₱{payAmount:N2} successfully.";
                 MessageBox.Show(message, "Payment", MessageBoxButton.OK, MessageBoxImage.Information);

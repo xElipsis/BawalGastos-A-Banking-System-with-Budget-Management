@@ -1,6 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.Windows.Input;
-using wpfBudgetSys.Model;
+using wpfBudgetSys.Helpers;
 using wpfBudgetSys.MVVM;
 using wpfBudgetSys.Services;
 
@@ -10,37 +10,43 @@ namespace wpfBudgetSys.ViewModel.PanelViewModel
     {
         private readonly AlertService alertService = new();
 
-        public ObservableCollection<Alert> Alerts { get; }
+        public ObservableCollection<AlertItemVM> Alerts { get; }
 
         public bool HasAlerts => Alerts.Count > 0;
 
-        public string EmptyMessage => "No budget alerts yet. Alerts appear when payments reach 50%, 75%, 90%, or 100% of a category's monthly limit.";
+        public string EmptyMessage =>
+            "No budget alerts yet. Alerts appear when payments reach 50%, 75%, 90%, or 100% of a category's monthly limit.";
 
         public ICommand MarkReadCommand { get; }
-        public ICommand RefreshCommand { get; }
+        public ICommand MarkAllAsReadCommand { get; }
 
         public AlertsPanelVM()
         {
-            Alerts = new ObservableCollection<Alert>(alertService.GetAlertsForCurrentUser());
+            Alerts = new ObservableCollection<AlertItemVM>();
+            LoadAlerts();
 
             MarkReadCommand = new RelayCommand(o =>
             {
-                if (o is not Alert alert)
+                if (o is not AlertItemVM item)
                     return;
 
-                alertService.MarkAsRead(alert.AlertId);
-                alert.IsRead = true;
-                OnPropertyChanged(nameof(Alerts));
+                alertService.MarkAsRead(item.AlertId);
+                item.IsRead = true;
             });
 
-            RefreshCommand = new RelayCommand(_ => Refresh());
+            MarkAllAsReadCommand = new RelayCommand(_ =>
+            {
+                alertService.MarkAllAsRead();
+                foreach (var item in Alerts)
+                    item.IsRead = true;
+            });
         }
 
-        private void Refresh()
+        private void LoadAlerts()
         {
             Alerts.Clear();
             foreach (var alert in alertService.GetAlertsForCurrentUser())
-                Alerts.Add(alert);
+                Alerts.Add(new AlertItemVM(alert));
 
             OnPropertyChanged(nameof(HasAlerts));
         }

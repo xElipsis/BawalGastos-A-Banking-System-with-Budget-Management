@@ -102,14 +102,38 @@
                             <TextBlock Text="{Binding PageInfo, Mode=OneWay}" VerticalAlignment="Center"
                                        Foreground="{StaticResource AppNavyBrush}" FontWeight="SemiBold"/>
                             <StackPanel Grid.Column="1" Orientation="Horizontal">
-                                <Button Content="«" Style="{StaticResource AppBackButtonStyle}" Width="36" Margin="0,0,4,0"
-                                        Command="{Binding FirstPageCommand}"/>
-                                <Button Content="‹" Style="{StaticResource AppBackButtonStyle}" Width="36" Margin="0,0,4,0"
-                                        Command="{Binding PreviousPageCommand}"/>
-                                <Button Content="›" Style="{StaticResource AppBackButtonStyle}" Width="36" Margin="0,0,4,0"
-                                        Command="{Binding NextPageCommand}"/>
-                                <Button Content="»" Style="{StaticResource AppBackButtonStyle}" Width="36"
-                                        Command="{Binding LastPageCommand}"/>
+                                <Button Style="{StaticResource AppIconButtonStyle}" Margin="0,0,4,0"
+                                        Command="{Binding FirstPageCommand}" ToolTip="First page">
+                                    <Rectangle Width="14" Height="14" Fill="{StaticResource AppNavyBrush}">
+                                        <Rectangle.OpacityMask>
+                                            <ImageBrush ImageSource="pack://application:,,,/Assets/Icons/double-arrow-left-100.png"/>
+                                        </Rectangle.OpacityMask>
+                                    </Rectangle>
+                                </Button>
+                                <Button Style="{StaticResource AppIconButtonStyle}" Margin="0,0,4,0"
+                                        Command="{Binding PreviousPageCommand}" ToolTip="Previous page">
+                                    <Rectangle Width="14" Height="14" Fill="{StaticResource AppNavyBrush}">
+                                        <Rectangle.OpacityMask>
+                                            <ImageBrush ImageSource="pack://application:,,,/Assets/Icons/arrow-left-100.png"/>
+                                        </Rectangle.OpacityMask>
+                                    </Rectangle>
+                                </Button>
+                                <Button Style="{StaticResource AppIconButtonStyle}" Margin="0,0,4,0"
+                                        Command="{Binding NextPageCommand}" ToolTip="Next page">
+                                    <Rectangle Width="14" Height="14" Fill="{StaticResource AppNavyBrush}">
+                                        <Rectangle.OpacityMask>
+                                            <ImageBrush ImageSource="pack://application:,,,/Assets/Icons/arrow-right-100.png"/>
+                                        </Rectangle.OpacityMask>
+                                    </Rectangle>
+                                </Button>
+                                <Button Style="{StaticResource AppIconButtonStyle}"
+                                        Command="{Binding LastPageCommand}" ToolTip="Last page">
+                                    <Rectangle Width="14" Height="14" Fill="{StaticResource AppNavyBrush}">
+                                        <Rectangle.OpacityMask>
+                                            <ImageBrush ImageSource="pack://application:,,,/Assets/Icons/double-arrow-right-100.png"/>
+                                        </Rectangle.OpacityMask>
+                                    </Rectangle>
+                                </Button>
                             </StackPanel>
                         </Grid>
                     </Border>

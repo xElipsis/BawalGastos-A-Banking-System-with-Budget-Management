@@ -21,7 +21,7 @@ namespace wpfBudgetSys.ViewModel.PanelViewModel
                 .ToList();
 
         public ICommand AddBudgetCommand { get; }
-        public ICommand SaveBudgetCommand { get; }
+        public ICommand SaveAllCommand { get; }
         public ICommand DeleteBudgetCommand { get; }
         public ICommand RefreshCommand { get; }
 
@@ -71,38 +71,25 @@ namespace wpfBudgetSys.ViewModel.PanelViewModel
                 OnPropertyChanged(nameof(AvailablePresets));
             });
 
-            SaveBudgetCommand = new RelayCommand(o =>
+            SaveAllCommand = new RelayCommand(_ =>
             {
-                if (o is not BudgetLimitRowVM row)
+                var rows = Budgets.Select(b => (
+                    b.LimitId,
+                    b.CategoryId,
+                    b.CategoryName,
+                    b.MonthlyLimit,
+                    b.DailyLimit)).ToList();
+
+                string? error = budgetService.SaveAll(rows);
+                if (error != null)
+                {
+                    StatusMessage = error;
                     return;
-
-                if (row.LimitId == 0)
-                {
-                    string? error = budgetService.AddBudget(
-                        row.CategoryId,
-                        row.CategoryName,
-                        row.MonthlyLimit,
-                        row.DailyLimit);
-
-                    if (error != null)
-                    {
-                        StatusMessage = error;
-                        return;
-                    }
-                }
-                else
-                {
-                    string? error = budgetService.UpdateBudget(row.LimitId, row.MonthlyLimit, row.DailyLimit);
-                    if (error != null)
-                    {
-                        StatusMessage = error;
-                        return;
-                    }
                 }
 
                 StatusMessage = string.Empty;
                 Reload();
-                MessageBox.Show("Budget saved.", "Budgets", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("All budgets saved.", "Budgets", MessageBoxButton.OK, MessageBoxImage.Information);
             });
 
             DeleteBudgetCommand = new RelayCommand(o =>

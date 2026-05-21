@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using wpfBudgetSys.Enums;
 using wpfBudgetSys.Helpers;
 using wpfBudgetSys.Model;
 using wpfBudgetSys.MVVM;
@@ -21,6 +22,7 @@ namespace wpfBudgetSys.Services
         {
             User newUser = new User
             {
+                Role = AppEnums.UserRole.User,
                 Fullname = fullName,
                 Email = email,
                 Phone = phone,

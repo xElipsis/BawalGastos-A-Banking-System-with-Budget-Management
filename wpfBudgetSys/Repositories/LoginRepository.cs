@@ -83,5 +83,44 @@ namespace wpfBudgetSys.Repositories
                 }
             }
         }
+
+        public void UpdateUsername(int loginId, string username)
+        {
+            using MySqlConnection conn = DBConnection.GetConnection();
+            conn.Open();
+
+            const string query = "UPDATE logins SET username = @Username WHERE login_id = @LoginId";
+
+            using MySqlCommand cmd = new MySqlCommand(query, conn);
+            cmd.Parameters.AddWithValue("@LoginId", loginId);
+            cmd.Parameters.AddWithValue("@Username", username);
+            cmd.ExecuteNonQuery();
+        }
+
+        public void UpdatePasswordHash(int loginId, string passwordHash)
+        {
+            using MySqlConnection conn = DBConnection.GetConnection();
+            conn.Open();
+
+            const string query = "UPDATE logins SET password_hash = @PasswordHash WHERE login_id = @LoginId";
+
+            using MySqlCommand cmd = new MySqlCommand(query, conn);
+            cmd.Parameters.AddWithValue("@LoginId", loginId);
+            cmd.Parameters.AddWithValue("@PasswordHash", passwordHash);
+            cmd.ExecuteNonQuery();
+        }
+
+        public bool UsernameExists(string username, int excludeLoginId)
+        {
+            using MySqlConnection conn = DBConnection.GetConnection();
+            conn.Open();
+
+            const string query = "SELECT COUNT(*) FROM logins WHERE username = @Username AND login_id <> @LoginId";
+
+            using MySqlCommand cmd = new MySqlCommand(query, conn);
+            cmd.Parameters.AddWithValue("@Username", username);
+            cmd.Parameters.AddWithValue("@LoginId", excludeLoginId);
+            return Convert.ToInt32(cmd.ExecuteScalar()) > 0;
+        }
     }
 }

@@ -94,7 +94,7 @@ namespace wpfBudgetSys.ViewModel.PanelViewModel
 
             try
             {
-                transactionServices.Transfer(fromAccountRecord.AccountId, toAccountRecord.AccountId, transferAmount);
+                transactionServices.Transfer(fromAccountRecord, toAccountRecord, transferAmount);
                 MessageBox.Show(
                     $"Transfered ₱{transferAmount:N2} successfully.",
                     "Transfer",

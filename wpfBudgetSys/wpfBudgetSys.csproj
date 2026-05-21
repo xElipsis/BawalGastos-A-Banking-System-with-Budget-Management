@@ -20,6 +20,11 @@
     <None Remove="Assets\Icons\plus-100.png" />
     <None Remove="Assets\Icons\settings-100.png" />
     <None Remove="Assets\Icons\transaction-100.png" />
+    <None Remove="Assets\Icons\notification-100.png" />
+    <None Remove="Assets\Icons\arrow-left-100.png" />
+    <None Remove="Assets\Icons\arrow-right-100.png" />
+    <None Remove="Assets\Icons\double-arrow-left-100.png" />
+    <None Remove="Assets\Icons\double-arrow-right-100.png" />
     <None Remove="Assets\loginbutton-removebg-preview.png" />
     <None Remove="Assets\loginbutton.png" />
     <None Remove="Assets\logowword-removebg-preview.png" />
@@ -50,6 +55,11 @@
     <Resource Include="Assets\Icons\plus-100.png" />
     <Resource Include="Assets\Icons\settings-100.png" />
     <Resource Include="Assets\Icons\transaction-100.png" />
+    <Resource Include="Assets\Icons\notification-100.png" />
+    <Resource Include="Assets\Icons\arrow-left-100.png" />
+    <Resource Include="Assets\Icons\arrow-right-100.png" />
+    <Resource Include="Assets\Icons\double-arrow-left-100.png" />
+    <Resource Include="Assets\Icons\double-arrow-right-100.png" />
     <Resource Include="Assets\loginbutton-removebg-preview.png" />
     <Resource Include="Assets\loginbutton.png" />
     <Resource Include="Assets\logowword-removebg-preview.png" />

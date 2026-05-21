@@ -133,5 +133,23 @@ namespace wpfBudgetSys.Services
             spendingLimitsRepository.Delete(limitId, SessionManager.CurrentUser.UserId);
             return null;
         }
+
+        public string? SaveAll(IEnumerable<(int LimitId, int CategoryId, string? CategoryName, decimal MonthlyLimit, decimal DailyLimit)> rows)
+        {
+            if (SessionManager.CurrentUser == null)
+                return "You must be logged in.";
+
+            foreach (var row in rows)
+            {
+                string? error = row.LimitId == 0
+                    ? AddBudget(row.CategoryId, row.CategoryName, row.MonthlyLimit, row.DailyLimit)
+                    : UpdateBudget(row.LimitId, row.MonthlyLimit, row.DailyLimit);
+
+                if (error != null)
+                    return error;
+            }
+
+            return null;
+        }
     }
 }

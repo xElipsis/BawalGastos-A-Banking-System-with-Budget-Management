@@ -29,7 +29,7 @@
                         </Grid.ColumnDefinitions>
                         <StackPanel>
                             <TextBlock Text="Your budgets" Style="{StaticResource AppSectionTitleStyle}"/>
-                            <TextBlock Text="Edit limits inline, then click Save on each row. New rows need Save once added."
+                            <TextBlock Text="Edit limits in the table, then save all changes at once."
                                        Style="{StaticResource AppSectionSubtitleStyle}"/>
                         </StackPanel>
                         <Button Grid.Column="1" Content="Refresh" Style="{StaticResource AppBackButtonStyle}"
@@ -97,15 +97,6 @@
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellEditingTemplate>
                                 </DataGridTemplateColumn>
-                                <DataGridTemplateColumn Header="" Width="52">
-                                    <DataGridTemplateColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <Button Content="Save" Style="{StaticResource AppBackButtonStyle}" Padding="10,4" FontSize="12"
-                                                    Command="{Binding DataContext.SaveBudgetCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"
-                                                    CommandParameter="{Binding}"/>
-                                        </DataTemplate>
-                                    </DataGridTemplateColumn.CellTemplate>
-                                </DataGridTemplateColumn>
                                 <DataGridTemplateColumn Header="" Width="40">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
@@ -132,6 +123,10 @@
                                       Margin="16,0,0,0" SelectionChanged="BudgetCategoryComboBox_SelectionChanged"/>
                         </Grid>
                     </Border>
+
+                    <Button Content="Save all budgets" Style="{StaticResource AppPrimaryButtonStyle}"
+                            HorizontalAlignment="Right" Margin="0,20,0,0"
+                            Command="{Binding SaveAllCommand}"/>
 
                     <TextBlock Text="{Binding StatusMessage}" Foreground="#DC2626" FontSize="13" Margin="0,12,0,0" TextWrapping="Wrap"
                                Visibility="{Binding StatusMessage, Converter={StaticResource StringNotEmptyToVisibilityConverter}}"/>
