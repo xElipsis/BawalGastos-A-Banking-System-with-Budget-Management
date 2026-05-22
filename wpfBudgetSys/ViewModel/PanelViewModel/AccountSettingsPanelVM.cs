@@ -9,7 +9,6 @@ namespace wpfBudgetSys.ViewModel.PanelViewModel
     public class AccountSettingsPanelVM : ViewModelBase
     {
         private readonly AccountSettingsService accountSettingsService = new();
-
         public ICommand BackCommand { get; }
         public ICommand SaveProfileCommand { get; }
         public ICommand SaveUsernameCommand { get; }

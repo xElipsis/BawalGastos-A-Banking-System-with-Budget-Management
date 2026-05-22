@@ -15,46 +15,33 @@ namespace wpfBudgetSys.Helpers
             <body style='font-family: Arial, sans-serif; color: #333;'>
                 <div style='max-width: 600px; margin: auto; padding: 20px;
                             border: 1px solid #ddd; border-radius: 10px;'>
-
                     <h2 style='color: #2e7d32;'>Deposit Successful</h2>
-
                     <p>Dear Customer,</p>
-
                     <p>
                         We are pleased to inform you that your deposit
                         transaction has been successfully processed.
                     </p>
-
                     <table style='width: 100%;
                                   border-collapse: collapse;
                                   margin-top: 20px;'>
-
                         <tr>
                             <td style='padding: 8px; font-weight: bold;'>Account Number:</td>
                             <td style='padding: 8px;'>{accountNumber}</td>
                         </tr>
-
                         <tr>
                             <td style='padding: 8px; font-weight: bold;'>Deposit Amount:</td>
                             <td style='padding: 8px;'>₱{amount:N2}</td>
                         </tr>
-
                         <tr>
                             <td style='padding: 8px; font-weight: bold;'>Transaction Date:</td>
                             <td style='padding: 8px;'>{DateTime.Now:MMMM dd, yyyy hh:mm tt}</td>
                         </tr>
-
                         <tr>
                             <td style='padding: 8px; font-weight: bold;'>Reference Number:</td>
                             <td style='padding: 8px;'>{referenceNumber}</td>
                         </tr>
-
                     </table>
-
-                    <p style='margin-top: 20px;'>
-                        Thank you for using our banking services.
-                    </p>
-
+                    <p style='margin-top: 20px;'>Thank you for using our banking services.</p>
                     <p>
                         Regards,<br>
                         <strong>Your Banking System</strong>
@@ -248,9 +235,7 @@ namespace wpfBudgetSys.Helpers
                             <td style='padding: 8px;'>{referenceNumber}</td>
                         </tr>
                     </table>
-                    <p style='margin-top: 20px;'>
-                        Thank you for using our banking services.
-                    </p>
+                    <p style='margin-top: 20px;'>Thank you for using our banking services.</p>
                     <p>
                         Regards,<br>
                         <strong>Your Banking System</strong>

@@ -8,14 +8,9 @@ namespace wpfBudgetSys.ViewModel.PanelViewModel
     public class NotificationsPanelVM : ViewModelBase
     {
         private readonly NotificationService notificationService = new();
-
         public ObservableCollection<NotificationItemVM> Notifications { get; }
-
         public bool HasNotifications => Notifications.Count > 0;
-
-        public string EmptyMessage =>
-            "No notifications yet. You'll see updates here for deposits and other account activity.";
-
+        public string EmptyMessage =>"No notifications yet. You'll see updates here for deposits and other account activity.";
         public ICommand MarkReadCommand { get; }
         public ICommand MarkAllAsReadCommand { get; }
 
