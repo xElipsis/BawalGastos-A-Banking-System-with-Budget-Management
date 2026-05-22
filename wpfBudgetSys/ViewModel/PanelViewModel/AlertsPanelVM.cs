@@ -9,14 +9,9 @@ namespace wpfBudgetSys.ViewModel.PanelViewModel
     public class AlertsPanelVM : ViewModelBase
     {
         private readonly AlertService alertService = new();
-
         public ObservableCollection<AlertItemVM> Alerts { get; }
-
         public bool HasAlerts => Alerts.Count > 0;
-
-        public string EmptyMessage =>
-            "No budget alerts yet. Alerts appear when payments reach 50%, 75%, 90%, or 100% of a category's monthly limit.";
-
+        public string EmptyMessage => "No budget alerts yet. Alerts appear when payments reach 50%, 75%, 90%, or 100% of a category's monthly limit.";
         public ICommand MarkReadCommand { get; }
         public ICommand MarkAllAsReadCommand { get; }
 

@@ -1,10 +1,8 @@
-using System.Windows;
 using System.Windows.Input;
 using wpfBudgetSys.Enums;
 using wpfBudgetSys.Helpers;
 using wpfBudgetSys.MVVM;
 using wpfBudgetSys.Services;
-using wpfBudgetSys.View;
 using wpfBudgetSys.ViewModel.Admin.PanelViewModel;
 using wpfBudgetSys.ViewModel.PanelViewModel;
 
