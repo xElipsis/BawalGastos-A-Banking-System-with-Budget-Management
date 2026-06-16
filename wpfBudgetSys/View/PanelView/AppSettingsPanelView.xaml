@@ -1,0 +1,29 @@
+<UserControl x:Class="wpfBudgetSys.View.PanelView.AppSettingsPanelView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
+             d:DesignHeight="700" d:DesignWidth="900">
+
+    <StackPanel>
+        <Button Content="← Back to settings" Style="{StaticResource AppBackButtonStyle}" HorizontalAlignment="Left"
+                Margin="0,0,0,16" Command="{Binding BackCommand}"/>
+
+        <Border Style="{StaticResource AppFormCardStyle}">
+            <StackPanel>
+                <TextBlock Text="Application preferences" Style="{StaticResource AppSectionTitleStyle}" Margin="0,0,0,20"/>
+
+                <CheckBox Content="Show balance on dashboard" IsChecked="{Binding ShowBalanceOnDashboard}"
+                          Margin="0,0,0,12" FontSize="14" Foreground="#374151"/>
+                <CheckBox Content="Enable budget alert emails (coming soon)" IsChecked="{Binding EnableBudgetAlertEmails}"
+                          Margin="0,0,0,12" FontSize="14" Foreground="#374151"/>
+                <CheckBox Content="Use compact transaction list" IsChecked="{Binding CompactTransactionList}"
+                          Margin="0,0,0,20" FontSize="14" Foreground="#374151"/>
+
+                <Button Content="Save app settings" Style="{StaticResource AppPrimaryButtonStyle}"
+                        HorizontalAlignment="Left" Command="{Binding SaveCommand}"/>
+            </StackPanel>
+        </Border>
+    </StackPanel>
+</UserControl>

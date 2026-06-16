@@ -1,0 +1,65 @@
+﻿<UserControl x:Class="wpfBudgetSys.View.PanelView.SettingsPanelView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
+             d:DesignHeight="700" d:DesignWidth="900"
+             Background="{StaticResource AppPageBrush}">
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="40,32,40,48">
+        <StackPanel MaxWidth="800" HorizontalAlignment="Center">
+
+            <Border Style="{StaticResource AppHeroBannerStyle}">
+                <StackPanel>
+                    <Border Height="4" Width="48" CornerRadius="2" Background="{StaticResource AppAccentBrush}"
+                            Margin="0,0,0,16" HorizontalAlignment="Left"/>
+                    <TextBlock Text="Settings" FontSize="28" FontWeight="Bold" Foreground="White"/>
+                    <TextBlock Text="Manage your account and how the app behaves."
+                               FontSize="14" Foreground="#9CA3AF" Margin="0,10,0,0"/>
+                </StackPanel>
+            </Border>
+
+            <StackPanel Visibility="{Binding IsHub, Converter={StaticResource BooleanToVisibilityConverter}}">
+                <Button Command="{Binding ShowAccountSettingsCommand}" Margin="0,0,0,16"
+                        Background="Transparent" BorderThickness="0" Cursor="Hand" HorizontalContentAlignment="Stretch">
+                    <Border Style="{StaticResource AppFormCardStyle}" Padding="24,20">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel>
+                                <TextBlock Text="Account settings" Style="{StaticResource AppSectionTitleStyle}"/>
+                                <TextBlock Text="Username, password, email, phone, and profile details."
+                                           Style="{StaticResource AppSectionSubtitleStyle}"/>
+                            </StackPanel>
+                            <TextBlock Grid.Column="1" Text="→" FontSize="22" Foreground="{StaticResource AppNavyBrush}" VerticalAlignment="Center"/>
+                        </Grid>
+                    </Border>
+                </Button>
+
+                <Button Command="{Binding ShowAppSettingsCommand}"
+                        Background="Transparent" BorderThickness="0" Cursor="Hand" HorizontalContentAlignment="Stretch">
+                    <Border Style="{StaticResource AppFormCardStyle}" Padding="24,20">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel>
+                                <TextBlock Text="App settings" Style="{StaticResource AppSectionTitleStyle}"/>
+                                <TextBlock Text="Preferences for the whole application experience."
+                                           Style="{StaticResource AppSectionSubtitleStyle}"/>
+                            </StackPanel>
+                            <TextBlock Grid.Column="1" Text="→" FontSize="22" Foreground="{StaticResource AppNavyBrush}" VerticalAlignment="Center"/>
+                        </Grid>
+                    </Border>
+                </Button>
+            </StackPanel>
+
+            <ContentControl Content="{Binding SubView}"
+                            Visibility="{Binding IsHub, Converter={StaticResource InverseBooleanToVisibilityConverter}}"/>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

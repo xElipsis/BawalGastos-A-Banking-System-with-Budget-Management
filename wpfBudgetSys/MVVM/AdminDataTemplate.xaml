@@ -1,0 +1,24 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:PanelView="clr-namespace:wpfBudgetSys.View.Admin.PanelView"
+                    xmlns:PanelVM="clr-namespace:wpfBudgetSys.ViewModel.Admin.PanelViewModel">
+
+    <DataTemplate DataType="{x:Type PanelVM:AdminDashboardPanelVM}">
+        <PanelView:AdminDashboardPanelView/>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type PanelVM:AdminUsersPanelVM}">
+        <PanelView:AdminUsersPanelView/>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type PanelVM:AdminAccountsPanelVM}">
+        <PanelView:AdminAccountsPanelView/>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type PanelVM:AdminTransactionsPanelVM}">
+        <PanelView:AdminTransactionsPanelView/>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type PanelVM:AdminNotificationsPanelVM}">
+        <PanelView:AdminNotificationsPanelView/>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type PanelVM:AdminReportsPanelVM}">
+        <PanelView:AdminReportsPanelView/>
+    </DataTemplate>
+</ResourceDictionary>

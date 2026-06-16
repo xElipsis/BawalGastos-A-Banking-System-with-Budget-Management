@@ -1,0 +1,59 @@
+<UserControl x:Class="wpfBudgetSys.View.Admin.PanelView.AdminUsersPanelView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Background="{StaticResource AppPageBrush}">
+    <ScrollViewer Padding="24">
+        <StackPanel>
+            <Border Style="{StaticResource AppFormCardStyle}" Margin="0,0,0,12">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBox Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" Height="40" Padding="12,8"
+                             FontSize="14" VerticalContentAlignment="Center"
+                             Tag="Search by name, username, email, or account #"/>
+                    <Button Grid.Column="1" Content="Refresh" Style="{StaticResource AppBackButtonStyle}" Margin="12,0,0,0"
+                            Command="{Binding RefreshCommand}"/>
+                </Grid>
+            </Border>
+
+            <Border Style="{StaticResource AppFormCardStyle}" Margin="0,0,0,12">
+                <StackPanel Orientation="Horizontal">
+                    <Button Content="Activate" Style="{StaticResource AppBackButtonStyle}" Margin="0,0,8,0"
+                            Command="{Binding ActivateCommand}"/>
+                    <Button Content="Suspend" Style="{StaticResource AppBackButtonStyle}" Margin="0,0,8,0"
+                            Command="{Binding SuspendCommand}"/>
+                    <Button Content="Unlock" Style="{StaticResource AppBackButtonStyle}" Margin="0,0,8,0"
+                            Command="{Binding UnlockCommand}"/>
+                    <Button Content="Reset password" Style="{StaticResource AppBackButtonStyle}"
+                            Command="{Binding ResetPasswordCommand}"/>
+                    <TextBlock Text="Select a row, then choose an action." VerticalAlignment="Center" Margin="16,0,0,0"
+                               Foreground="{StaticResource AppMutedBrush}" FontSize="13"/>
+                </StackPanel>
+            </Border>
+
+            <DataGrid ItemsSource="{Binding Users}" SelectedItem="{Binding SelectedUser, Mode=TwoWay}"
+                      AutoGenerateColumns="False" CanUserAddRows="False"
+                      Style="{StaticResource BudgetCategoryDataGridStyle}" MinHeight="360">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Name" Binding="{Binding FullName}" Width="*"/>
+                    <DataGridTextColumn Header="Username" Binding="{Binding Username}" Width="*"/>
+                    <DataGridTextColumn Header="Email" Binding="{Binding Email}" Width="*"/>
+                    <DataGridTemplateColumn Header="Status" Width="100">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Border CornerRadius="8" Padding="8,4" HorizontalAlignment="Left"
+                                        Background="{Binding Status, Converter={StaticResource StatusBrushConverter}}">
+                                    <TextBlock Text="{Binding Status}" Foreground="White" FontWeight="SemiBold" FontSize="12"/>
+                                </Border>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTextColumn Header="Account" Binding="{Binding AccountNumber}" Width="*"/>
+                    <DataGridTextColumn Header="Locked" Binding="{Binding IsLocked}" Width="60"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>
